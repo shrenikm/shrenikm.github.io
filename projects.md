@@ -82,7 +82,7 @@ In this model, a single high degree polynomial spline is fit to the trajectory d
 
 If the degree of the polynomial is too low, it would not be able to express the trajectory well enough. On the other hand, if it is too high, we end up with a lot of variation and lose generality. This model thus performs poorly, especially when the state space dimensions are high.
 
-### Point-wise Spine
+### Point-wise Spine (PWS)
 
 To deal with the issues faced by SPS, a point wise spline model is introduced. The spline models each knot point separately (parameterized by the initial state), which helps in removing unnecessary dependencies between the knot points. As each knot point parameter is now independent, failure to capture trends in a particular region in the trajectory will not affect other regions.
 
@@ -206,7 +206,7 @@ The result of the multi tree algorithm in a two dimensional setting is as shown.
 
 ## Autonomous Robot Development Open-Source Platform
 
-ARDOP is a humanoid robot that was built to serve as an open-source platform for robotics. It was designed to be an economical way to learnt and test algorithms for planning, control, perception and learning.
+ARDOP is a humanoid robot that was built to serve as an open-source platform for robotics. It was designed to be an economical way to learn and test algorithms for planning, control, perception and learning.
 
 STL files for the parts are open-source and may be 3D printed. The robot consists of an upper body with two arms and a head. Each arm has five degrees of freedom and a gripper. The head has two degrees of freedom and houses a [DUO 3D camera](https://duo3d.com/product/duo-minilx-lv1). Servo motors are used to actuate all the joints and are controlled using the [PCA9685](https://www.nxp.com/products/analog/interfaces/ic-bus/ic-led-controllers/16-channel-12-bit-pwm-fm-plus-ic-bus-led-controller:PCA9685) PWM controller. The main processor used is the [NVidia Jetson TK1](https://www.nvidia.com/object/jetson-tk1-embedded-dev-kit.html), which interfaces with the motor controller and other hardware.
 
