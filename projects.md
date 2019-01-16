@@ -201,3 +201,24 @@ The result of the multi tree algorithm in a two dimensional setting is as shown.
 [Repository](https://github.com/shrenikm/NCLDT)
 
 ---
+
+# ARDOP
+
+## Autonomous Robot Development Open-Source Platform
+
+ARDOP is a humanoid robot that was built to serve as an open-source platform for robotics. It was designed to be an economical way to learnt and test algorithms for planning, control, perception and learning.
+
+STL files for the parts are open-source and may be 3D printed. The robot consists of an upper body with two arms and a head. Each arm has five degrees of freedom and a gripper. The head has two degrees of freedom and houses a [DUO 3D camera](https://duo3d.com/product/duo-minilx-lv1). Servo motors are used to actuate all the joints and are controlled using the [PCA9685](https://www.nxp.com/products/analog/interfaces/ic-bus/ic-led-controllers/16-channel-12-bit-pwm-fm-plus-ic-bus-led-controller:PCA9685) PWM controller. The main processor used is the [NVidia Jetson TK1](https://www.nvidia.com/object/jetson-tk1-embedded-dev-kit.html), which interfaces with the motor controller and other hardware.
+
+All the code is written in C++. Tests and simulations were run using MATLAB/Python, before being deployed on the hardware. The robot is able to identify objects and perform simple manipulation tasks as shown.
+
+
+<p align="center">
+<a href="https://www.youtube.com/watch?v=ako6UgEj9yY&t">
+<img src="https://img.youtube.com/vi/ako6UgEj9yY/0.jpg" alt="ARDOP" width="640" />
+</a>
+</p>
+
+[Repository](https://github.com/ardop)
+
+---
