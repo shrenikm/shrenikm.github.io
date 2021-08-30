@@ -6,7 +6,26 @@
     <description>Recent content in Tags on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
-    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster><atom:link href="https://shrenikm.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <managingEditor>shrenik95@gmail.com</managingEditor>
+    <webMaster>shrenik95@gmail.com</webMaster>
+    <lastBuildDate>Sun, 29 Aug 2021 10:20:38 -0700</lastBuildDate><atom:link href="https://shrenikm.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>linear_algebra</title>
+      <link>https://shrenikm.com/tags/linear_algebra/</link>
+      <pubDate>Sun, 29 Aug 2021 10:20:38 -0700</pubDate>
+      <author>shrenik95@gmail.com</author>
+      <guid>https://shrenikm.com/tags/linear_algebra/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>math</title>
+      <link>https://shrenikm.com/tags/math/</link>
+      <pubDate>Sun, 29 Aug 2021 10:20:38 -0700</pubDate>
+      <author>shrenik95@gmail.com</author>
+      <guid>https://shrenikm.com/tags/math/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

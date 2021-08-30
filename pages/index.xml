@@ -6,16 +6,18 @@
     <description>Recent content in Pages on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
-    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
+    <managingEditor>shrenik95@gmail.com</managingEditor>
+    <webMaster>shrenik95@gmail.com</webMaster>
     <lastBuildDate>Sat, 28 Aug 2021 16:53:20 -0700</lastBuildDate><atom:link href="https://shrenikm.com/pages/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Projects</title>
       <link>https://shrenikm.com/pages/projects/</link>
       <pubDate>Sat, 28 Aug 2021 16:53:20 -0700</pubDate>
-      <author>shrenik95@gmail.com (Shrenik M)</author>
+      <author>shrenik95@gmail.com</author>
       <guid>https://shrenikm.com/pages/projects/</guid>
-      <description>GPV Generation of policy variations in deep reinforcement learning The project aims to enable reinforcement learning agents to obtain probabilistically consistant policy variations from a learned deterministic policy. A Variational Autoencoder (VAE) is used to obtain these variations. The goal is to enable agents to execute actions that are different (and sub-optimal) from the trained policy, while still being able to achieve the desired result.
+      <description>GPV Generation of policy variations in deep reinforcement learning 
+
+The project aims to enable reinforcement learning agents to obtain probabilistically consistant policy variations from a learned deterministic policy. A Variational Autoencoder (VAE) is used to obtain these variations. The goal is to enable agents to execute actions that are different (and sub-optimal) from the trained policy, while still being able to achieve the desired result.
 This is useful in cases where we need to generate behavior that is not a part of the trained policy, while also making sure that the system does not fail at the given task.</description>
     </item>
     
@@ -23,7 +25,7 @@ This is useful in cases where we need to generate behavior that is not a part of
       <title>Shrenik Muralidhar</title>
       <link>https://shrenikm.com/pages/about/</link>
       <pubDate>Sat, 28 Aug 2021 16:52:40 -0700</pubDate>
-      <author>shrenik95@gmail.com (Shrenik M)</author>
+      <author>shrenik95@gmail.com</author>
       <guid>https://shrenikm.com/pages/about/</guid>
       <description>I&amp;rsquo;m a roboticist, currently working as a motion planning research engineer at Brain Corporation.
 I have a Master&amp;rsquo;s degree in Robotics from the University of Pennsylvania. While at University, I was a part of the DAIR Lab, working on optimal control for bipedal robots.
