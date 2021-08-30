@@ -2,10 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://shrenikm.com/posts/2021-08-29-dimension-of-a-proper-subspace/</loc>
+    <loc>https://shrenikm.com/</loc>
     <lastmod>2021-08-29T10:20:38-07:00</lastmod>
   </url><url>
-    <loc>https://shrenikm.com/</loc>
+    <loc>https://shrenikm.com/posts/2021-08-29-dimension-of-a-proper-subspace/</loc>
     <lastmod>2021-08-29T10:20:38-07:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/tags/linear_algebra/</loc>

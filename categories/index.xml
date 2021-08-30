@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on Home</title>
+    <title>Categories on </title>
     <link>https://shrenikm.com/categories/</link>
-    <description>Recent content in Categories on Home</description>
+    <description>Recent content in Categories on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <managingEditor>shrenik95@gmail.com</managingEditor>
-    <webMaster>shrenik95@gmail.com</webMaster><atom:link href="https://shrenikm.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
+    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster><atom:link href="https://shrenikm.com/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
