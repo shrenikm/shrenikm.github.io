@@ -7,11 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Dimension of a proper subspace - </title>
-  <meta name="description" content="Let $V$ be a finite dimensional vector space over the field $F$, with $\dim{V} = n$.
-We also define the ordered basis for $V$ to be $B = \set{\beta_1, \ldots, \beta_n}$.
-Consider a subspace $U$ of the vector space $V \subseteq U$. Naturally, we have $\dim{U} \leq \dim{V}$.
-This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then be expressed as a linear combination of the basis vectors in $B$.">
+  <title>Injective Linear Transformations - </title>
+  <meta name="description" content="In this post, we take a look at some characteristics of injective linear transformations. Let $T$ be a linear transformation from some vector space $V$ to another vector space $W$, both defined over a field $F$. $T$ being injective, means that no two vectors in $V$ can be mapped to the same vector in $W$. We have a one-to-one mapping between the vectors in $V$ and their images in $W$.">
   <meta name="author" content="Shrenik M"/><script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -47,8 +44,8 @@ This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then b
         "@type": "ListItem",
         "position": 3,
         "item": {
-          "@id": "https:\/\/shrenikm.com\/posts\/2021-08-29-dimension-of-a-proper-subspace\/",
-          "name": "Dimension of a proper subspace"
+          "@id": "https:\/\/shrenikm.com\/posts\/2021-09-20-injective-linear-transformations\/",
+          "name": "Injective linear transformations"
         }
     }]
 }
@@ -59,15 +56,15 @@ This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then b
   "author": {
     "name" : "Shrenik M"
   },
-  "headline": "Dimension of a proper subspace",
-  "description" : "Let $V$ be a finite dimensional vector space over the field $F$, with $\\dim{V} = n$.\nWe also define the ordered basis for $V$ to be $B = \\set{\\beta_1, \\ldots, \\beta_n}$.\nConsider a subspace $U$ of the vector space $V \\subseteq U$. Naturally, we have $\\dim{U} \\leq \\dim{V}$.\nThis is because for any $\\alpha \\in U$, we have $\\alpha \\in V$, which can then be expressed as a linear combination of the basis vectors in $B$.",
+  "headline": "Injective Linear Transformations",
+  "description" : "In this post, we take a look at some characteristics of injective linear transformations. Let $T$ be a linear transformation from some vector space $V$ to another vector space $W$, both defined over a field $F$. $T$ being injective, means that no two vectors in $V$ can be mapped to the same vector in $W$. We have a one-to-one mapping between the vectors in $V$ and their images in $W$.",
   "inLanguage" : "en",
-  "wordCount":  471 ,
-  "datePublished" : "2021-08-29T10:20:38",
-  "dateModified" : "2021-08-29T10:20:38",
+  "wordCount":  582 ,
+  "datePublished" : "2021-09-20T01:02:55",
+  "dateModified" : "2021-09-20T01:02:55",
   "image" : "https:\/\/shrenikm.com",
   "keywords" : [ "math, linear_algebra" ],
-  "mainEntityOfPage" : "https:\/\/shrenikm.com\/posts\/2021-08-29-dimension-of-a-proper-subspace\/",
+  "mainEntityOfPage" : "https:\/\/shrenikm.com\/posts\/2021-09-20-injective-linear-transformations\/",
   "publisher" : {
     "@type": "Organization",
     "name" : "https:\/\/shrenikm.com",
@@ -81,19 +78,14 @@ This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then b
 }
 </script>
 
-<meta property="og:title" content="Dimension of a proper subspace" />
-<meta property="og:description" content="Let $V$ be a finite dimensional vector space over the field $F$, with $\dim{V} = n$.
-We also define the ordered basis for $V$ to be $B = \set{\beta_1, \ldots, \beta_n}$.
-Consider a subspace $U$ of the vector space $V \subseteq U$. Naturally, we have $\dim{U} \leq \dim{V}$.
-This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then be expressed as a linear combination of the basis vectors in $B$.">
-<meta property="og:url" content="https://shrenikm.com/posts/2021-08-29-dimension-of-a-proper-subspace/" />
+<meta property="og:title" content="Injective Linear Transformations" />
+<meta property="og:description" content="In this post, we take a look at some characteristics of injective linear transformations. Let $T$ be a linear transformation from some vector space $V$ to another vector space $W$, both defined over a field $F$. $T$ being injective, means that no two vectors in $V$ can be mapped to the same vector in $W$. We have a one-to-one mapping between the vectors in $V$ and their images in $W$.">
+<meta property="og:url" content="https://shrenikm.com/posts/2021-09-20-injective-linear-transformations/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="" />
 
-  <meta name="twitter:title" content="Dimension of a proper subspace" />
-  <meta name="twitter:description" content="Let $V$ be a finite dimensional vector space over the field $F$, with $\dim{V} = n$.
-We also define the ordered basis for $V$ to be $B = \set{\beta_1, \ldots, \beta_n}$.
-Consider a subspace $U$ of the …">
+  <meta name="twitter:title" content="Injective Linear Transformations" />
+  <meta name="twitter:description" content="In this post, we take a look at some characteristics of injective linear transformations. Let $T$ be a linear transformation from some vector space $V$ to another vector space $W$, both defined over a …">
   <meta name="twitter:card" content="summary" />
   <meta name="generator" content="Hugo 0.87.0" />
   <link rel="alternate" href="https://shrenikm.com/index.xml" type="application/rss+xml" title=""><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -238,7 +230,7 @@ if (!doNotTrack) {
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="posts-heading">
               
-                <h1>Dimension of a proper subspace</h1>
+                <h1>Injective Linear Transformations</h1>
               
               
                 <hr class="small">
@@ -258,32 +250,48 @@ if (!doNotTrack) {
   <div class="row">
     <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
       <article role="main" class="blog-post">
-        <p>Let $V$ be a finite dimensional vector space over the field $F$, with $\dim{V} = n$.<br>
-We also define the ordered basis for $V$ to be $B = \set{\beta_1, \ldots, \beta_n}$.</p>
-<p>Consider a subspace $U$ of the vector space $V \subseteq U$. Naturally, we have $\dim{U} \leq \dim{V}$.</p>
-<p>This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then be expressed as a linear combination of the basis vectors in $B$. Hence, we don&rsquo;t require more than $n$ linearly independent vectors to represent any vector in $U$.</p>
-<p>Now what if $U$ is a proper subspace, $U \subsetneq V$?</p>
-<p>At first glance, it might seem like we still have $\dim{U} \leq \dim{V}$, but in fact we have a strict inequality $\dim{U} \lt \dim{V}$.</p>
-<p>To see this, we let $\dim{U} = m$. Let the ordered basis of $U$ be $A = \set{\alpha_1, \ldots, \alpha_m}$.<br>
-As $U$ is a proper subspace, we can choose an element $\gamma \in V$ such that $\gamma \not\in U$. Intuitively, the vectors $\set{\alpha_1, \ldots, \alpha_m, \gamma}$ are linearly independent as $\gamma$ cannot be expressed as a linear combination of the vectors in $A$. To see this mathematically, consider the following linear combination of the basis vectors in $A$ and $\gamma$ with scalars $c_i$ taken from the field $F$:</p>
+        <p>In this post, we take a look at some characteristics of injective linear transformations. Let $T$ be a linear transformation from some vector space $V$ to another vector space $W$, both defined over a field $F$. $T$ being injective, means that no two vectors in $V$ can be mapped to the same vector in $W$. We have a one-to-one mapping between the vectors in $V$ and their images in $W$.</p>
 <p>\begin{equation}
-c_1\alpha_1 + \ldots + c_m\alpha_m + c_{m+1}\gamma = 0
+T(\alpha) = T(\beta) \implies \alpha = \beta
 \end{equation}</p>
-<p>For this to be satisfied, we must have all $c_i = 0$. To prove this, we first assume that $c_{m+1} \neq 0$. We can now multiply both sides by $\frac{1}{c_{m+1}}$ (Which is possible because $\frac{1}{c_{m+1}}$ is also an element of the field, for $c_{m+1} \neq 0$).</p>
+<p>What does the null space of $T$ look like?</p>
 <p>\begin{equation}
-\frac{c_1}{c_{m+1}}\alpha_1 + \ldots + \frac{c_m}{c_{m+1}}\alpha_m + \gamma = 0
+N = \set{\alpha \in V: T\alpha = 0}
 \end{equation}</p>
-<p>The above equation means that either $\gamma$ can be expressed as a linear combination of the basis vectors of $U$ (If some of the $c_i \neq 0$), or $\gamma = 0$. Both of these would mean that $\gamma \in U$, which is not the case as we have specifically chosen $\gamma \not\in U$. Hence this means that $c_{m+1}$ cannot be non-zero.</p>
+<p>Assuming that $V$ isn&rsquo;t just $\set{0}$, for an $\alpha \in V$ ($\alpha \neq 0$), we can pick another element $\beta \in V$ that is different from $\alpha$. We have $\gamma = \beta - \alpha$, with $\gamma \neq 0$, $\gamma \neq \beta$ and $\alpha = \beta - \gamma$, basically writing $\alpha$ as the difference of two other vectors in $V$.</p>
 <p>\begin{equation}
-c_{m+1} = 0 \implies c_1\alpha_1 + \ldots + c_m\alpha_m = 0
+T\alpha = T(\beta - \gamma) = T\beta - T\gamma
 \end{equation}</p>
-<p>As $\set{\alpha_1, \ldots, \alpha_m}$ is the basis for $U$, they are linearly independent, and we must have $c_i = 0, i \in [1, m]$ in the above equation.</p>
-<p>So for the linear combination of the basis vectors in $A$ and $\gamma$ to be equal to $0$, we must have every $c_i = 0, i \in [1, m+1]$, implying that the basis vectors in $A$ along with $\gamma$ are linearly independent.</p>
-<p>We now have a set $C = \set{\alpha_1, \ldots, \alpha_m, \gamma}$ of linearly independent vectors within $V$.
-Hence $\dim{V} \ge m+1$ which means that $\dim{V} \gt m$, giving us the strict inequality between the dimensions of both vector spaces:
-\begin{equation}
-\dim{U} \lt \dim{V}
+<p>\begin{equation}
+T\alpha = 0 \implies T\beta - T\gamma = 0 \implies T\beta = T\gamma
 \end{equation}</p>
+<p>As $\beta$ and $\gamma$ are different vectors in $V$, they cannot have the same image in $W$ as $T$ is injective. So only the zero vector in $V$ can get mapped to the zero vector in $W$.</p>
+<p>\begin{equation}
+T\alpha = 0 \implies \alpha = 0
+\end{equation}</p>
+<p>The null space $N$ of $T$ is just the zero vector space $\set{0}$ over $F$. An injective linear transformation cannot map non-zero vectors to the zero vector. We sometimes say that such a $T$ is non-singular.</p>
+<p>Another property of such a transformation, is that it preserves linear independence. Stating more formally, if $A \subset V$ is a set of linearly independent vectors in $V$ consisting of vectors $\set{\alpha_1, \ldots, \alpha_n}$, then $B = \set{T\alpha_1, \ldots, T\alpha_n} \subset W$ is also an independent set of vectors.</p>
+<p>Let&rsquo;s look at a simple way of verifying this. We let $\beta_j = T\alpha_j$. Assume that $A$ is a set of independent vectors and $B$ is not. If the vectors in $B$ are not independent, it means that we can express some particular vector as a linear combination of the other vectors.</p>
+<p>\begin{equation}
+\beta_k = \sum_{j=1, j \neq k}^{n}c_j\beta_j
+\end{equation}</p>
+<p>As $T$ is a linear transform, we have</p>
+<p>\begin{equation}
+T\alpha_k = T(\sum_{j=1, j \neq k}^{n}c_j\alpha_j)
+\end{equation}</p>
+<p>\begin{equation}
+T\alpha_k - T(\sum_{j=1, j \neq k}^{n}c_j\alpha_j) = 0
+\end{equation}</p>
+<p>\begin{equation}
+T(\alpha_k - \sum_{j=1, j \neq k}^{n}c_j\alpha_j) = 0
+\end{equation}</p>
+<p>As the $\alpha_j$&rsquo;s are independent, the term $\alpha_k - \sum_{j=1, j \neq k}^{n}c_j\alpha_j \neq 0$ as we cannot express any $\alpha_k$ as a linear combination of the other vectors in A.</p>
+<p>But as we have seen, if $T$ is injective, it cannot map non-zero vectors to zero. Hence the vectors $\beta_j$ in $B$ must also be independent, meaning that an injective linear transformation preserves the linear independence of vectors.</p>
+<p>To close this out, we tie this back to a fundamental result in linear algebra. Let $R_T$ be the range of $T$ and $\dim R_T$ be the rank of $T$. As $T$ is injective, the range has the same dimensionality as $V$ as the basis of $V$ would get mapped to independent vectors in $R_T$. So we have $\dim V = \dim R_T$. For a general linear transformation $T$, we know that:</p>
+<p>\begin{equation}
+\dim V = \dim N + \dim R_T
+\end{equation}</p>
+<p>If $T$ is injective, $\dim N = 0$ and so $\dim V = \dim R_T$, which agrees with our conclusion above.</p>
 
 
         
@@ -306,21 +314,21 @@ Hence $\dim{V} \ge m+1$ which means that $\dim{V} \gt m$, giving us the strict i
     <ul class="share">
       
       <li>
-        <a href="//twitter.com/share?url=https%3a%2f%2fshrenikm.com%2fposts%2f2021-08-29-dimension-of-a-proper-subspace%2f&amp;text=Dimension%20of%20a%20proper%20subspace&amp;via=" target="_blank" title="Share on Twitter">
+        <a href="//twitter.com/share?url=https%3a%2f%2fshrenikm.com%2fposts%2f2021-09-20-injective-linear-transformations%2f&amp;text=Injective%20Linear%20Transformations&amp;via=" target="_blank" title="Share on Twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//reddit.com/submit?url=https%3a%2f%2fshrenikm.com%2fposts%2f2021-08-29-dimension-of-a-proper-subspace%2f&amp;title=Dimension%20of%20a%20proper%20subspace" target="_blank" title="Share on Reddit">
+        <a href="//reddit.com/submit?url=https%3a%2f%2fshrenikm.com%2fposts%2f2021-09-20-injective-linear-transformations%2f&amp;title=Injective%20Linear%20Transformations" target="_blank" title="Share on Reddit">
           <i class="fab fa-reddit"></i>
         </a>
       </li>
   
       
       <li>
-        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fshrenikm.com%2fposts%2f2021-08-29-dimension-of-a-proper-subspace%2f&amp;title=Dimension%20of%20a%20proper%20subspace" target="_blank" title="Share on LinkedIn">
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fshrenikm.com%2fposts%2f2021-09-20-injective-linear-transformations%2f&amp;title=Injective%20Linear%20Transformations" target="_blank" title="Share on LinkedIn">
           <i class="fab fa-linkedin"></i>
         </a>
       </li>
@@ -342,9 +350,9 @@ Hence $\dim{V} \ge m+1$ which means that $\dim{V} \gt m$, giving us the strict i
                   <ul>
                 
                 
-                    <li><a href="/posts/2021-09-20-injective-linear-transformations/">Injective Linear Transformations</a></li>
-                
                     <li><a href="/posts/2021-09-06-change-of-basis/">Change of Basis</a></li>
+                
+                    <li><a href="/posts/2021-08-29-dimension-of-a-proper-subspace/">Dimension of a proper subspace</a></li>
                 
               </ul>
 
@@ -355,10 +363,10 @@ Hence $\dim{V} \ge m+1$ which means that $\dim{V} \gt m$, giving us the strict i
       
         <ul class="pager blog-pager">
           
-          
-            <li class="next">
-              <a href="https://shrenikm.com/posts/2021-09-06-change-of-basis/" data-toggle="tooltip" data-placement="top" title="Change of Basis">Next Post &rarr;</a>
+            <li class="previous">
+              <a href="https://shrenikm.com/posts/2021-09-06-change-of-basis/" data-toggle="tooltip" data-placement="top" title="Change of Basis">&larr; Previous Post</a>
             </li>
+          
           
         </ul>
       
