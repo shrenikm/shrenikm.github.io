@@ -8,7 +8,16 @@
     <language>en-us</language>
     <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
     <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
-    <lastBuildDate>Mon, 20 Sep 2021 01:02:55 -0700</lastBuildDate><atom:link href="https://shrenikm.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 25 Sep 2021 20:11:57 -0700</lastBuildDate><atom:link href="https://shrenikm.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>numerical_analysis</title>
+      <link>https://shrenikm.com/tags/numerical_analysis/</link>
+      <pubDate>Sat, 25 Sep 2021 20:11:57 -0700</pubDate>
+      <author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/numerical_analysis/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>linear_algebra</title>
       <link>https://shrenikm.com/tags/linear_algebra/</link>
