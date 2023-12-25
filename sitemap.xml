@@ -3,18 +3,33 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://shrenikm.com/</loc>
-    <lastmod>2021-09-25T20:11:57-07:00</lastmod>
+    <lastmod>2023-12-24T18:54:32-08:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/motion_planning/</loc>
+    <lastmod>2023-12-24T18:54:32-08:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/</loc>
+    <lastmod>2023-12-24T18:54:32-08:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/numerical_optimization/</loc>
+    <lastmod>2023-12-24T18:54:32-08:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/posts/</loc>
+    <lastmod>2023-12-24T18:54:32-08:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/robotics/</loc>
+    <lastmod>2023-12-24T18:54:32-08:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/</loc>
+    <lastmod>2023-12-24T18:54:32-08:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/trajectory_optimization/</loc>
+    <lastmod>2023-12-24T18:54:32-08:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/posts/2021-09-25-implicit-euler-integration-using-newton-raphson/</loc>
     <lastmod>2021-09-25T20:11:57-07:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/tags/numerical_analysis/</loc>
-    <lastmod>2021-09-25T20:11:57-07:00</lastmod>
-  </url><url>
-    <loc>https://shrenikm.com/posts/</loc>
-    <lastmod>2021-09-25T20:11:57-07:00</lastmod>
-  </url><url>
-    <loc>https://shrenikm.com/tags/</loc>
     <lastmod>2021-09-25T20:11:57-07:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/posts/2021-09-20-injective-linear-transformations/</loc>

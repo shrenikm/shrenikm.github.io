@@ -8,49 +8,42 @@
     <language>en-us</language>
     <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
     <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
-    <lastBuildDate>Sat, 25 Sep 2021 20:11:57 -0700</lastBuildDate><atom:link href="https://shrenikm.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 24 Dec 2023 18:54:32 -0800</lastBuildDate>
+    <atom:link href="https://shrenikm.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multi Vehicle Mixed Integer Programming</title>
+      <link>https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/</link>
+      <pubDate>Sun, 24 Dec 2023 18:54:32 -0800</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/</guid>
+      <description>$\newcommand{\ith}{i^{th}}$ $\newcommand{\pth}{p^{th}}$ $\newcommand{\qth}{q^{th}}$ $\newcommand{\lth}{l^{th}}$ $\newcommand{\MR}{\mathbb{R}}$ $\newcommand{\xpi}{x_{pi}}$ $\newcommand{\ypi}{y_{pi}}$ $\newcommand{\xqi}{x_{qi}}$ $\newcommand{\yqi}{y_{qi}}$ $\newcommand{\xmin}{x_{min}}$ $\newcommand{\xmax}{x_{max}}$ $\newcommand{\ymin}{y_{min}}$ $\newcommand{\ymax}{y_{max}}$ $\newcommand{\xlmin}{x_{l,min}}$ $\newcommand{\xlmax}{x_{l,max}}$ $\newcommand{\ylmin}{y_{l,min}}$ $\newcommand{\ylmax}{y_{l,max}}$ $\newcommand{\xlimin}{x_{li,min}}$ $\newcommand{\xlimax}{x_{li,max}}$ $\newcommand{\ylimin}{y_{li,min}}$ $\newcommand{\ylimax}{y_{li,max}}$ $\newcommand{\cplx}{c_{pl,x}}$ $\newcommand{\cply}{c_{pl,y}}$ $\newcommand{\dpqx}{d_{pq,x}}$ $\newcommand{\dpqy}{d_{pq,y}}$ $\newcommand{\tpli}{t_{pli}}$ $\newcommand{\spi}{s_{pi}}$ $\newcommand{\spij}{s_{pij}}$ $\newcommand{\spinext}{s_{p,i+1}}$ $\newcommand{\spn}{s_{pN}}$ $\newcommand{\spf}{s_{pf}}$ $\newcommand{\wpi}{w_{pi}}$ $\newcommand{\wpij}{w_{pij}}$ $\newcommand{\wpn}{w_{pN}}$ $\newcommand{\upi}{u_{pi}}$ $\newcommand{\upik}{u_{pik}}$ $\newcommand{\vpi}{v_{pi}}$ $\newcommand{\vpik}{v_{pik}}$ $\newcommand{\Ap}{A_{p}}$ $\newcommand{\Bp}{B_{p}}$ $\newcommand{\qp}{q_{p}}$ $\newcommand{\rp}{r_{p}}$ $\newcommand{\pp}{p_{p}}$&#xA;In this post, we take a look at this paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.&#xA;My implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found here</description>
+    </item>
     <item>
       <title>Implicit Euler integration using Newton-Raphson</title>
       <link>https://shrenikm.com/posts/2021-09-25-implicit-euler-integration-using-newton-raphson/</link>
-      <pubDate>Sat, 25 Sep 2021 20:11:57 -0700</pubDate>
-      <author>shrenik95@gmail.com (Shrenik M)</author>
+      <pubDate>Sat, 25 Sep 2021 20:11:57 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/posts/2021-09-25-implicit-euler-integration-using-newton-raphson/</guid>
-      <description>$\newcommand{\Dt}{\Delta t}$
-We take a look at the implicit or backward Euler integration scheme for computing numerical solutions of ordinary differential equations. We will go over the process of integrating using the backward Euler method and make comparisons to the more well known forward Euler method.
-Numerical integration is extremely important when it comes to simulating real world physical systems. For robotic systems, we usually have a continuous time state dynamics that tells us how the system behaves upon the application of a certain control signal.</description>
+      <description>$\newcommand{\Dt}{\Delta t}$&#xA;We take a look at the implicit or backward Euler integration scheme for computing numerical solutions of ordinary differential equations. We will go over the process of integrating using the backward Euler method and make comparisons to the more well known forward Euler method.&#xA;Numerical integration is extremely important when it comes to simulating real world physical systems. For robotic systems, we usually have a continuous time state dynamics that tells us how the system behaves upon the application of a certain control signal.</description>
     </item>
-    
     <item>
       <title>Injective linear transformations</title>
       <link>https://shrenikm.com/posts/2021-09-20-injective-linear-transformations/</link>
-      <pubDate>Mon, 20 Sep 2021 01:02:55 -0700</pubDate>
-      <author>shrenik95@gmail.com (Shrenik M)</author>
+      <pubDate>Mon, 20 Sep 2021 01:02:55 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/posts/2021-09-20-injective-linear-transformations/</guid>
       <description>In this post, we take a look at some characteristics of injective linear transformations. Let $T$ be a linear transformation from some vector space $V$ to another vector space $W$, both defined over a field $F$. $T$ being injective, means that no two vectors in $V$ can be mapped to the same vector in $W$. We have a one-to-one mapping between the vectors in $V$ and their images in $W$.</description>
     </item>
-    
     <item>
       <title>Change of basis</title>
       <link>https://shrenikm.com/posts/2021-09-06-change-of-basis/</link>
-      <pubDate>Mon, 06 Sep 2021 22:32:43 -0700</pubDate>
-      <author>shrenik95@gmail.com (Shrenik M)</author>
+      <pubDate>Mon, 06 Sep 2021 22:32:43 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/posts/2021-09-06-change-of-basis/</guid>
-      <description>We look into the problem of expressing a vector $p$, whose coordinates relative to some basis is known, through the coordinates relative to a different basis.
-Let&amp;rsquo;s assume that $p$ lies in an $n$ dimensional vector space $V$ defined over the field $F$. Let $A$ and $B$ be two different sets of basis vectors containing the vectors $\set{\alpha_1, \ldots, \alpha_n}$ and $\set{\beta_1, \ldots, \beta_n}$ respectively.
-Let $p_A$ represent the coordinates of $p$ with respect to the basis $A$.</description>
+      <description>We look into the problem of expressing a vector $p$, whose coordinates relative to some basis is known, through the coordinates relative to a different basis.&#xA;Let&amp;rsquo;s assume that $p$ lies in an $n$ dimensional vector space $V$ defined over the field $F$. Let $A$ and $B$ be two different sets of basis vectors containing the vectors $\set{\alpha_1, \ldots, \alpha_n}$ and $\set{\beta_1, \ldots, \beta_n}$ respectively.&#xA;Let $p_A$ represent the coordinates of $p$ with respect to the basis $A$.</description>
     </item>
-    
     <item>
       <title>Dimension of a proper subspace</title>
       <link>https://shrenikm.com/posts/2021-08-29-dimension-of-a-proper-subspace/</link>
-      <pubDate>Sun, 29 Aug 2021 10:20:38 -0700</pubDate>
-      <author>shrenik95@gmail.com (Shrenik M)</author>
+      <pubDate>Sun, 29 Aug 2021 10:20:38 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/posts/2021-08-29-dimension-of-a-proper-subspace/</guid>
-      <description>Let $V$ be a finite dimensional vector space over the field $F$, with $\dim{V} = n$.
-We also define the ordered basis for $V$ to be $B = \set{\beta_1, \ldots, \beta_n}$.
-Consider a subspace $U$ of the vector space $V \subseteq U$. Naturally, we have $\dim{U} \leq \dim{V}$.
-This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then be expressed as a linear combination of the basis vectors in $B$.</description>
+      <description>Let $V$ be a finite dimensional vector space over the field $F$, with $\dim{V} = n$.&#xA;We also define the ordered basis for $V$ to be $B = \set{\beta_1, \ldots, \beta_n}$.&#xA;Consider a subspace $U$ of the vector space $V \subseteq U$. Naturally, we have $\dim{U} \leq \dim{V}$.&#xA;This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then be expressed as a linear combination of the basis vectors in $B$.</description>
     </item>
-    
   </channel>
 </rss>
