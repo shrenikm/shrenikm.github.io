@@ -7,6 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
-    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster><atom:link href="https://shrenikm.com/categories/index.xml" rel="self" type="application/rss+xml" />
+    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
+    <atom:link href="https://shrenikm.com/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

@@ -7,7 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-  <title>Change of basis - </title>
+ 
+
+
+      <title>Change of basis - </title>
+
   <meta name="description" content="We look into the problem of expressing a vector $p$, whose coordinates relative to some basis is known, through the coordinates relative to a different basis.
 Let&rsquo;s assume that $p$ lies in an $n$ dimensional vector space $V$ defined over the field $F$. Let $A$ and $B$ be two different sets of basis vectors containing the vectors $\set{\alpha_1, \ldots, \alpha_n}$ and $\set{\beta_1, \ldots, \beta_n}$ respectively.
 Let $p_A$ represent the coordinates of $p$ with respect to the basis $A$.">
@@ -91,26 +95,25 @@ Let $p_A$ represent the coordinates of $p$ with respect to the basis $A$.">
   <meta name="twitter:title" content="Change of basis" />
   <meta name="twitter:description" content="We look into the problem of expressing a vector $p$, whose coordinates relative to some basis is known, through the coordinates relative to a different basis.
 Let&rsquo;s assume that $p$ lies in an …">
-  <meta name="twitter:card" content="summary" />
-  <meta name="generator" content="Hugo 0.88.1" />
-  <link rel="alternate" href="https://shrenikm.com/index.xml" type="application/rss+xml" title=""><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://shrenikm.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="generator" content="Hugo 0.121.1">
+  <link rel="alternate" href="https://shrenikm.com/index.xml" type="application/rss+xml" title="">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://shrenikm.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
   <link rel="stylesheet" href="https://shrenikm.com/css/highlight.min.css" /><link rel="stylesheet" href="https://shrenikm.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
 
-
-<script type="application/javascript">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E2P4DFRG5B"></script>
+<script>
 var doNotTrack = false;
 if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-206203136-1', 'auto');
-	
-	ga('send', 'pageview');
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-E2P4DFRG5B', { 'anonymize_ip': false });
 }
 </script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-
 
   </head>
   <body>
@@ -229,6 +232,7 @@ if (!doNotTrack) {
 
   <header class="header-section ">
     
+    
     <div class="intro-header no-img">
       <div class="container">
         <div class="row">
@@ -247,6 +251,7 @@ if (!doNotTrack) {
         </div>
       </div>
     </div>
+  
   </header>
 
 
@@ -280,14 +285,14 @@ p = \sum_{i=1}^{n}\sum_{j=1}^{n}a_ic_{ij}\beta_j = \sum_{i=1}^{n}b_i\beta_i
 Now what does $\sum_{i=1}^{n}a_i\alpha_{iB}$ give us? As each of the basis is represented relative to $B$, it should give us the vector $p$ relative to $B$, or $p_B$. The matrix transformation $p_B = Pp_A$ now becomes:</p>
 <p>\begin{equation}
 \begin{bmatrix}
-b_1\\<br>
-\vdots\\<br>
+b_1\\
+\vdots\\
 b_n
 \end{bmatrix} = \begin{bmatrix}
 \alpha_{1B} &amp; \ldots &amp; \alpha_{nB}
 \end{bmatrix}\begin{bmatrix}
-a_1\\<br>
-\vdots\\<br>
+a_1\\
+\vdots\\
 a_n
 \end{bmatrix}
 \end{equation}</p>
@@ -296,7 +301,7 @@ a_n
 p_A = P^{-1}p_B
 \end{equation}</p>
 <p>To summarize, given a coordinate of a vector $p_A$, to represent it relative to a different basis $B$, all we have to do is represent each of the basis vectors in the original basis $\alpha_i$ relative to the new basis and set these as columns of a matrix $P$. Multiplying $P$ and $p_A$ will give us the required $p_B$.</p>
-<p><br /></p>
+<br />
 <h3 id="example">Example</h3>
 <p>Let&rsquo;s go over a quick example showcasing this change of basis. Consider the two dimensional vector space $\mathbb{R}^2$ over the field of real numbers $\mathbb{R}$. Let the standard basis for this space be $A = \set{\alpha_1, \alpha_2} = \set{[1, 0], [0, 1]}$</p>
 <p>Consider a vector $p = [5, 0]$. Using the standard basis, we have $p_A = (5, 0)$.</p>
@@ -311,19 +316,19 @@ p_A = P^{-1}p_B
 <p>This is because $0\beta_1 + 1\beta_2 = [1, 0] = \alpha_1$ and $-1\beta_1 + 0\beta_2 = [0, 1] = \alpha_2$. We can construct the matrix P as:</p>
 <p>\begin{equation}
 P = \begin{bmatrix}
-0 &amp; -1 \\<br>
+0 &amp; -1 \\
 1 &amp; 0
 \end{bmatrix}
 \end{equation}</p>
 <p>\begin{equation}
 p_B = \begin{bmatrix}
-0 &amp; -1\\<br>
+0 &amp; -1\\
 1 &amp; 0
 \end{bmatrix}\begin{bmatrix}
-5\\<br>
+5\\
 0
 \end{bmatrix} = \begin{bmatrix}
-0\\<br>
+0\\
 5
 \end{bmatrix}
 \end{equation}</p>
@@ -331,10 +336,10 @@ p_B = \begin{bmatrix}
 <p>Rotating the basis by $-90^\circ$ in this case is equivalent to rotating the vector $p$ by $90^\circ$. We can construct the rotation matrix:</p>
 <p>\begin{equation}
 Rot(90^\circ) = \begin{bmatrix}
-\cos{90^\circ} &amp; -\sin{90^\circ}\\<br>
+\cos{90^\circ} &amp; -\sin{90^\circ}\\
 \sin{90^\circ} &amp; \cos{90^\circ}
 \end{bmatrix} = \begin{bmatrix}
-0 &amp; -1\\<br>
+0 &amp; -1\\
 1 &amp; 0
 \end{bmatrix}
 \end{equation}</p>
@@ -428,8 +433,8 @@ Rot(90^\circ) = \begin{bmatrix}
           
           <div class="disqus-comments">
             <div id="disqus_thread"></div>
-<script type="application/javascript">
-    var disqus_config = function () {
+<script>
+    window.disqus_config = function () {
     
     
     
@@ -460,12 +465,15 @@ Rot(90^\circ) = \begin{bmatrix}
       
 <footer>
   <div class="container">
+    
     <div class="row">
       <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <ul class="list-inline text-center footer-links">
           
               <li>
-                <a href="mailto:shrenik95@gmail.com" title="Email me">
+		
+		  <a href="mailto:shrenik95@gmail.com" title="Email me">
+		
                   <span class="fa-stack fa-lg">
                     <i class="fas fa-circle fa-stack-2x"></i>
                     <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
@@ -473,7 +481,9 @@ Rot(90^\circ) = \begin{bmatrix}
                 </a>
               </li>
               <li>
-                <a href="https://github.com/shrenikm" title="GitHub">
+		
+		  <a href="https://github.com/shrenikm" title="GitHub">
+		
                   <span class="fa-stack fa-lg">
                     <i class="fas fa-circle fa-stack-2x"></i>
                     <i class="fab fa-github fa-stack-1x fa-inverse"></i>
@@ -481,7 +491,9 @@ Rot(90^\circ) = \begin{bmatrix}
                 </a>
               </li>
               <li>
-                <a href="https://linkedin.com/in/shrenik95" title="LinkedIn">
+		
+		  <a href="https://linkedin.com/in/shrenik95" title="LinkedIn">
+		
                   <span class="fa-stack fa-lg">
                     <i class="fas fa-circle fa-stack-2x"></i>
                     <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
@@ -515,7 +527,7 @@ Rot(90^\circ) = \begin{bmatrix}
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="https://gohugo.io">Hugo v0.88.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          <a href="https://gohugo.io">Hugo v0.121.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>
@@ -543,7 +555,7 @@ Rot(90^\circ) = \begin{bmatrix}
     </script><script type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://shrenikm.com/js/main.js"></script>
 <script src="https://shrenikm.com/js/highlight.min.js"></script>
 <script> hljs.initHighlightingOnLoad(); </script>
-<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script> renderMathInElement(document.body); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://shrenikm.com/js/load-photoswipe.js"></script>
 
 
