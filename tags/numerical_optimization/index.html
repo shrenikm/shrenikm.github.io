@@ -10,7 +10,7 @@
  
 
 
-      <title>linear_algebra - </title>
+      <title>numerical_optimization - </title>
 
   <meta name="author" content="Shrenik M"/><script type="application/ld+json">
 {
@@ -33,12 +33,12 @@
 }
 </script>
 
-<meta property="og:title" content="linear_algebra" />
-<meta property="og:url" content="https://shrenikm.com/tags/linear_algebra/" />
+<meta property="og:title" content="numerical_optimization" />
+<meta property="og:url" content="https://shrenikm.com/tags/numerical_optimization/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="" />
 
-  <meta name="twitter:title" content="linear_algebra" />
+  <meta name="twitter:title" content="numerical_optimization" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="generator" content="Hugo 0.121.1">
   <link rel="alternate" href="https://shrenikm.com/index.xml" type="application/rss+xml" title="">
@@ -183,7 +183,7 @@ if (!doNotTrack) {
           <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
             <div class="tags-heading">
               
-                <h1>linear_algebra</h1>
+                <h1>numerical_optimization</h1>
               
               
                 <hr class="small">
@@ -207,8 +207,8 @@ if (!doNotTrack) {
         <div class="posts-list">
           
             <article class="post-preview">
-    <a href="https://shrenikm.com/posts/2021-09-20-injective-linear-transformations/">
-        <h2 class="post-title">Injective linear transformations</h2>
+    <a href="https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/">
+        <h2 class="post-title">Multi Vehicle Mixed Integer Programming</h2>
         
         
         
@@ -218,7 +218,7 @@ if (!doNotTrack) {
         <span class="post-meta">
   
   
-  <i class="fas fa-calendar"></i>&nbsp;Posted on September 20, 2021
+  <i class="fas fa-calendar"></i>&nbsp;Posted on December 24, 2023
   
   
   
@@ -230,104 +230,23 @@ if (!doNotTrack) {
     </p>
     <div class="post-entry">
         
-        In this post, we take a look at some characteristics of injective linear transformations. Let $T$ be a linear transformation from some vector space $V$ to another vector space $W$, both defined over a field $F$. $T$ being injective, means that no two vectors in $V$ can be mapped to the same vector in $W$. We have a one-to-one mapping between the vectors in $V$ and their images in $W$.
-        <a href="https://shrenikm.com/posts/2021-09-20-injective-linear-transformations/" class="post-read-more">[Read More]</a>
+        $\newcommand{\ith}{i^{th}}$ $\newcommand{\pth}{p^{th}}$ $\newcommand{\qth}{q^{th}}$ $\newcommand{\lth}{l^{th}}$ $\newcommand{\MR}{\mathbb{R}}$ $\newcommand{\xpi}{x_{pi}}$ $\newcommand{\ypi}{y_{pi}}$ $\newcommand{\xqi}{x_{qi}}$ $\newcommand{\yqi}{y_{qi}}$ $\newcommand{\xmin}{x_{min}}$ $\newcommand{\xmax}{x_{max}}$ $\newcommand{\ymin}{y_{min}}$ $\newcommand{\ymax}{y_{max}}$ $\newcommand{\xlmin}{x_{l,min}}$ $\newcommand{\xlmax}{x_{l,max}}$ $\newcommand{\ylmin}{y_{l,min}}$ $\newcommand{\ylmax}{y_{l,max}}$ $\newcommand{\xlimin}{x_{li,min}}$ $\newcommand{\xlimax}{x_{li,max}}$ $\newcommand{\ylimin}{y_{li,min}}$ $\newcommand{\ylimax}{y_{li,max}}$ $\newcommand{\cplx}{c_{pl,x}}$ $\newcommand{\cply}{c_{pl,y}}$ $\newcommand{\dpqx}{d_{pq,x}}$ $\newcommand{\dpqy}{d_{pq,y}}$ $\newcommand{\tpli}{t_{pli}}$ $\newcommand{\spi}{s_{pi}}$ $\newcommand{\spij}{s_{pij}}$ $\newcommand{\spinext}{s_{p,i+1}}$ $\newcommand{\spn}{s_{pN}}$ $\newcommand{\spf}{s_{pf}}$ $\newcommand{\wpi}{w_{pi}}$ $\newcommand{\wpij}{w_{pij}}$ $\newcommand{\wpn}{w_{pN}}$ $\newcommand{\upi}{u_{pi}}$ $\newcommand{\upik}{u_{pik}}$ $\newcommand{\vpi}{v_{pi}}$ $\newcommand{\vpik}{v_{pik}}$ $\newcommand{\Ap}{A_{p}}$ $\newcommand{\Bp}{B_{p}}$ $\newcommand{\qp}{q_{p}}$ $\newcommand{\rp}{r_{p}}$ $\newcommand{\pp}{p_{p}}$
+In this post, we take a look at this paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.
+My implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found here
+        <a href="https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/" class="post-read-more">[Read More]</a>
         
     </div>
 
     
     <div class="blog-tags">
         
-        <a href="https://shrenikm.com/tags/math/">math</a>&nbsp;
+        <a href="https://shrenikm.com/tags/robotics/">robotics</a>&nbsp;
         
-        <a href="https://shrenikm.com/tags/linear_algebra/">linear_algebra</a>&nbsp;
+        <a href="https://shrenikm.com/tags/motion_planning/">motion_planning</a>&nbsp;
         
-    </div>
-    
-
-</article>
-          
-            <article class="post-preview">
-    <a href="https://shrenikm.com/posts/2021-09-06-change-of-basis/">
-        <h2 class="post-title">Change of basis</h2>
+        <a href="https://shrenikm.com/tags/numerical_optimization/">numerical_optimization</a>&nbsp;
         
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on September 6, 2021
-  
-  
-  
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        We look into the problem of expressing a vector $p$, whose coordinates relative to some basis is known, through the coordinates relative to a different basis.
-Let&rsquo;s assume that $p$ lies in an $n$ dimensional vector space $V$ defined over the field $F$. Let $A$ and $B$ be two different sets of basis vectors containing the vectors $\set{\alpha_1, \ldots, \alpha_n}$ and $\set{\beta_1, \ldots, \beta_n}$ respectively.
-Let $p_A$ represent the coordinates of $p$ with respect to the basis $A$.
-        <a href="https://shrenikm.com/posts/2021-09-06-change-of-basis/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-        <a href="https://shrenikm.com/tags/math/">math</a>&nbsp;
-        
-        <a href="https://shrenikm.com/tags/linear_algebra/">linear_algebra</a>&nbsp;
-        
-    </div>
-    
-
-</article>
-          
-            <article class="post-preview">
-    <a href="https://shrenikm.com/posts/2021-08-29-dimension-of-a-proper-subspace/">
-        <h2 class="post-title">Dimension of a proper subspace</h2>
-        
-        
-        
-    </a>
-
-    <p class="post-meta">
-        <span class="post-meta">
-  
-  
-  <i class="fas fa-calendar"></i>&nbsp;Posted on August 29, 2021
-  
-  
-  
-  
-  
-</span>
-
-
-    </p>
-    <div class="post-entry">
-        
-        Let $V$ be a finite dimensional vector space over the field $F$, with $\dim{V} = n$.
-We also define the ordered basis for $V$ to be $B = \set{\beta_1, \ldots, \beta_n}$.
-Consider a subspace $U$ of the vector space $V \subseteq U$. Naturally, we have $\dim{U} \leq \dim{V}$.
-This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then be expressed as a linear combination of the basis vectors in $B$.
-        <a href="https://shrenikm.com/posts/2021-08-29-dimension-of-a-proper-subspace/" class="post-read-more">[Read More]</a>
-        
-    </div>
-
-    
-    <div class="blog-tags">
-        
-        <a href="https://shrenikm.com/tags/math/">math</a>&nbsp;
-        
-        <a href="https://shrenikm.com/tags/linear_algebra/">linear_algebra</a>&nbsp;
+        <a href="https://shrenikm.com/tags/trajectory_optimization/">trajectory_optimization</a>&nbsp;
         
     </div>
     
@@ -380,7 +299,7 @@ This is because for any $\alpha \in U$, we have $\alpha \in V$, which can then b
               </li>
           
           <li>
-            <a href="/tags/linear_algebra/index.xml" title="RSS">
+            <a href="/tags/numerical_optimization/index.xml" title="RSS">
               <span class="fa-stack fa-lg">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-rss fa-stack-1x fa-inverse"></i>

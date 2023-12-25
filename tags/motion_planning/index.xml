@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>motion_planning on </title>
+    <link>https://shrenikm.com/tags/motion_planning/</link>
+    <description>Recent content in motion_planning on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
+    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
+    <lastBuildDate>Sun, 24 Dec 2023 18:54:32 -0800</lastBuildDate>
+    <atom:link href="https://shrenikm.com/tags/motion_planning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multi Vehicle Mixed Integer Programming</title>
+      <link>https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/</link>
+      <pubDate>Sun, 24 Dec 2023 18:54:32 -0800</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/</guid>
+      <description>$\newcommand{\ith}{i^{th}}$ $\newcommand{\pth}{p^{th}}$ $\newcommand{\qth}{q^{th}}$ $\newcommand{\lth}{l^{th}}$ $\newcommand{\MR}{\mathbb{R}}$ $\newcommand{\xpi}{x_{pi}}$ $\newcommand{\ypi}{y_{pi}}$ $\newcommand{\xqi}{x_{qi}}$ $\newcommand{\yqi}{y_{qi}}$ $\newcommand{\xmin}{x_{min}}$ $\newcommand{\xmax}{x_{max}}$ $\newcommand{\ymin}{y_{min}}$ $\newcommand{\ymax}{y_{max}}$ $\newcommand{\xlmin}{x_{l,min}}$ $\newcommand{\xlmax}{x_{l,max}}$ $\newcommand{\ylmin}{y_{l,min}}$ $\newcommand{\ylmax}{y_{l,max}}$ $\newcommand{\xlimin}{x_{li,min}}$ $\newcommand{\xlimax}{x_{li,max}}$ $\newcommand{\ylimin}{y_{li,min}}$ $\newcommand{\ylimax}{y_{li,max}}$ $\newcommand{\cplx}{c_{pl,x}}$ $\newcommand{\cply}{c_{pl,y}}$ $\newcommand{\dpqx}{d_{pq,x}}$ $\newcommand{\dpqy}{d_{pq,y}}$ $\newcommand{\tpli}{t_{pli}}$ $\newcommand{\spi}{s_{pi}}$ $\newcommand{\spij}{s_{pij}}$ $\newcommand{\spinext}{s_{p,i+1}}$ $\newcommand{\spn}{s_{pN}}$ $\newcommand{\spf}{s_{pf}}$ $\newcommand{\wpi}{w_{pi}}$ $\newcommand{\wpij}{w_{pij}}$ $\newcommand{\wpn}{w_{pN}}$ $\newcommand{\upi}{u_{pi}}$ $\newcommand{\upik}{u_{pik}}$ $\newcommand{\vpi}{v_{pi}}$ $\newcommand{\vpik}{v_{pik}}$ $\newcommand{\Ap}{A_{p}}$ $\newcommand{\Bp}{B_{p}}$ $\newcommand{\qp}{q_{p}}$ $\newcommand{\rp}{r_{p}}$ $\newcommand{\pp}{p_{p}}$&#xA;In this post, we take a look at this paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.&#xA;My implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found here</description>
+    </item>
+  </channel>
+</rss>
