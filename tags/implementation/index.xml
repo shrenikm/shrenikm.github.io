@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>implementation on </title>
+    <link>https://shrenikm.com/tags/implementation/</link>
+    <description>Recent content in implementation on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 06 Jan 2024 11:11:12 -0800</lastBuildDate>
+    <atom:link href="https://shrenikm.com/tags/implementation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding TrajOpt</title>
+      <link>https://shrenikm.com/posts/2024-01-06-understanding-trajopt/</link>
+      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate>
+      <guid>https://shrenikm.com/posts/2024-01-06-understanding-trajopt/</guid>
+      <description>$\newcommand{\R}{\mathbb{R}}$ $\newcommand{\Rn}{\mathbb{R}^n}$ $\newcommand{\Rm}{\mathbb{R}^n}$ $\newcommand{\Rnn}{\mathbb{R}^{n \times n}}$ $\newcommand{\Rmn}{\mathbb{R}^{m \times n}}$ $\newcommand{\half}{\frac{1}{2}}$ $\newcommand{\vline}{\Bigr|}$ $\newcommand{\st}{\text{s.t.}}$ $\newcommand{\x}{\mathrm{x}}$ $\newcommand{\e}{\mathrm{e}}$&#xA;$\newcommand{\nineq}{n_{ineq}}$ $\newcommand{\neq}{n_{eq}}$ $\newcommand{\Rnineqn}{\mathbb{R}^{\nineq \times n}}$ $\newcommand{\Rneqn}{\mathbb{R}^{\neq \times n}}$ $\newcommand{\Rnnnineq}{\mathbb{R}^{n \times n \times \nineq}}$ $\newcommand{\Rnnneq}{\mathbb{R}^{n \times n \times \neq}}$ $\newcommand{\xst}{{\mathrm{x}^\ast}}$ $\newcommand{\Tgixst}{\Omega_{g, i}(\xst)}$ $\newcommand{\Tgist}{{\Omega_{g, i}^\ast}}$ $\newcommand{\Thixst}{{\Omega_{h, i}(\xst)}}$ $\newcommand{\Thist}{{\Omega_{h, i}^\ast}}$ $\newcommand{\fx}{f(\x)}$ $\newcommand{\fc}{\tilde{f}}$ $\newcommand{\fcx}{\tilde{f}(\x)}$ $\newcommand{\gx}{g(\x)}$ $\newcommand{\gc}{\tilde{g}}$ $\newcommand{\gcst}{{\tilde{g}^\ast}}$ $\newcommand{\gcx}{\tilde{g}(\x)}$ $\newcommand{\gxi}{g_i(\x)}$ $\newcommand{\gci}{\tilde{g}_i}$ $\newcommand{\gcxi}{\tilde{g}_i(\x)}$ $\newcommand{\hx}{h(\x)}$ $\newcommand{\hc}{\tilde{h}}$ $\newcommand{\hcst}{{\tilde{h}^\ast}}$ $\newcommand{\hcx}{\tilde{h}(\x)}$ $\newcommand{\hxi}{h_i(\x)}$ $\newcommand{\hci}{\tilde{h}_i}$ $\newcommand{\hcxi}{\tilde{h}_i(\x)}$ $\newcommand{\tp}{\tau^{+}}$ $\newcommand{\tm}{\tau^{-}}$ $\newcommand{\wfxst}{\omega_f(\xst)}$ $\newcommand{\wfst}{\omega_f^\ast}$ $\newcommand{\Wfxst}{W_f(\xst)}$ $\newcommand{\Wfst}{{W_f^\ast}}$ $\newcommand{\Wgxst}{W_g(\xst)}$ $\newcommand{\Wgst}{{W_g^\ast}}$ $\newcommand{\Whxst}{W_h(\xst)}$ $\newcommand{\Whst}{{W_h^\ast}}$ $\newcommand{\Tgxst}{\Omega_g(\xst)}$ $\newcommand{\Tgst}{{\Omega_g^\ast}}$ $\newcommand{\Thxst}{{\Omega_h(\xst)}}$ $\newcommand{\Thst}{{\Omega_h^\ast}}$ $\newcommand{\tg}{t_g}$ $\newcommand{\sh}{s_h}$ $\newcommand{\th}{t_h}$ $\newcommand{\Dx}{\Delta \x}$</description>
+    </item>
+    <item>
+      <title>Multi Vehicle Mixed Integer Programming</title>
+      <link>https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/</link>
+      <pubDate>Sun, 24 Dec 2023 18:54:32 -0800</pubDate>
+      <guid>https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/</guid>
+      <description>$\newcommand{\ith}{i^{th}}$ $\newcommand{\pth}{p^{th}}$ $\newcommand{\qth}{q^{th}}$ $\newcommand{\lth}{l^{th}}$ $\newcommand{\MR}{\mathbb{R}}$ $\newcommand{\xpi}{x_{pi}}$ $\newcommand{\ypi}{y_{pi}}$ $\newcommand{\xqi}{x_{qi}}$ $\newcommand{\yqi}{y_{qi}}$ $\newcommand{\xmin}{x_{min}}$ $\newcommand{\xmax}{x_{max}}$ $\newcommand{\ymin}{y_{min}}$ $\newcommand{\ymax}{y_{max}}$ $\newcommand{\xlmin}{x_{l,min}}$ $\newcommand{\xlmax}{x_{l,max}}$ $\newcommand{\ylmin}{y_{l,min}}$ $\newcommand{\ylmax}{y_{l,max}}$ $\newcommand{\xlimin}{x_{li,min}}$ $\newcommand{\xlimax}{x_{li,max}}$ $\newcommand{\ylimin}{y_{li,min}}$ $\newcommand{\ylimax}{y_{li,max}}$ $\newcommand{\cplx}{c_{pl,x}}$ $\newcommand{\cply}{c_{pl,y}}$ $\newcommand{\dpqx}{d_{pq,x}}$ $\newcommand{\dpqy}{d_{pq,y}}$ $\newcommand{\tpli}{t_{pli}}$ $\newcommand{\spi}{s_{pi}}$ $\newcommand{\spij}{s_{pij}}$ $\newcommand{\spinext}{s_{p,i+1}}$ $\newcommand{\spn}{s_{pN}}$ $\newcommand{\spf}{s_{pf}}$ $\newcommand{\wpi}{w_{pi}}$ $\newcommand{\wpij}{w_{pij}}$ $\newcommand{\wpn}{w_{pN}}$ $\newcommand{\upi}{u_{pi}}$ $\newcommand{\upik}{u_{pik}}$ $\newcommand{\vpi}{v_{pi}}$ $\newcommand{\vpik}{v_{pik}}$ $\newcommand{\Ap}{A_{p}}$ $\newcommand{\Bp}{B_{p}}$ $\newcommand{\qp}{q_{p}}$ $\newcommand{\rp}{r_{p}}$ $\newcommand{\pp}{p_{p}}$&#xA;In this post, we take a look at this $[1]$ paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.&#xA;My implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found here</description>
+    </item>
+  </channel>
+</rss>
