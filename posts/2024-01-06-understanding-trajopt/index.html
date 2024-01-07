@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Understanding TrajOpt - </title>
+
+  <meta name="description" content="$\newcommand{\R}{\mathbb{R}}$ $\newcommand{\Rn}{\mathbb{R}^n}$ $\newcommand{\Rm}{\mathbb{R}^n}$ $\newcommand{\Rnn}{\mathbb{R}^{n \times n}}$ $\newcommand{\Rmn}{\mathbb{R}^{m \times n}}$ $\newcommand{\half}{\frac{1}{2}}$ $\newcommand{\vline}{\Bigr|}$ $\newcommand{\st}{\text{s.t.}}$ $\newcommand{\x}{\mathrm{x}}$ $\newcommand{\e}{\mathrm{e}}$
+$\newcommand{\nineq}{n_{ineq}}$ $\newcommand{\neq}{n_{eq}}$ $\newcommand{\Rnineqn}{\mathbb{R}^{\nineq \times n}}$ $\newcommand{\Rneqn}{\mathbb{R}^{\neq \times n}}$ $\newcommand{\Rnnnineq}{\mathbb{R}^{n \times n \times \nineq}}$ $\newcommand{\Rnnneq}{\mathbb{R}^{n \times n \times \neq}}$ $\newcommand{\xst}{{\mathrm{x}^\ast}}$ $\newcommand{\Tgixst}{\Omega_{g, i}(\xst)}$ $\newcommand{\Tgist}{{\Omega_{g, i}^\ast}}$ $\newcommand{\Thixst}{{\Omega_{h, i}(\xst)}}$ $\newcommand{\Thist}{{\Omega_{h, i}^\ast}}$ $\newcommand{\fx}{f(\x)}$ $\newcommand{\fc}{\tilde{f}}$ $\newcommand{\fcx}{\tilde{f}(\x)}$ $\newcommand{\gx}{g(\x)}$ $\newcommand{\gc}{\tilde{g}}$ $\newcommand{\gcst}{{\tilde{g}^\ast}}$ $\newcommand{\gcx}{\tilde{g}(\x)}$ $\newcommand{\gxi}{g_i(\x)}$ $\newcommand{\gci}{\tilde{g}_i}$ $\newcommand{\gcxi}{\tilde{g}_i(\x)}$ $\newcommand{\hx}{h(\x)}$ $\newcommand{\hc}{\tilde{h}}$ $\newcommand{\hcst}{{\tilde{h}^\ast}}$ $\newcommand{\hcx}{\tilde{h}(\x)}$ $\newcommand{\hxi}{h_i(\x)}$ $\newcommand{\hci}{\tilde{h}_i}$ $\newcommand{\hcxi}{\tilde{h}_i(\x)}$ $\newcommand{\tp}{\tau^{&#43;}}$ $\newcommand{\tm}{\tau^{-}}$ $\newcommand{\wfxst}{\omega_f(\xst)}$ $\newcommand{\wfst}{\omega_f^\ast}$ $\newcommand{\Wfxst}{W_f(\xst)}$ $\newcommand{\Wfst}{{W_f^\ast}}$ $\newcommand{\Wgxst}{W_g(\xst)}$ $\newcommand{\Wgst}{{W_g^\ast}}$ $\newcommand{\Whxst}{W_h(\xst)}$ $\newcommand{\Whst}{{W_h^\ast}}$ $\newcommand{\Tgxst}{\Omega_g(\xst)}$ $\newcommand{\Tgst}{{\Omega_g^\ast}}$ $\newcommand{\Thxst}{{\Omega_h(\xst)}}$ $\newcommand{\Thst}{{\Omega_h^\ast}}$ $\newcommand{\tg}{t_g}$ $\newcommand{\sh}{s_h}$ $\newcommand{\th}{t_h}$ $\newcommand{\Dx}{\Delta \x}$">
+  <meta name="author" content="Shrenik M"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "",
+    
+    "url": "https:\/\/shrenikm.com"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/shrenikm.com"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/shrenikm.com",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/shrenikm.com\/posts\/2024-01-06-understanding-trajopt\/",
+          "name": "Understanding traj opt"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Shrenik M"
+  },
+  "headline": "Understanding TrajOpt",
+  "description" : "$\\newcommand{\\R}{\\mathbb{R}}$ $\\newcommand{\\Rn}{\\mathbb{R}^n}$ $\\newcommand{\\Rm}{\\mathbb{R}^n}$ $\\newcommand{\\Rnn}{\\mathbb{R}^{n \\times n}}$ $\\newcommand{\\Rmn}{\\mathbb{R}^{m \\times n}}$ $\\newcommand{\\half}{\\frac{1}{2}}$ $\\newcommand{\\vline}{\\Bigr|}$ $\\newcommand{\\st}{\\text{s.t.}}$ $\\newcommand{\\x}{\\mathrm{x}}$ $\\newcommand{\\e}{\\mathrm{e}}$\n$\\newcommand{\\nineq}{n_{ineq}}$ $\\newcommand{\\neq}{n_{eq}}$ $\\newcommand{\\Rnineqn}{\\mathbb{R}^{\\nineq \\times n}}$ $\\newcommand{\\Rneqn}{\\mathbb{R}^{\\neq \\times n}}$ $\\newcommand{\\Rnnnineq}{\\mathbb{R}^{n \\times n \\times \\nineq}}$ $\\newcommand{\\Rnnneq}{\\mathbb{R}^{n \\times n \\times \\neq}}$ $\\newcommand{\\xst}{{\\mathrm{x}^\\ast}}$ $\\newcommand{\\Tgixst}{\\Omega_{g, i}(\\xst)}$ $\\newcommand{\\Tgist}{{\\Omega_{g, i}^\\ast}}$ $\\newcommand{\\Thixst}{{\\Omega_{h, i}(\\xst)}}$ $\\newcommand{\\Thist}{{\\Omega_{h, i}^\\ast}}$ $\\newcommand{\\fx}{f(\\x)}$ $\\newcommand{\\fc}{\\tilde{f}}$ $\\newcommand{\\fcx}{\\tilde{f}(\\x)}$ $\\newcommand{\\gx}{g(\\x)}$ $\\newcommand{\\gc}{\\tilde{g}}$ $\\newcommand{\\gcst}{{\\tilde{g}^\\ast}}$ $\\newcommand{\\gcx}{\\tilde{g}(\\x)}$ $\\newcommand{\\gxi}{g_i(\\x)}$ $\\newcommand{\\gci}{\\tilde{g}_i}$ $\\newcommand{\\gcxi}{\\tilde{g}_i(\\x)}$ $\\newcommand{\\hx}{h(\\x)}$ $\\newcommand{\\hc}{\\tilde{h}}$ $\\newcommand{\\hcst}{{\\tilde{h}^\\ast}}$ $\\newcommand{\\hcx}{\\tilde{h}(\\x)}$ $\\newcommand{\\hxi}{h_i(\\x)}$ $\\newcommand{\\hci}{\\tilde{h}_i}$ $\\newcommand{\\hcxi}{\\tilde{h}_i(\\x)}$ $\\newcommand{\\tp}{\\tau^{\u002b}}$ $\\newcommand{\\tm}{\\tau^{-}}$ $\\newcommand{\\wfxst}{\\omega_f(\\xst)}$ $\\newcommand{\\wfst}{\\omega_f^\\ast}$ $\\newcommand{\\Wfxst}{W_f(\\xst)}$ $\\newcommand{\\Wfst}{{W_f^\\ast}}$ $\\newcommand{\\Wgxst}{W_g(\\xst)}$ $\\newcommand{\\Wgst}{{W_g^\\ast}}$ $\\newcommand{\\Whxst}{W_h(\\xst)}$ $\\newcommand{\\Whst}{{W_h^\\ast}}$ $\\newcommand{\\Tgxst}{\\Omega_g(\\xst)}$ $\\newcommand{\\Tgst}{{\\Omega_g^\\ast}}$ $\\newcommand{\\Thxst}{{\\Omega_h(\\xst)}}$ $\\newcommand{\\Thst}{{\\Omega_h^\\ast}}$ $\\newcommand{\\tg}{t_g}$ $\\newcommand{\\sh}{s_h}$ $\\newcommand{\\th}{t_h}$ $\\newcommand{\\Dx}{\\Delta \\x}$",
+  "inLanguage" : "en",
+  "wordCount":  5352 ,
+  "datePublished" : "2024-01-06T11:11:12",
+  "dateModified" : "2024-01-06T11:11:12",
+  "image" : "https:\/\/shrenikm.com",
+  "keywords" : [ "control, implementation, motion_planning, numerical_optimization, robotics, trajectory_optimization" ],
+  "mainEntityOfPage" : "https:\/\/shrenikm.com\/posts\/2024-01-06-understanding-trajopt\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/shrenikm.com",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/shrenikm.com",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="Understanding TrajOpt" />
+<meta property="og:description" content="$\newcommand{\R}{\mathbb{R}}$ $\newcommand{\Rn}{\mathbb{R}^n}$ $\newcommand{\Rm}{\mathbb{R}^n}$ $\newcommand{\Rnn}{\mathbb{R}^{n \times n}}$ $\newcommand{\Rmn}{\mathbb{R}^{m \times n}}$ $\newcommand{\half}{\frac{1}{2}}$ $\newcommand{\vline}{\Bigr|}$ $\newcommand{\st}{\text{s.t.}}$ $\newcommand{\x}{\mathrm{x}}$ $\newcommand{\e}{\mathrm{e}}$
+$\newcommand{\nineq}{n_{ineq}}$ $\newcommand{\neq}{n_{eq}}$ $\newcommand{\Rnineqn}{\mathbb{R}^{\nineq \times n}}$ $\newcommand{\Rneqn}{\mathbb{R}^{\neq \times n}}$ $\newcommand{\Rnnnineq}{\mathbb{R}^{n \times n \times \nineq}}$ $\newcommand{\Rnnneq}{\mathbb{R}^{n \times n \times \neq}}$ $\newcommand{\xst}{{\mathrm{x}^\ast}}$ $\newcommand{\Tgixst}{\Omega_{g, i}(\xst)}$ $\newcommand{\Tgist}{{\Omega_{g, i}^\ast}}$ $\newcommand{\Thixst}{{\Omega_{h, i}(\xst)}}$ $\newcommand{\Thist}{{\Omega_{h, i}^\ast}}$ $\newcommand{\fx}{f(\x)}$ $\newcommand{\fc}{\tilde{f}}$ $\newcommand{\fcx}{\tilde{f}(\x)}$ $\newcommand{\gx}{g(\x)}$ $\newcommand{\gc}{\tilde{g}}$ $\newcommand{\gcst}{{\tilde{g}^\ast}}$ $\newcommand{\gcx}{\tilde{g}(\x)}$ $\newcommand{\gxi}{g_i(\x)}$ $\newcommand{\gci}{\tilde{g}_i}$ $\newcommand{\gcxi}{\tilde{g}_i(\x)}$ $\newcommand{\hx}{h(\x)}$ $\newcommand{\hc}{\tilde{h}}$ $\newcommand{\hcst}{{\tilde{h}^\ast}}$ $\newcommand{\hcx}{\tilde{h}(\x)}$ $\newcommand{\hxi}{h_i(\x)}$ $\newcommand{\hci}{\tilde{h}_i}$ $\newcommand{\hcxi}{\tilde{h}_i(\x)}$ $\newcommand{\tp}{\tau^{&#43;}}$ $\newcommand{\tm}{\tau^{-}}$ $\newcommand{\wfxst}{\omega_f(\xst)}$ $\newcommand{\wfst}{\omega_f^\ast}$ $\newcommand{\Wfxst}{W_f(\xst)}$ $\newcommand{\Wfst}{{W_f^\ast}}$ $\newcommand{\Wgxst}{W_g(\xst)}$ $\newcommand{\Wgst}{{W_g^\ast}}$ $\newcommand{\Whxst}{W_h(\xst)}$ $\newcommand{\Whst}{{W_h^\ast}}$ $\newcommand{\Tgxst}{\Omega_g(\xst)}$ $\newcommand{\Tgst}{{\Omega_g^\ast}}$ $\newcommand{\Thxst}{{\Omega_h(\xst)}}$ $\newcommand{\Thst}{{\Omega_h^\ast}}$ $\newcommand{\tg}{t_g}$ $\newcommand{\sh}{s_h}$ $\newcommand{\th}{t_h}$ $\newcommand{\Dx}{\Delta \x}$">
+<meta property="og:url" content="https://shrenikm.com/posts/2024-01-06-understanding-trajopt/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="" />
+
+  <meta name="twitter:title" content="Understanding TrajOpt" />
+  <meta name="twitter:description" content="$\newcommand{\R}{\mathbb{R}}$ $\newcommand{\Rn}{\mathbb{R}^n}$ $\newcommand{\Rm}{\mathbb{R}^n}$ $\newcommand{\Rnn}{\mathbb{R}^{n \times n}}$ $\newcommand{\Rmn}{\mathbb{R}^{m \times n}}$ …">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="generator" content="Hugo 0.121.2">
+  <link rel="alternate" href="https://shrenikm.com/index.xml" type="application/rss+xml" title="">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://shrenikm.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://shrenikm.com/css/highlight.min.css" /><link rel="stylesheet" href="https://shrenikm.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E2P4DFRG5B"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-E2P4DFRG5B', { 'anonymize_ip': false });
+}
+</script>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://shrenikm.com"></a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Posts" href="/">Posts</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Projects" href="/pages/projects/">Projects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/pages/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Understanding TrajOpt</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <!-- common commands -->
+<p>$\newcommand{\R}{\mathbb{R}}$
+$\newcommand{\Rn}{\mathbb{R}^n}$
+$\newcommand{\Rm}{\mathbb{R}^n}$
+$\newcommand{\Rnn}{\mathbb{R}^{n \times n}}$
+$\newcommand{\Rmn}{\mathbb{R}^{m \times n}}$
+$\newcommand{\half}{\frac{1}{2}}$
+$\newcommand{\vline}{\Bigr|}$
+$\newcommand{\st}{\text{s.t.}}$
+$\newcommand{\x}{\mathrm{x}}$
+$\newcommand{\e}{\mathrm{e}}$</p>
+<!-- Post specific -->
+<p>$\newcommand{\nineq}{n_{ineq}}$
+$\newcommand{\neq}{n_{eq}}$
+$\newcommand{\Rnineqn}{\mathbb{R}^{\nineq \times n}}$
+$\newcommand{\Rneqn}{\mathbb{R}^{\neq \times n}}$
+$\newcommand{\Rnnnineq}{\mathbb{R}^{n \times n \times \nineq}}$
+$\newcommand{\Rnnneq}{\mathbb{R}^{n \times n \times \neq}}$
+$\newcommand{\xst}{{\mathrm{x}^\ast}}$
+$\newcommand{\Tgixst}{\Omega_{g, i}(\xst)}$
+$\newcommand{\Tgist}{{\Omega_{g, i}^\ast}}$
+$\newcommand{\Thixst}{{\Omega_{h, i}(\xst)}}$
+$\newcommand{\Thist}{{\Omega_{h, i}^\ast}}$
+$\newcommand{\fx}{f(\x)}$
+$\newcommand{\fc}{\tilde{f}}$
+$\newcommand{\fcx}{\tilde{f}(\x)}$
+$\newcommand{\gx}{g(\x)}$
+$\newcommand{\gc}{\tilde{g}}$
+$\newcommand{\gcst}{{\tilde{g}^\ast}}$
+$\newcommand{\gcx}{\tilde{g}(\x)}$
+$\newcommand{\gxi}{g_i(\x)}$
+$\newcommand{\gci}{\tilde{g}_i}$
+$\newcommand{\gcxi}{\tilde{g}_i(\x)}$
+$\newcommand{\hx}{h(\x)}$
+$\newcommand{\hc}{\tilde{h}}$
+$\newcommand{\hcst}{{\tilde{h}^\ast}}$
+$\newcommand{\hcx}{\tilde{h}(\x)}$
+$\newcommand{\hxi}{h_i(\x)}$
+$\newcommand{\hci}{\tilde{h}_i}$
+$\newcommand{\hcxi}{\tilde{h}_i(\x)}$
+$\newcommand{\tp}{\tau^{+}}$
+$\newcommand{\tm}{\tau^{-}}$
+$\newcommand{\wfxst}{\omega_f(\xst)}$
+$\newcommand{\wfst}{\omega_f^\ast}$
+$\newcommand{\Wfxst}{W_f(\xst)}$
+$\newcommand{\Wfst}{{W_f^\ast}}$
+$\newcommand{\Wgxst}{W_g(\xst)}$
+$\newcommand{\Wgst}{{W_g^\ast}}$
+$\newcommand{\Whxst}{W_h(\xst)}$
+$\newcommand{\Whst}{{W_h^\ast}}$
+$\newcommand{\Tgxst}{\Omega_g(\xst)}$
+$\newcommand{\Tgst}{{\Omega_g^\ast}}$
+$\newcommand{\Thxst}{{\Omega_h(\xst)}}$
+$\newcommand{\Thst}{{\Omega_h^\ast}}$
+$\newcommand{\tg}{t_g}$
+$\newcommand{\sh}{s_h}$
+$\newcommand{\th}{t_h}$
+$\newcommand{\Dx}{\Delta \x}$</p>
+<!-- Post 6 -->
+<p>TrajOpt <a href="#references">$[1]$</a> is an optimization based approach for motion planning. More specifically, it uses a sequential convex optimization procedure along with a formulation of collision constraints to find locally optimal planning trajectories, even for robotic systems that have a large number of degrees of freedom.</p>
+<p>This post will go into the details of the optimization part, and give an outline of how it can be implemented. My implementation can be found <a href="https://github.com/shrenikm/Atium/tree/main/algorithms/trajopt">here</a></p>
+<h2 id="theory">Theory</h2>
+<p>Motion planning problems can usually be fully represented as a non-linear, non-convex optimization problem of the form:</p>
+<p>\begin{equation}
+\begin{aligned}
+\min f(\x)\\
+\st \quad g_i(\x) \le 0, \ \ i = 1, 2, \ldots , \nineq\\
+h_i(\x) = 0, \quad i = 1, 2, \ldots , \nineq\\
+\end{aligned}
+\end{equation}</p>
+<p>$f$, $g_i$ and $h_i$ are scalar non-convex functions with $\x \in \Rn$ being the vector of variables to optimize. For trajectory optimization algorithms, $\x$ consists of the sequence of control inputs and/or sequence of states (depending on the method used &ndash; direct, indirect, etc.) that can then be optimized to find the optimal robot trajectory.</p>
+<p>Unfortunately, such optimization problems are usually NP-hard and we&rsquo;re almost never guaranteed to find the global optima. Coupled with the fact that for motion planning, we usually require these problems to be solved quickly, most methods to solve such problems tend to gravitate towards using local optimization methods. One such popular method is Sequential Convex Programming (SCP).</p>
+<h3 id="sequential-convex-programming">Sequential Convex Programming</h3>
+<p>The main idea here is to convexify the non-convex problem at the current iterate, and take steps towards the minima found at each convex optimization solution.</p>
+<p>\begin{equation}
+\begin{aligned}
+\min \fcx \\
+\st \quad \gcxi \le 0, \ \ i = 1, 2, \ldots , \nineq\\
+\hcxi = 0, \ \ i = 1, 2, \ldots , \nineq\\
+\end{aligned}
+\end{equation}</p>
+<p>Here, $\fc$, $\gci$ and $\hci$ are the convexified functions at the current value of $\x$ (denoted by $\x^\ast$). The SCP procedure looks something like this:</p>
+<blockquote>
+<p><strong>for</strong> iteration = 1, 2, $\ldots$ <strong>do</strong><br>
+$\quad$ $\fc$, $\gc$, $\hc$ = ConvexifyProblem($f$, $g$, $h$) around $\x^\ast$<br>
+$\quad$ $\x^\ast \leftarrow \text{argmin}_{\x} \fcx \ \st \  \gcx \le 0, \ \hcx = 0$</p>
+</blockquote>
+<p>Fairly straightforward, but there is still something missing. When we convexify the problem, we make a local approximation of the (potentially highly) non-convex function. We rely on the fact that this local approximation is accurate enough and can help drive us to a minima upon repeating the procedure. But irrespective of what approximation method we use, as we move away from the current $\xst$ around which the functions are convexified, it will start deviating from true values of the function.</p>
+<p>What this means is that when we find the $\xst$ that minimizes a particular convexified problem, the actual value of $\x$ that minimizes the problem could be far away from $\xst$. This can lead to the algorithm getting to an updated value of $\x$ that is optimal according to the current convexified problem, but is not optimal according to the true non-convex problem.</p>
+<p>To avoid this, SCP methods usually employ an additional trust region constraint, where we restrict the optimal value of $\x$ for a convexified step to be within a certain distance of $\xst$. The distance metric is some sort of norm (usually the $l^2$-norm) in most cases. If we define the trust region size as $s$, we now get:</p>
+<blockquote>
+<p><strong>for</strong> iteration = 1, 2, $\ldots$ <strong>do</strong><br>
+$\quad$ $\fc$, $\gc$, $\hc$ = ConvexifyProblem($f$, $g$, $h$) around $\x^\ast$<br>
+$\quad$ $\x^\ast \leftarrow \text{argmin}_{\x} \fcx \ \st \  \gcx \le 0, \ \hcx = 0, \ \lVert \x - \x^\ast \rVert_2 \le s$</p>
+</blockquote>
+<p>Instead of the $l^2$ ball constraint, we could also use an ellipsoidal constraint of the form $(\x - \x^\ast)^TP(\x - \x^\ast) \le s$ where $P \succ 0$.</p>
+<h3 id="dynamic-trust-region-size">Dynamic Trust Region Size</h3>
+<p>One strategy is to keep the trust region size small and fixed. This would guarantee that we&rsquo;d be able to solve any convexified step and reliably get to some sort of local minima. But there are merits to using larger values of trust region size as well.</p>
+<p>Consider a convexified step, where the convexified functions are almost an exact representation of the actual non-convex functions. In such a scenario, we could potentially take a large step while minimizing $\x$. Let&rsquo;s say that in this situation a trust region size of $s = 1$ can get us to a new value of $\x$ that also minimizes the original non-convex problem. Compared to us using a smaller $s$ (Like around $1\e{-2}$, $1\e{-3}$), we could get to a similar $\x$ with much fewer iterations.</p>
+<p>Dynamically varying the trust region size helps us get the best of both worlds. We can start with using a small trust region size and can progressively increase the size depending on how confident we are with the current convexified approximation. If we think that the convexified approximation is an accurate representation of the original problem around a larger region of $\x$, we can increase the trust region size and vice versa.</p>
+<p>How do we know if the current problem approximation is a good one? We can use the new optimized value of $\x$ from the convexified problem and check how much it improves the original cost function as compared to the convexified cost function.</p>
+<blockquote>
+<p>TrueImprove = $f(\x) - f(\xst)$<br>
+ModelImprove = $\fcx - \fc(\xst)$</p>
+</blockquote>
+<p>As we&rsquo;re minimizing the cost function, we expect the cost at the newly minimized value at $\xst$ to be lower, and so the difference tells us how much of an improvement there is.</p>
+<p>As we&rsquo;re minimizing the convexified cost function, it is a given that <strong><em>ModelImprove &gt;= TrueImprove</em></strong>, but by computing the ratio of these terms, we can get an estimate of how much the original cost function improves upon solving the convexified problem.</p>
+<blockquote>
+<p>IsImprovement<br>
+$\quad$ TrueImprove = $f(\x) - f(\xst)$<br>
+$\quad$ ModelImprove = $\fcx - \fc(\xst)$<br>
+$\quad$ <strong>return</strong> TrueImprove/ModelImprove &gt; c</p>
+</blockquote>
+<p>Let&rsquo;s consider two extreme cases:</p>
+<ol>
+<li>The convexified problem is an exact representation of the non-convex problem (Maybe the original problem was even convex). In this case, $\xst$ will improve the original problem by the same amount as it improves the convexified problem. The ratio is 1 in this case.</li>
+<li>The convexified problem is an extremely poor representation of the non-convex problem. In this case $\xst$ will not improve the original problem by nearly as much. The ratio is close to 0 in this case.</li>
+</ol>
+<p>We define some $c \le 1$ (Referred to as step acceptance parameter in the paper) and make an assumption that if the ratio is $&gt; c$, the approximation is good and we can increase the trust region size. If not, we decrease the trust region size and don&rsquo;t use the new $\xst$.</p>
+<p>This now brings us to something similar to the trust region loop defined in the paper (more details on this later):</p>
+<blockquote>
+<p>TrustRegionLoop<br>
+<strong>for</strong> TrustRegionIteration = 1, 2, $\ldots$ <strong>do</strong><br>
+$\quad$ $\x^\ast \leftarrow \text{argmin}_{\x} \fcx \ \st \  \gcx \le 0, \ \hcx = 0, \ \lVert \x - \x^\ast \rVert_2 \le s$<br>
+$\quad$ <strong>if</strong> IsImprovement <strong>then</strong><br>
+$\qquad$ $s \leftarrow \tp \ast s$<br>
+$\qquad$ <strong>break</strong><br>
+$\quad$ <strong>else</strong><br>
+$\qquad$ $s \leftarrow \tm \ast s$<br>
+$\quad$ <strong>if</strong> $s &lt; xtol$ <strong>then</strong><br>
+$\qquad$ <strong>break</strong></p>
+</blockquote>
+<p>Where we define $\tp \ge 1$ and $\tm \le 1$ as trust region expansion and shrinkage factors that decide how much the trust region expands or shrinks at each step.</p>
+<p>If the trust region becomes too small, the problem will be numerically be stationary at a certain point. $xtol$ defines this smallest trust region size beyond which we break out of the loop. It also serves as the convergence threshold which we will get to next.</p>
+<h3 id="convergence">Convergence</h3>
+<p>The SCP also requires some criteria to stop the trust region loop. Usually this is defined as some threshold between the successive solutions of $\x$. Usually when we&rsquo;re at a local/global minima, the gradients are zero and differences between successive solutions are minimal.</p>
+<p>Depending on the function, we could also end up in a situation where a region around the minima corresponds to the same or similar cost values. So it&rsquo;s generally a good idea to also have a convergence criteria on the value of the cost function as usually these would also stop moving much when we&rsquo;re at a minima.</p>
+<blockquote>
+<p>IsConverged<br>
+$\quad$ <strong>return</strong> $\lVert \xst - \x \rVert_2 &lt; xtol$ <strong>or</strong> $\lVert f(\xst) - f(\x) \rVert_2 &lt; ftol$</p>
+</blockquote>
+<p>Where $xtol$ and $ftol$ are the corresponding convergence thresholds.</p>
+<h3 id="constraints">Constraints</h3>
+<p>Something that still needs to be addressed is the fact that we have non-convex constraints in the original problem. Solving the convexified problem with convexified constraints can still be tricky.</p>
+<p>In the paper, these are added into the cost function as penalties rather than as constraints to the problem directly. Doing it this way simplifies things a lot as we can restrict the actual constraints to being linear and have the other terms as penalties in the cost function. We&rsquo;ll go over this in detail in the <a href="#implementation">implementation</a> section, so for now we focus on how the penalties are formulated.</p>
+<p>Consider the non-convex inequality constraints of the form $\gxi \le 0$.<br>
+In order to add this as a penalty in the cost function, we need to map it to a function that has a minimum at $0$ whenever the constraints are satisfied, and is positive everywhere else.<br>
+The paper uses $|\gxi|^+$ Where
+\begin{equation}
+|\gxi|^+ = \max(\x, 0)
+\end{equation}
+Whenever the constraints are satisfied, $\gxi \le 0$ which means that $|\gxi|^+ = 0$. So if we multiply this term by an extremely large penalty factor and add it to the cost function, it would force this term to go to zero (and hence satisfy the constraints) when the problem is solved. The minimizer of the penalized problem would be equal to the minimizer of the original problem with constraints.</p>
+<p>Similarly for the non-convex equality functions $\hxi = 0$, we have a similar penalty function:
+\begin{equation}
+|\hxi|
+\end{equation}</p>
+<p>Where $|\hxi|$ is just the absolute value of $\hxi$. Similar to the inequality function, this penalty function also has a minima at $0$ when the constraints are satisfied and is positive everywhere else. These constraints can also be multiplied by a penalty factor and incorporated into the cost function.</p>
+<p>The cost function of the convexified problem which initially was</p>
+<p>\begin{equation}
+\begin{aligned}
+\min \fcx \\
+\st \quad \gcxi \le 0, \ \ i = 1, 2, \ldots , \nineq\\
+\hcxi = 0, \ \ i = 1, 2, \ldots , \nineq\\
+\end{aligned}
+\end{equation}</p>
+<p>Now has a more numerically tractable form:</p>
+<p>\begin{equation}
+\begin{aligned}
+\min \fcx + \mu \sum_i^{\nineq} |\gcxi|^+ + \mu\sum_i^{\neq}|\hcxi|\\
+\st \quad \lVert \x - \xst \rVert_2 \le s\\
+\end{aligned}
+\end{equation}</p>
+<p>Given the current trust region size $s$ and the penalty factor $\mu$. Larger the value of $\mu$, the more likely it is for the optimization to prioritize satisfying the constraints over minimizing the pure cost $\fx$. When $\mu$ is very large (theoretically close to $\infty$), solving the problem would attempt to satisfy the constraints at any cost.</p>
+<p>In order to check if the given constraints are satisfied, we have another procedure using a constraint satisfaction threshold $ctol$ (Where $0 &lt; ctol \ll 1$). The threshold helps us relax the satisfaction requirements a bit when we actually implement it numerically. The check in practice becomes $\gxi \le ctol$ and $\lVert \hxi \rVert_2 \le ctol$</p>
+<blockquote>
+<p>AreConstraintsSatisfied<br>
+$\quad$ <em><strong>for</strong></em> $i=1, 2, \ldots, \nineq$<br>
+$\qquad$ <strong>if</strong> $\gxi &gt; ctol$ <strong>then</strong><br>
+$\qquad$ $\quad$ <strong>return</strong> False<br>
+$\quad$ <em><strong>for</strong></em> $i=1, 2, \ldots, \neq$<br>
+$\qquad$ <strong>if</strong> $|\hxi| &gt; ctol$ <strong>then</strong><br>
+$\qquad$ $\quad$ <strong>return</strong> False<br>
+$\quad$ <strong>return</strong> True</p>
+</blockquote>
+<p>It is important to note that the actual versions of the constraint functions are used here, and not the convexified versions.</p>
+<h3 id="putting-it-all-together">Putting It All Together</h3>
+<p>Finally, we can take a look at how the paper integrates the penalty check, convexification and trust region loops.</p>
+<ol>
+<li>
+<p>The first step is to convexify the problem at the given $\xst$ and start the SCP trust region loop.</p>
+</li>
+<li>
+<p>Depending on whether the new solution to the convexified problem is considered an improvement to the original cost function or not, we dynamically expand or shrink the trust region size. Ideally we continue this process until convergence, but what exactly do we need to do post trust region size modification?</p>
+<ul>
+<li>
+<p><strong>Expansion</strong>: When the $\x$ minimizer solution is accepted, we want to increase the trust region size and re-convexify the problem at the new $\xst$. We would keep the new expanded trust region size and continue the SCP process.</p>
+</li>
+<li>
+<p><strong>Shrinkage</strong>: When the solution is not accepted, the trust region size is reduced and we don&rsquo;t update $\xst$. There&rsquo;s no need to convexify the problem as $\x$ hasn&rsquo;t changed so we can reduce the trust region and try solving the convexified problem again. We keep repeating this until:</p>
+<ul>
+<li>The trust region size $s &lt; xtol$ after which we need to break out of the loop and check for constraint satisfaction</li>
+<li>We reach the convergence criteria and we break out of the loop</li>
+</ul>
+<p>All in all, we repeat the loop for a convexified version of the problem until a solution is accepted or the trust region becomes too small. Once we have a new solution, the problem is convexified again and the process is repeated.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Where do the penalties fit into all this? The convergence check only ensures that we have found a local optima for the current convexified version of the problem. It does not imply that $\xst$ satisfies the required constraints due to the nature of how the constraints are treated as cost function penalties. After each SCP iteration has converged, we check if the constraints are satisfied. There are only two scenarios:</p>
+<ul>
+<li><strong>Satisfied</strong>: If the SCP has converged and the constraints are satisfied, we have satisfied the requirements of the problem. We have minimized the object (To the best of our numerical abilities, around a local convex estimate) and we have satisfied the required constraints. We can return the solution $\xst$ as the final minimizer of the optimization problem.</li>
+<li><strong>Unsatisfied</strong>: If the SCP has converged and the constraints are not satisfied, we obviously need to start over, but what do we do differently? This is where the penalty factor comes into play. In this case, we can increase the penalty factor $\mu$ by some $k &gt; 1$ by setting $\mu \leftarrow k \ast \mu$. We don&rsquo;t have to start over from the initial value of $\x$ as the last SCP iteration converged and the only issues are the constraints not being satisfied. We can resume the SCP using the last updated values of $\xst$ and $s$, but with the new penalty factor $\mu$.</li>
+</ul>
+</li>
+</ol>
+<p>The entire algorithm now looks something like:</p>
+<blockquote>
+<p><strong>for</strong> PenaltyIteration = 1, 2, $\ldots$ <strong>do</strong><br>
+$\quad$ <strong>for</strong> ConvexifyIteration = 1, 2, $\ldots$ <strong>do</strong><br>
+$\qquad$ $\fc$, $\gc$, $\hc$ = ConvexifyProblem($f$, $g$, $h$)<br>
+$\qquad$ <strong>execute</strong> TrustRegionLoop<br>
+$\qquad$ <strong>if</strong> IsConverged <strong>then</strong><br>
+$\qquad$ $\quad$ <strong>break</strong><br>
+$\quad$ <strong>if</strong> AreConstraintsSatisfied <strong>then</strong><br>
+$\qquad$ <strong>return</strong> $\xst$<br>
+$\quad$ <strong>else</strong><br>
+$\qquad$ $\mu \leftarrow k \ast \mu$</p>
+</blockquote>
+<h2 id="implementation">Implementation</h2>
+<p>Now we get to the fun part of implementing it. In this section, we&rsquo;ll go over how all of this can be implemented, along with some details that were skipped in the paper. For reference, my python implementation of the algorithm can be found <a href="https://github.com/shrenikm/Atium/tree/main/algorithms/trajopt">here</a>.</p>
+<h3 id="convexifying-the-cost">Convexifying The Cost</h3>
+<p>How do we actually go about convexifying the problem? In the paper, each of the functions are expanded about the current value of $\x$ using the Taylor series (Up until the second order). After doing this for each function, we can convert the non-convex optimization problem in to a Quadratic Program (QP) at each step.</p>
+<p>More specifically, we can try to cast the problem into this specific form of the QP:</p>
+<p>\begin{equation}
+\begin{aligned}
+\min \half x^TPx + q^Tx\\
+\st \quad l \le Ax \le u\\
+\quad x \in \Rn\\
+\quad P \in \Rnn, q \in \Rn, A \in \Rmn\\
+\quad l \in \Rm, u \in \Rm\\
+\end{aligned}
+\end{equation}</p>
+<p>Why this form in particular? Because this is a pretty standard form and also is the form of the inputs to <a href="https://osqp.org/">OSQP</a>, an open source and widely used optimization library for solving convex quadratic programs.</p>
+<p>Expanding the cost function $\fx$ around $\xst$ up until the second order, we get</p>
+<p>\begin{equation}
+\begin{aligned}
+\fcx = f(\xst) + \frac{\partial f}{\partial \x}^T\vline_{\x=\xst}(\x - \xst) + \half (\x - \xst)^T \frac{\partial^2 f}{\partial \x^2}^T\vline_{\x = \xst}(\x - \xst)
+\end{aligned}
+\end{equation}</p>
+<p>To simplify things, we represent:</p>
+<ul>
+<li>The gradient vector at $\xst$, $\frac{\partial f}{\partial \x}^T\vline_{\x=\xst}$ by $\wfxst \in \Rn$</li>
+<li>The Hessian matrix at $\xst$, $\frac{\partial^2 f}{\partial \x^2}^T\vline_{\x = \xst}$ by $\Wfxst \in \Rnn$</li>
+<li>The difference $(\x - \xst)$ by $\Dx$</li>
+</ul>
+<p>The convexified approximation now looks like:</p>
+<p>\begin{equation}
+\begin{aligned}
+\fcx = f(\xst) + \wfxst^T\Dx + \half \Dx^T \Wfxst \Dx
+\end{aligned}
+\end{equation}</p>
+<p>To get it into the standard QP form, we need to expand $\Dx$ and separate out the first and second order terms of $\x$. After simplification, this gives us:</p>
+<p>\begin{equation}
+\begin{aligned}
+\fcx = \half \x^T \Wfxst \x + (\wfxst - \half(\Wfxst + \Wfxst^T)\xst) ^T \x
+\end{aligned}
+\end{equation}</p>
+<p>Note that we have dropped the terms that do not depend on $\x$ (Such as $f(\xst)$, $\xst^{T} \Wfxst \xst$ and $\wfxst^{T} \xst$) as they are constant with respect to the optimization variable.</p>
+<p>As we can see the coefficients of the first order $\x$ terms will be incorporated in the $q$ matrix and the second order terms in the $P$ matrix of the final QP formulation.</p>
+<h3 id="convexifying-the-constraints">Convexifying The Constraints</h3>
+<p>In a similar fashion, we can convexify the constraints. Like in the paper, we can think of it as individual scalar valued $\gxi$, $\hxi$ constraints, but I find it easier to work with vector
+valued constraints $\gx$ and $\hx$ where the outputs are a vector, each value corresponding to one constraint in $\x$.</p>
+<p>In this case, as both the inputs and outputs of the functions are vectors, the gradients of the functions are matrices and the Hessians are tensors. We represent them evaluated at $\xst$ as
+$\Wgxst \in \Rnineqn$, $\Whxst \in \Rneqn$, $\Tgxst \in \Rnnnineq$ and $\Thxst \in \Rnnneq$ for the constraint function families $g$ and $h$. We can think of the tensors to be comprised of individual Hessian matrices $\Tgixst \in \Rnn$ and $\Thixst \in \Rnn$.</p>
+<p>Similar to the cost function, we can convexify the constraint functions using the Taylor series expansion.</p>
+<p>\begin{equation}
+\begin{aligned}
+\gcx = g(\xst) + \Wgxst\Dx + \half \Dx^T \sum_i^{\nineq}\Tgixst \Dx\\
+\hcx = h(\xst) + \Whxst\Dx + \half \Dx^T \sum_i^{\neq}\Thixst \Dx\\
+\end{aligned}
+\end{equation}</p>
+<h3 id="incorporating-the-constraints">Incorporating The Constraints</h3>
+<p>We go back to an important bit in the paper. We still need to reformulate the penalties in a way that can passed off to a solver. If the $\gxi$ constraints can be linearized, the penalty function $|\gxi|^+$ can be written as $|a \cdot x + b|^+$. The problem of minimizing
+\begin{equation}
+\begin{aligned}
+\min |a\cdot x + b|^+
+\end{aligned}
+\end{equation}</p>
+<p>Can equivalently be written as</p>
+<p>\begin{equation}
+\begin{aligned}
+\min \tg\\
+\st \quad \tg \ge 0\\
+a\cdot x + b \le \tg\\
+\end{aligned}
+\end{equation}</p>
+<p>In a similar vein, $\min |\hxi|$ can be written as $\min |a\cdot x + b|$. Upon the introduction of more slack variables, we get:</p>
+<p>\begin{equation}
+\begin{aligned}
+\min \sh + \th\\
+\st \quad \sh \ge 0\\
+\st \quad \th \ge 0\\
+\sh - \th = a\cdot x + b\\
+\end{aligned}
+\end{equation}</p>
+<p>But $\gcx$ and $\hcx$ have both quadratic and linear $\x$ terms. What do we do in this case?</p>
+<p>Luckily the nature of the penalty functions makes it easy to separate them out.</p>
+<p>\begin{equation}
+\begin{aligned}
+|\gci|^+ = |g(\xst) + \Wgxst\Dx + \half \Dx^T \sum_i^{\nineq}\Tgixst \Dx|^+\\
+= \half \Dx^T \sum_i^{\nineq}\Tgixst \Dx + |g(\xst) + \Wgxst\Dx|^+\\
+\end{aligned}
+\end{equation}</p>
+<p>We can pull the quadratic term out as it will be $\ge 0$ if each $\Tgixst \succeq 0$. Positive semi-definitiveness of the Hessians is a reasonable assumption to make, and even if they aren&rsquo;t, we can modify and deal with them numerically.</p>
+<p>We also expand the quadratic term to separate out the quadratic and linear terms in $\x$. We get something similar to the cost function expansion.</p>
+<p>\begin{equation}
+\begin{aligned}
+\half \x^T\sum_i^{\nineq}\Tgixst \x - \half \xst^T \sum_i^{\nineq} (\Tgixst + \Tgixst^T) \x + |g(\xst) + \Wgxst\Dx|^+
+\end{aligned}
+\end{equation}</p>
+<p>Similarly for the equality constraints:</p>
+<p>\begin{equation}
+\begin{aligned}
+|\hci| = |h(\xst) + \Whxst\Dx + \half \Dx^T \sum_i^{\neq}\Thixst \Dx|\\
+= \half \x^T\sum_i^{\neq}\Thixst \x - \half \xst^T \sum_i^{\neq} (\Thixst + \Thixst^T) \x + |h(\xst) + \Whxst\Dx|
+\end{aligned}
+\end{equation}</p>
+<p>So now we have linear terms, which can be incorporated through the slack variables into the cost function, along with linear constraints in $\x$ and the slack variables themselves.
+What do we do about the quadratic term? Dropping them is a bad idea as then there would be nothing in the cost function to numerically push $\x$ to a region that satisfies constraints (The slack terms are there but they don&rsquo;t perform this function).
+The only reason using the penalty factor $\mu$ works is that there is some term in the convexified constraint functions that push the entire cost around.</p>
+<p>We can simply add the quadratic terms directly into the cost and incorporate them into the $P$ matrix.</p>
+<p>Finally, we look at what the linear constraint terms look like.</p>
+<p>\begin{equation}
+\begin{aligned}
+g(\xst) + \Wgxst\Dx\\
+\end{aligned}
+\end{equation}</p>
+<p>This is linear in $\Dx$ but we need them to be linear in $\x$. Similar to what we did for $f$, we can expand and separate out the terms. We then write out linear inequality in a way required by the QP. We have:</p>
+<p>\begin{equation}
+\begin{aligned}
+g(\xst) + \Wgxst\Dx \le \tg\\
+\end{aligned}
+\end{equation}</p>
+<p>\begin{equation}
+\begin{aligned}
+\Wgxst\x - \tg \le \Wgxst\xst - g(\xst)\\
+\end{aligned}
+\end{equation}</p>
+<p>For the non-convex equality constraints, we have:</p>
+<p>\begin{equation}
+\begin{aligned}
+\Whxst\x - \sh + \th = \Whxst\xst - h(\xst)\\
+\end{aligned}
+\end{equation}</p>
+<h3 id="final-qp">Final QP</h3>
+<p>After convexifiying the functions, the QP can be written as:</p>
+<p>\begin{equation}
+\begin{aligned}
+\min \half \x^T \Wfst \x + (\wfst - \half(\Wfst + \Wfst^T)\xst) ^T \x +\\
+\mu(\half \x^T\sum_i^{\nineq}\Tgist \x - \half \xst^T \sum_i^{\nineq} (\Tgist + \Tgist^T) \x) + \mu(\half \x^T\sum_i^{\neq}\Thist \x - \half \xst^T \sum_i^{\neq} (\Thist + \Thist^T) \x) + \mu(\tg + \sh + \th)\\
+\st \quad lb \le \x \le ub\\
+\lVert \xst - \x \rVert_2 \le s\\
+A_g\x \le b_g\\
+A_h\x = b_h\\
+\Wgst\x - \tg \le \Wgst\xst - \gcst\\
+\Whst\x - \sh + \th = \Whst\xst - \hcst\\
+\end{aligned}
+\end{equation}</p>
+<p>We abuse the notation slightly, where $[ \ ]^\ast$ refers to a quantity measured at $\xst$.<br>
+Note that in addition to the constraints mentioned previously, we also have $lb \le \x \le ub$ constraints on the state as well as pure linear inequality and equality constraints (defined by
+$(A_g, b_g)$ and $(A_h, b_h)$) for which we don&rsquo;t require any slack terms.</p>
+<p>One final thing to note is that the trust region constraints $\lVert \xst - \x \rVert_2 \le s$ is not linear which would make the problem a QCQP instead. There are a bunch of ways around this:</p>
+<ol>
+<li>Solve the problem as a QCQP using a compatible solver</li>
+<li>Expand the second order constraints in terms of its gradients and Hessians like the non-convex constraints and incorporate it that way. We don&rsquo;t lose out on anything doing this because the
+norm constraint is convex in the first place</li>
+<li>Replace the $l^2$ norm constraints using box constraints of the form $\xst - s \le x \le \xst + s$. This is the easiest way around the problem and works pretty well in practice. This is what
+the paper employs for solving some of the higher DOF problems.</li>
+</ol>
+<p>We can write the optimization problem in the standard QP form:</p>
+<p>\begin{equation}
+\begin{aligned}
+\min \half z^TPz + q^Tz\\
+\st \quad l \le Az \le u\\
+\end{aligned}
+\end{equation}</p>
+<p>Where $z$ is a variable that holds the original variables and the slack terms.</p>
+<p>\begin{equation}
+\begin{aligned}
+z = \begin{bmatrix}
+\x^T, \tg^T, \sh^T, \th^T
+\end{bmatrix}^T
+\end{aligned}
+\end{equation}</p>
+<p>The other quantities are:</p>
+<p>\begin{equation}
+\begin{aligned}
+P = \Wfst + \mu \sum_i^{\nineq}\Tgist + \mu \sum_i^{\neq}\Thist
+\end{aligned}
+\end{equation}</p>
+<p>\begin{equation}
+\begin{aligned}
+q = \begin{bmatrix}
+\wfst - \half(\Wfst + \Wfst^T)\xst + \mu\left(- \half \xst^T \sum_i^{\nineq} (\Tgist + \Tgist^T) - \half \xst^T \sum_i^{\neq} (\Thist + \Thist^T)\right) \\
+1\\
+\vdots\\
+1\\
+\end{bmatrix}
+\end{aligned}
+\end{equation}</p>
+<p>\begin{equation}
+\begin{aligned}
+A = \begin{bmatrix}
+I^{n \times n} &amp; 0^{n \times ns}\\
+I^{n \times n} &amp; 0^{n \times ns}\\
+A_g &amp; 0^{n_{A_g} \times ns}\\
+A_h &amp; 0^{n_{A_h} \times ns}\\
+\Wgst &amp; \begin{bmatrix}
+-I^{\nineq \times \nineq} &amp; 0^{\nineq \times 2\neq}\\
+\end{bmatrix}\\
+\Whst &amp; \begin{bmatrix}
+0^{\neq \times \nineq} &amp; -I^{\neq \times \neq} &amp; I^{\neq \times \neq}\\
+\end{bmatrix}
+\end{bmatrix}
+\end{aligned}
+\end{equation}</p>
+<p>\begin{equation}
+\begin{aligned}
+l = \begin{bmatrix}
+lb\\
+\xst - s\\
+-\infty^{n_{A_g}}\\
+b_h\\
+-\infty^{\nineq}\\
+\Whst\xst - \hcst\\
+\end{bmatrix}
+\end{aligned}
+\end{equation}</p>
+<p>\begin{equation}
+\begin{aligned}
+u = \begin{bmatrix}
+ub\\
+\xst + s\\
+b_g\\
+b_h\\
+\Wgst\xst - \gcst\\
+\Whst\xst - \hcst\\
+\end{bmatrix}
+\end{aligned}
+\end{equation}</p>
+<h3 id="libraries">Libraries</h3>
+<p>My implementation uses <a href="https://osqp.org/">OSQP</a> to solve the QP at each SCP step. Most solvers and optimization libraries support quadratic programming, so this part is pretty straightforward.</p>
+<p>For simple problem setups, we can manually compute the function derivatives, but for more complex setups this might not be an option. High DOF systems with large number of constraints will require
+the computation of large Hessian tensors which can be painstaking (and sometimes impossible) to compute analytically.</p>
+<p>I&rsquo;ve found <a href="https://jax.readthedocs.io/en/latest/index.html">JAX</a> to be a godsend in these scenarios. It can compute the derivatives of any of your functions to your required degree (provided the function is actually differentiable that many times) and also comes with other useful features to speed up computation using GPU/parallel processing and just in time compilation. Convexifying functions becomes a breeze as you can compute gradient and hessian functions extremely easily.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">jax</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="o">...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">grad_f</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">grad</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">hess_f</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">hessian</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">x</span> <span class="o">=</span> <span class="o">...</span>
+</span></span><span class="line"><span class="cl"><span class="n">grad_at_x</span> <span class="o">=</span> <span class="n">grad_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">hess_at_x</span> <span class="o">=</span> <span class="n">hess_f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="the-not-so-obvious-bits">The Not So Obvious Bits</h3>
+<p>Here&rsquo;s a list of things that might not be obvious from a paper read through:</p>
+<ol>
+<li>
+<p>Linear constraints might feel warm and fuzzy, but can break the problem if we&rsquo;re not careful. Consider the scenario where we&rsquo;re optimizing for a scalar $\x$ with a constraint $\x \ge 100$. Let&rsquo;s say that
+our initial guess of $\x$ is 0. Given the fact that our trust region is small initially, this would lead to an infeasible QP as the linear constraint is violated at the first iteration itself. There&rsquo;s no way for the optimizer to deal with this due to the small trust region. This means that:</p>
+<ul>
+<li>We need to be careful about how we go about choosing the initial $\x$ in general</li>
+<li>Starting the problem off with linear constraints violated could be a recipe for disaster</li>
+</ul>
+<p>We could do some numerical magic like introduce penalties and let the cost function drive $\x$ into the feasible space when this happens but it just complicates things unnecessarily. It&rsquo;s best to leave the complicated bits to decades of optimization research that we have access through current day solvers. Most problems in robotics usually have linear constraints that can be navigated around easily (such as goal state constraints, etc.)</p>
+</li>
+<li>
+<p>This one is more obvious, but we need to make sure to <strong>drop</strong> the solution when the cost function improvement ratio does not pass our acceptance threshold. Using the new $\xst$ in this case can
+lead to the problem being unable to find a way forward, even after reducing the trust region size as it might be impossible to backtrack from that position.</p>
+</li>
+<li>
+<p>If the value of the constraint satisfaction threshold $ctol$ is not high enough, solvers will find it difficult to numerically converge to constraint satisfying solutions. Keeping it reasonably high will help in progressing the SCP at the correct times and will also speed up the overall solve time.</p>
+</li>
+<li>
+<p>It might seem logical to keep a high penalty factor initially, but this can come at the cost of sub-optimal solutions. The factor can always scale up later on once the constraints don&rsquo;t get satisfied.</p>
+</li>
+<li>
+<p>I covered this earlier but to re-iterate, if we don&rsquo;t include the quadratic terms of the convexified constraint functions in the overall cost function, there is nothing in the cost that will help drive the solution from infeasible to feasible regions.</p>
+</li>
+<li>
+<p>We don&rsquo;t really need to make a distinction for pure linear constraints and add them in as direct constraints without the slack terms. We could treat them as non-convex functions and follow the
+same procedure. The problem is equivalent and has the same optimum no matter which way we go about doing it. Not treating them as a special case makes the actual implementation a bit easier, but adding them directly should still be preferred as it reduces the overall program size by not having the additional slack terms.</p>
+</li>
+</ol>
+<h2 id="evaluation">Evaluation</h2>
+<p>We can now evaluate the algorithm on some examples. For this post, we&rsquo;ll go over how it operates on the Rosenbrock function. Its application on some actual robotic systems will be covered in another post.</p>
+<p>The Rosenbrock function is a non-convex function that is a nice test bed to test the performance of non-convex optimization methods. It isn&rsquo;t difficult to solve for but helps us get a good understanding of what the algorithm is doing under the hood. It also helps with easier debugging when implementing such algorithms.</p>
+<p>\begin{equation}
+\begin{aligned}
+f(x, y) = (a - x)^2 + b(y - x^2)^2
+\end{aligned}
+\end{equation}</p>
+<p>We test on the 2-dimensional version as this lets us visualize the algorithm and see what&rsquo;s going on at each step. We use $(a=1, b=100)$, which makes the function have a global minimum at $(1, 1)$ with a value $f(x, y) = 0$</p>
+<p>First, we try to minimize the problem unconstrained. Below we have a visualization of $\x = (x, y)$ from the initial to the final value as optimized by the algorithm.
+The initial value in this case is $(-1, -2)$. We can see it converge to the global minima at $(1, 1)$ (upto a tolerance) and the path it took to get there.</p>
+
+<link rel="stylesheet" href="https://shrenikm.com/css/hugo-easy-gallery.css" />
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/posts/6/gifs/trajopt_rosenbrock_1_cost_constraint.gif" alt="trajopt_rosenbrock_1_cost_constraint"/>
+    </div>
+    <a href="/posts/6/gifs/trajopt_rosenbrock_1_cost_constraint.gif" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>We can run the same thing for a different starting point. This time from $(5, 5)$</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/posts/6/gifs/trajopt_rosenbrock_2_cost_constraint.gif" alt="trajopt_rosenbrock_2_cost_constraint"/>
+    </div>
+    <a href="/posts/6/gifs/trajopt_rosenbrock_2_cost_constraint.gif" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>Time to start adding constraints!<br>
+To start off, we add a pure linear constraints that specify $(x \le -2, y \ge 0)$. we can see how the point moves on the cost surface and the constraint feasibility region (shaded in pink).</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/posts/6/gifs/trajopt_rosenbrock_3.gif" alt="trajopt_rosenbrock_3"/>
+    </div>
+    <a href="/posts/6/gifs/trajopt_rosenbrock_3.gif" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>Now we test non-linear constraints.<br>
+The linear constraints have been updated to $(x \ge 2, y \ge -5)$<br>
+We also have another constraint $(x - 2)^2 + (y - 2)^2 \le 4$ which defines a circular region in the X-Y plane (shaded in teal).</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/posts/6/gifs/trajopt_rosenbrock_4.gif" alt="trajopt_rosenbrock_4"/>
+    </div>
+    <a href="/posts/6/gifs/trajopt_rosenbrock_4.gif" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>We can see how the point passes through and overshoots the circular region initially but the increased penalty factor drives the point back through the quadratic term of the constraint function.</p>
+<p>Now we add an equality constraint of the form $(x - 2)^2 + (y - 2)^2 = 1$ to the existing set of constraints. Note that this is a circle of half the radius of the inequality region and the constraint now requires the solution to lie exactly on this smaller circle and not just within the larger inequality region. So the final solution will need to lie well within the inequality constraint region and not just at the surface like the previous setup. The equality region is the dark blue colored ring as seen below:</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/posts/6/gifs/trajopt_rosenbrock_5.gif" alt="trajopt_rosenbrock_5"/>
+    </div>
+    <a href="/posts/6/gifs/trajopt_rosenbrock_5.gif" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>Again we can see the costs balancing out and the equality constraint pushing the point further into the circular region (Once $\mu$ gets large enough) until it satisfies the equality constraint.</p>
+<p>To top things off, we introduce another inequality constraint $(x - 4)^2 + (y - 1)^2 \le 6.25$ along with all the other constraints. The feasible inequality region is the intersection of both the circular inequality regions and forms a leaf shaped region. The minima now has to shift a bit to the left in order to satisfy all the constraints.</p>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/posts/6/gifs/trajopt_rosenbrock_6.gif" alt="trajopt_rosenbrock_6"/>
+    </div>
+    <a href="/posts/6/gifs/trajopt_rosenbrock_6.gif" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<h2 id="references">References</h2>
+<ol>
+<li><strong>Schulman, J., Duan, Y., Ho, J., Lee, A., Awwal, I., Bradlow, H., &hellip; &amp; Abbeel, P. (2014). Motion planning with sequential convex optimization and convex collision checking. The International Journal of Robotics Research, 33(9), 1251-1270.</strong> <a href="https://journals.sagepub.com/doi/abs/10.1177/0278364914528132">[Link]</a></li>
+</ol>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://shrenikm.com/tags/control/">control</a>&nbsp;
+            
+              <a href="https://shrenikm.com/tags/implementation/">implementation</a>&nbsp;
+            
+              <a href="https://shrenikm.com/tags/motion_planning/">motion_planning</a>&nbsp;
+            
+              <a href="https://shrenikm.com/tags/numerical_optimization/">numerical_optimization</a>&nbsp;
+            
+              <a href="https://shrenikm.com/tags/robotics/">robotics</a>&nbsp;
+            
+              <a href="https://shrenikm.com/tags/trajectory_optimization/">trajectory_optimization</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fshrenikm.com%2fposts%2f2024-01-06-understanding-trajopt%2f&amp;text=Understanding%20TrajOpt&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fshrenikm.com%2fposts%2f2024-01-06-understanding-trajopt%2f&amp;title=Understanding%20TrajOpt" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fshrenikm.com%2fposts%2f2024-01-06-understanding-trajopt%2f&amp;title=Understanding%20TrajOpt" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/posts/2023-12-24-multi-vehicle-mixed-integer-programming/">Multi Vehicle Mixed Integer Programming</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/" data-toggle="tooltip" data-placement="top" title="Multi Vehicle Mixed Integer Programming">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-shrenikm-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:shrenik95@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/shrenikm" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://linkedin.com/in/shrenik95" title="LinkedIn">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Shrenik M
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2024
+          
+
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.121.2</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script>
+      var reg = new RegExp("^\\s*\\$.*\\$\\s*$");
+      $('code').each(function(i) {
+        var elem = $(this);
+        if(reg.test(elem.text())) {
+          var contents = elem.contents();
+          contents.unwrap();
+          if (contents.parent().is('pre')) contents.unwrap();
+        }
+      });
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$','$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        }
+      };
+    </script><script type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://shrenikm.com/js/main.js"></script>
+<script src="https://shrenikm.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://shrenikm.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
