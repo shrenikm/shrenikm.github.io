@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>robotics on </title>
+    <title>Robotics on </title>
     <link>https://shrenikm.com/tags/robotics/</link>
-    <description>Recent content in robotics on </description>
+    <description>Recent content in Robotics on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jan 2024 11:11:12 -0800</lastBuildDate>
+    <lastBuildDate>Fri, 08 Mar 2024 22:11:21 -0800</lastBuildDate>
     <atom:link href="https://shrenikm.com/tags/robotics/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Setting Up a Manipulator</title>
+      <link>https://shrenikm.com/posts/2024-03-08-setting-up-a-manipulator/</link>
+      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate>
+      <guid>https://shrenikm.com/posts/2024-03-08-setting-up-a-manipulator/</guid>
+      <description>Let&amp;rsquo;s take a look at how we can set up a framework for streamlined simulation and hardware control of a manipulator. The robot under consideration is Ufactory&amp;rsquo;s Lite6 manipulator and the simulation/setup tool used is Drake.&#xA;All the code used in this post can be found in my repo. But before we start, some explanations are in order.&#xA;Lite6?&#xA;The Lite6 is one of the more economical (not to be confused with cheap) manipulators one can buy, especially for personal research where you&amp;rsquo;re not going to be spending tens of thousands of dollars on some of the more well established robots out there.</description>
+    </item>
     <item>
       <title>Understanding TrajOpt</title>
       <link>https://shrenikm.com/posts/2024-01-06-understanding-trajopt/</link>
