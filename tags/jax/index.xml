@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Jax on </title>
+    <link>https://shrenikm.com/tags/jax/</link>
+    <description>Recent content in Jax on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 06 Jan 2024 11:11:12 -0800</lastBuildDate>
+    <atom:link href="https://shrenikm.com/tags/jax/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding TrajOpt</title>
+      <link>https://shrenikm.com/posts/2024-01-06-understanding-trajopt/</link>
+      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate>
+      <guid>https://shrenikm.com/posts/2024-01-06-understanding-trajopt/</guid>
+      <description>TrajOpt $[1]$ is an optimization based approach for motion planning. More specifically, it uses a sequential convex optimization procedure along with a formulation of collision constraints to find locally optimal planning trajectories, even for robotic systems that have a large number of degrees of freedom.&#xA;This post will go into the details of the optimization part, and give an outline of how it can be implemented. My implementation can be found here</description>
+    </item>
+  </channel>
+</rss>
