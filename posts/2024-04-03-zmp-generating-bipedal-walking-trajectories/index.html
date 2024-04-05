@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>ZMP: Generating Bipedal Walking Trajectories - </title>
+
+  <meta name="description" content="Legged robot research has been an active area of study since the late nineties. Let&rsquo;s take a look at how we can generate walking trajectories for bipedal robots, using some of these ideas.
+The Objective: Implement a quick and dirty way of generating walking trajectories
+Constraints: Do it quickly. Minimize sophistication. Anything goes!
+What this post will cover:
+Overview of the minimal set of ideas required to develop walking algorithms Computation of bipedal joint trajectories for a simple walking gait What will not be covered:">
+  <meta name="author" content="Shrenik M"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "",
+    
+    "url": "https:\/\/shrenikm.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/shrenikm.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/shrenikm.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/shrenikm.com\/posts\/2024-04-03-zmp-generating-bipedal-walking-trajectories\/",
+          "name": "Zmp generating bipedal walking trajectories"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Shrenik M"
+  },
+  "headline": "ZMP: Generating Bipedal Walking Trajectories",
+  "description" : "Legged robot research has been an active area of study since the late nineties. Let\u0026rsquo;s take a look at how we can generate walking trajectories for bipedal robots, using some of these ideas.\nThe Objective: Implement a quick and dirty way of generating walking trajectories\nConstraints: Do it quickly. Minimize sophistication. Anything goes!\nWhat this post will cover:\nOverview of the minimal set of ideas required to develop walking algorithms Computation of bipedal joint trajectories for a simple walking gait What will not be covered:",
+  "inLanguage" : "en",
+  "wordCount":  1774 ,
+  "datePublished" : "2024-04-03T22:31:49",
+  "dateModified" : "2024-04-03T22:31:49",
+  "image" : "https:\/\/shrenikm.com\/",
+  "keywords" : [ "robotics, control, legged, motion_planning, trajectory_optimization, drake" ],
+  "mainEntityOfPage" : "https:\/\/shrenikm.com\/posts\/2024-04-03-zmp-generating-bipedal-walking-trajectories\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/shrenikm.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/shrenikm.com\/",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="ZMP: Generating Bipedal Walking Trajectories" />
+<meta property="og:description" content="Legged robot research has been an active area of study since the late nineties. Let&rsquo;s take a look at how we can generate walking trajectories for bipedal robots, using some of these ideas.
+The Objective: Implement a quick and dirty way of generating walking trajectories
+Constraints: Do it quickly. Minimize sophistication. Anything goes!
+What this post will cover:
+Overview of the minimal set of ideas required to develop walking algorithms Computation of bipedal joint trajectories for a simple walking gait What will not be covered:">
+<meta property="og:url" content="https://shrenikm.com/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="" />
+
+  <meta name="twitter:title" content="ZMP: Generating Bipedal Walking Trajectories" />
+  <meta name="twitter:description" content="Legged robot research has been an active area of study since the late nineties. Let&rsquo;s take a look at how we can generate walking trajectories for bipedal robots, using some of these ideas.
+The …">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="generator" content="Hugo 0.124.1">
+  <link rel="alternate" href="https://shrenikm.com/index.xml" type="application/rss+xml" title="">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://shrenikm.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://shrenikm.com/css/highlight.min.css" /><link rel="stylesheet" href="https://shrenikm.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E2P4DFRG5B"></script>
+<script>
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'G-E2P4DFRG5B', { 'anonymize_ip': false });
+}
+</script>
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://shrenikm.com/"></a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Posts" href="/">Posts</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Projects" href="/pages/projects/">Projects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/pages/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>ZMP: Generating Bipedal Walking Trajectories</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <!--- Post 8 -->
+<p>Legged robot research has been an active area of study since the late nineties. Let&rsquo;s take a look at how we can generate walking trajectories for bipedal robots, using some of these ideas.</p>
+<p><strong>The Objective:</strong> Implement a quick and dirty way of generating walking trajectories<br>
+<strong>Constraints:</strong> Do it quickly. Minimize sophistication. Anything goes!</p>
+<p>What this post will cover:</p>
+<ol>
+<li>Overview of the minimal set of ideas required to develop walking algorithms</li>
+<li>Computation of bipedal joint trajectories for a simple walking gait</li>
+</ol>
+<p>What will not be covered:</p>
+<ol>
+<li>Details regarding any of the individual parts</li>
+<li>Execution of the computed trajectory</li>
+</ol>
+<p>Code for the implementations in this post can be found <a href="https://github.com/shrenikm/legged_research">here</a>.</p>
+<p>$\newcommand{\norm}[1]{\left\lVert#1\right\rVert}$
+$\newcommand{\st}{\text{s.t.}}$
+$\newcommand{\fcom}{f_{com}}$
+$\newcommand{\gcom}{g_{com}}$
+$\newcommand{\qkj}{q_{kj}}$</p>
+<h2 id="zmp">ZMP</h2>
+<p>Bipedal research has come a long way, with us being able to control robots in extremely agile, contact implicit ways (looking at you Boston Dynamics). But the algorithms in this space has roots in much simpler ideas. <strong>ZMP</strong> or zero moment point is one of the oldest and most popular ideas used in legged locomotion. Robots of the late 90&rsquo;s and early 2000&rsquo;s (P2, Asimo, etc) employed ZMP based methods for walking. In the spirit of this post, we quickly summarize the major ideas here, without going into any of the details.</p>
+<p>The core idea here is that even for a bipedal system with complex dynamics, the dynamics of its <strong>center of mass (COM)</strong> is pretty simple. So we can come up with a relatively simple control law for the center of mass dynamics, which can then be tracked. The <strong>zero moment point (ZMP)</strong> is a point on the ground where the net horizontal moment of all the contact forces is zero. For a bipedal robot, as long as this point is inside the convex hull formed by the feet of the robot (that are in contact), the robot will not tip over (zero moment), and will hence be stable.</p>
+<p>If we make an assumption that the height of the center of mass, of the robot, does not change, it simplifies things even further.</p>
+<p>\begin{equation}
+\dot{z_{com}} = 0
+\end{equation}</p>
+<p>This also means that</p>
+<p>\begin{equation}
+\ddot{z_{com}} = 0
+\end{equation}</p>
+<p>This is powerful, because this allows us to ignore the effects of feet-ground impact on the dynamics. Even though we have made a few concessions, the problem can now be solved kinematically without having to worry about any complicated dynamics.</p>
+<p>The COM to ZMP relationship then turns out to be:</p>
+<p>\begin{equation}
+\begin{aligned}
+\ddot{x_{com}} = \frac{g(x - x_{zmp})}{h}\\
+\ddot{y_{com}} = \frac{g(y - y_{zmp})}{h}
+\end{aligned}
+\end{equation}</p>
+<p>Where</p>
+<p>\begin{equation}
+h = z - z_{zmp} = \text{constant}
+\end{equation}</p>
+<p>The equations look similar to an inverted pendulum with linearized dynamics, which is why using ZMP in this way tends to be considered an LIP model, with the mass of the robot assumed to be concentrated at the center of mass.</p>
+<p>This relationship is linear! (affine if strictly speaking). If the position of the ZMP is given, it also tells us how the dynamics of the COM will evolve.</p>
+<p>Now the question is how do we use this?</p>
+<h2 id="gait-trajectory-generation">Gait Trajectory Generation</h2>
+<p>A simple way of generating walking gaits using this principle is to do the following:</p>
+<ol>
+<li>First assume foot positions on the ground. We assume that we have a stance phase where we hold contact on both feet while also changing the COM, and a swing phase, where one foot swings forward to the next position. The stance and swing phases alternate between feet to form a walking gait</li>
+<li>As we require the ZMP to be within the convex hull of the feet contact polygon, we can make assumptions about the trajectory of the ZMP given the positions of the feet over time</li>
+<li>Given the ZMP trajectory, we can then use the COM dynamics equations to compute the trajectory of the COM</li>
+<li>And finally, we can kinematically solve for joint angles, that can track this COM trajectory</li>
+</ol>
+<h3 id="foot-placement">Foot Placement</h3>
+<p>We can use sophisticated methods to solve for dynamically feasible foot positions, but for the most part, we can just set up these positions heuristically. The only constraint is that they need to be feasible in terms of being able to track the COM while constraining the feet to these positions, but taking small incremental steps will work in most cases.</p>
+<h3 id="zmp-trajectory-generation">ZMP Trajectory Generation</h3>
+<p>We can just set the ZMP at any time to be the center of the convex polygon hull made by the feet currently in contact. This means that at the end of the stance phase, as we&rsquo;re lifting the swing leg, the ZMP must now be within the convex hull of the single stance feet making contact.</p>
+<h3 id="com-trajectory-generation">COM Trajectory Generation</h3>
+<p>Solving for the COM can be trickier that it looks from the ZMP equations. We need to compute a COM trajectory such that the derivatives of the trajectory at every point satisfy the required relationship.</p>
+<p>There are more recent methods that solves this problem using a closed form solution <a href="#references">$[1]$</a>. To comply with our initial objective and constraints, I used one of the earliest methods developed for solving this problem: COM generation using preview control. For details, see <a href="#references">$[2]$</a> and <a href="#references">$[3]$</a>.</p>
+<p>The end result is this:</p>
+
+<link rel="stylesheet" href="https://shrenikm.com/css/hugo-easy-gallery.css" />
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/posts/8/images/zmp_traj1.png" alt="zmp_traj1"/>
+    </div>
+    <a href="/posts/8/images/zmp_traj1.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+<p>Here we can see the required path to track in green, along with positions of the feet (brown rectangles &ndash; light brown represents the left foot and dark brown represents the right). The blue trajectory represents the ZMP trajectory and we can see how it is always within the convex hull of the feet that are in contact. As we switch from swing to stance, we can see how the ZMP switches to be over the stance feet to maintain balance. The orange trajectory is the COM trajectory computed using the preview controller. The dotted line over the ZMP trajectory is the ZMP trajectory computed using the COM trajectory solution. A good solution of the ZMP equations will result in this re-computed ZMP trajectory being almost coincident with the original ZMP trajectory, which we can see is the case here.</p>
+<p>We can also plot the trajectories of each individual foot, in $x$, $y$ and $z$, along with the $x$ and $y$ components of the COM trajectory.</p>
+</br>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/posts/8/images/zmp_traj2.png" alt="zmp_traj2"/>
+    </div>
+    <a href="/posts/8/images/zmp_traj2.png" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+</br>
+<p>For the $z$ coordinates of the feet, we assume that each foot is lifted by a certain constant amount above the ground during the swing phase. Usually, the swing phase feet trajectories are represented by some sort of spline so that we get smooth motion, but my implementation here sets them as as linear piecewise trajectories as seen in the plots.</p>
+<h3 id="joint-trajectory-generation">Joint Trajectory Generation</h3>
+<p>To wrap things up, we need to convert this COM trajectory into a trajectory of joint angles. For simple bipedal systems, we might be able to find approximate closed form solutions for the joint angles for the given center of mass, but for my test, I used Unitree&rsquo;s H1 robot model, which has a total of 19 actuated joints!</p>
+<p>We can use this to our advantage by formulating the problem as a non-linear optimization problem. Because of the high dexterity of the model, we can be reasonably confident that the optimizer will find good solutions even with a lot of constraints on the kinematics. We make the following considerations:</p>
+<ol>
+<li>We split the trajectory into alternating stance and swing phases for each leg. This keeps each optimization problem independent and simple. It has the disadvantage of being open loop and resulting in some inconsistencies, but we won&rsquo;t get into that here</li>
+<li>We don&rsquo;t solve for any of the upper body or arm joints and fix them to be zero (or whatever the initial configuration is)</li>
+<li>The COM is purely a kinematic function of the joint angles. Even though it is non-linear, it makes it easy to represent the COM constraint in the optimization problem.</li>
+</ol>
+<p>For each phase from time $t_s$ to $t_e$, we divide the trajectory into a number of sample points (denoted $t_k$) and solve for the joint angles at each point, given the constraints. This is basically solving a series of IK problem for each phase and is similar to generating trajectories for manipulators. We have the following constraints at each sample point:</p>
+<ol>
+<li>The left and right feet at time $t_k$ when the joint angles are $q_k$ (Given by the forward kinematics $f_l(q_k)$ and $f_r(q_k)$) must be at positions $g_l(t_k)$ and $g_r(t_k)$ given by the left and right feet trajectories $g_l(t)$ and $g_r(t)$</li>
+<li>The COM (Given by the forward kinematics $\fcom(q_k)$) must be at $\gcom(t_k)$</li>
+<li>$\qkj$ for the joint indices $j$ corresponding to the upper body (Set $U$) must be 0</li>
+</ol>
+<p>In order to generate smooth trajectories, we add a cost between the joint angles of successive sample points. This will help prevent the solver from finding solutions that switch rapidly, especially when multiple IK solutions are available for a given sample point.</p>
+<p>The optimization problem looks something like:</p>
+<p>\begin{equation}
+\begin{aligned}
+\min_{q_k} Q\sum_{k=0}^{K-1} \norm{q_{k + 1} - q_{k}}_2\\
+\st \fcom(q_k) = \gcom(t_k)\\
+f_l(q_k) = g_l(t_k)\\
+f_r(q_k) = g_r(t_k)\\
+\qkj = 0, \ j \in U
+\end{aligned}
+\end{equation}</p>
+<p>Solving this, will give us a series of joint angles $q_k$ corresponding to a single walking phase. We can accumulate these together and obtain a walking gait trajectory. This is what the end result looks like:</p>
+</br>
+
+
+<div class="box" >
+  <figure  itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+    <div class="img">
+      <img itemprop="thumbnail" src="/posts/8/gifs/viz_zmp_ortho.gif" alt="viz_zmp_ortho"/>
+    </div>
+    <a href="/posts/8/gifs/viz_zmp_ortho.gif" itemprop="contentUrl"></a>
+  </figure>
+</div>
+
+</br>
+<h2 id="final-remarks">Final Remarks</h2>
+<p>Note that actually executing/tracking this trajectory requires more work. Open loop control here will almost never work, and the system will need to have a feedback controller running at a pretty high frequency that helps track the COM and stabilize the robot. Some methods also combine the COM generation and stabilization into a single controller and can allow for greater deviation and recovery.</p>
+<p>On a real robot, it is also common to have sensor modules to help compute estimated instantaneous positions of the ZMP, either by using pressure sensors on the feet or joint torque sensors.</p>
+<p>All in all, even though we haven&rsquo;t executed these gaits, just computing the trajectories can teach us a lot about the nuances of the problem and help us appreciate the beauty of bipedal robots.</p>
+<h2 id="references">References</h2>
+<ol>
+<li><strong>Tedrake, R., Kuindersma, S., Deits, R., &amp; Miura, K. (2015, November). A closed-form solution for real-time ZMP gait generation and feedback stabilization. In 2015 IEEE-RAS 15th International Conference on Humanoid Robots (Humanoids) (pp. 936-940). IEEE.</strong> <a href="https://groups.csail.mit.edu/robotics-center/public_papers/Tedrake15.pdf">[Link]</a></li>
+<li><strong>Kajita, S., Kanehiro, F., Kaneko, K., Fujiwara, K., Harada, K., Yokoi, K., &amp; Hirukawa, H. (2003, September). Biped walking pattern generation by using preview control of zero-moment point. In 2003 IEEE international conference on robotics and automation (Cat. No. 03CH37422) (Vol. 2, pp. 1620-1626). IEEE.</strong> <a href="https://mzucker.github.io/swarthmore/e91_s2013/readings/kajita2003preview.pdf">[Link]</a></li>
+<li><strong>Katayama, T., Ohki, T., Inoue, T., &amp; Kato, T. (1985). Design of an optimal controller for a discrete-time system subject to previewable demand. International Journal of Control, 41(3), 677-699.</strong> <a href="https://people.csail.mit.edu/katiebyl/kb/DW2008/papers_of_tangential_interest/katayama85.pdf">[Link]</a></li>
+</ol>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://shrenikm.com//tags/robotics/">robotics</a>&nbsp;
+            
+              <a href="https://shrenikm.com//tags/control/">control</a>&nbsp;
+            
+              <a href="https://shrenikm.com//tags/legged/">legged</a>&nbsp;
+            
+              <a href="https://shrenikm.com//tags/motion_planning/">motion_planning</a>&nbsp;
+            
+              <a href="https://shrenikm.com//tags/trajectory_optimization/">trajectory_optimization</a>&nbsp;
+            
+              <a href="https://shrenikm.com//tags/drake/">drake</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fshrenikm.com%2fposts%2f2024-04-03-zmp-generating-bipedal-walking-trajectories%2f&amp;text=ZMP%3a%20Generating%20Bipedal%20Walking%20Trajectories&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fshrenikm.com%2fposts%2f2024-04-03-zmp-generating-bipedal-walking-trajectories%2f&amp;title=ZMP%3a%20Generating%20Bipedal%20Walking%20Trajectories" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fshrenikm.com%2fposts%2f2024-04-03-zmp-generating-bipedal-walking-trajectories%2f&amp;title=ZMP%3a%20Generating%20Bipedal%20Walking%20Trajectories" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/posts/2024-03-08-setting-up-a-manipulator/">Setting Up a Robotic Manipulator</a></li>
+                
+                    <li><a href="/posts/2024-01-06-understanding-trajopt/">Understanding TrajOpt</a></li>
+                
+                    <li><a href="/posts/2023-12-24-multi-vehicle-mixed-integer-programming/">Multi Vehicle Mixed Integer Programming</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://shrenikm.com/posts/2024-03-08-setting-up-a-manipulator/" data-toggle="tooltip" data-placement="top" title="Setting Up a Robotic Manipulator">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-shrenikm-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      
+<footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:shrenik95@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://github.com/shrenikm" title="GitHub">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+		
+		  <a href="https://linkedin.com/in/shrenik95" title="LinkedIn">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            <a href="" title="RSS">
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Shrenik M
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2024
+          
+
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.124.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script>
+      var reg = new RegExp("^\\s*\\$.*\\$\\s*$");
+      $('code').each(function(i) {
+        var elem = $(this);
+        if(reg.test(elem.text())) {
+          var contents = elem.contents();
+          contents.unwrap();
+          if (contents.parent().is('pre')) contents.unwrap();
+        }
+      });
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$','$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        }
+      };
+    </script><script type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://shrenikm.com/js/main.js"></script>
+<script src="https://shrenikm.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://shrenikm.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+

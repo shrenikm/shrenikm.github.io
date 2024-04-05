@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Legged on </title>
+    <link>https://shrenikm.com/tags/legged/</link>
+    <description>Recent content in Legged on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 03 Apr 2024 22:31:49 -0700</lastBuildDate>
+    <atom:link href="https://shrenikm.com/tags/legged/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ZMP: Generating Bipedal Walking Trajectories</title>
+      <link>https://shrenikm.com/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/</link>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <guid>https://shrenikm.com/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/</guid>
+      <description>Legged robot research has been an active area of study since the late nineties. Let&amp;rsquo;s take a look at how we can generate walking trajectories for bipedal robots, using some of these ideas.&#xA;The Objective: Implement a quick and dirty way of generating walking trajectories&#xA;Constraints: Do it quickly. Minimize sophistication. Anything goes!&#xA;What this post will cover:&#xA;Overview of the minimal set of ideas required to develop walking algorithms Computation of bipedal joint trajectories for a simple walking gait What will not be covered:</description>
+    </item>
+  </channel>
+</rss>
