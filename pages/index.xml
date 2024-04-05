@@ -13,7 +13,7 @@
       <link>https://shrenikm.com/pages/projects/</link>
       <pubDate>Sat, 28 Aug 2021 16:53:20 -0700</pubDate>
       <guid>https://shrenikm.com/pages/projects/</guid>
-      <description>GPV Generation of policy variations in deep reinforcement learning The project aims to enable reinforcement learning agents to obtain probabilistically consistant policy variations from a learned deterministic policy. A Variational Autoencoder (VAE) is used to obtain these variations. The goal is to enable agents to execute actions that are different (and sub-optimal) from the trained policy, while still being able to achieve the desired result.&#xA;This is useful in cases where we need to generate behavior that is not a part of the trained policy, while also making sure that the system does not fail at the given task.</description>
+      <description>Atium Atium is a more formal collection of some of my motion planning experiments, research ideas and paper implementations. Details of the individual implementations can be found within the subdirectories of the repo.&#xA;Repository&#xA;Manipulation Research This is a collection of manipulation algorithms for execution in simulation and a real hardware robot.&#xA;Repository&#xA;Legged Research This is a collection of algorithms for legged robots. Everything here is purely simulation in Drake.</description>
     </item>
     <item>
       <title>Shrenik Muralidhar</title>

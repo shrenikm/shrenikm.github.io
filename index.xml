@@ -6,8 +6,15 @@
     <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Mar 2024 22:11:21 -0800</lastBuildDate>
+    <lastBuildDate>Wed, 03 Apr 2024 22:31:49 -0700</lastBuildDate>
     <atom:link href="https://shrenikm.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ZMP: Generating Bipedal Walking Trajectories</title>
+      <link>https://shrenikm.com/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/</link>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <guid>https://shrenikm.com/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/</guid>
+      <description>Legged robot research has been an active area of study since the late nineties. Let&amp;rsquo;s take a look at how we can generate walking trajectories for bipedal robots, using some of these ideas.&#xA;The Objective: Implement a quick and dirty way of generating walking trajectories&#xA;Constraints: Do it quickly. Minimize sophistication. Anything goes!&#xA;What this post will cover:&#xA;Overview of the minimal set of ideas required to develop walking algorithms Computation of bipedal joint trajectories for a simple walking gait What will not be covered:</description>
+    </item>
     <item>
       <title>Setting Up a Robotic Manipulator</title>
       <link>https://shrenikm.com/posts/2024-03-08-setting-up-a-manipulator/</link>
@@ -62,7 +69,7 @@
       <link>https://shrenikm.com/pages/projects/</link>
       <pubDate>Sat, 28 Aug 2021 16:53:20 -0700</pubDate>
       <guid>https://shrenikm.com/pages/projects/</guid>
-      <description>GPV Generation of policy variations in deep reinforcement learning The project aims to enable reinforcement learning agents to obtain probabilistically consistant policy variations from a learned deterministic policy. A Variational Autoencoder (VAE) is used to obtain these variations. The goal is to enable agents to execute actions that are different (and sub-optimal) from the trained policy, while still being able to achieve the desired result.&#xA;This is useful in cases where we need to generate behavior that is not a part of the trained policy, while also making sure that the system does not fail at the given task.</description>
+      <description>Atium Atium is a more formal collection of some of my motion planning experiments, research ideas and paper implementations. Details of the individual implementations can be found within the subdirectories of the repo.&#xA;Repository&#xA;Manipulation Research This is a collection of manipulation algorithms for execution in simulation and a real hardware robot.&#xA;Repository&#xA;Legged Research This is a collection of algorithms for legged robots. Everything here is purely simulation in Drake.</description>
     </item>
     <item>
       <title>Shrenik Muralidhar</title>

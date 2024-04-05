@@ -6,20 +6,48 @@
     <description>Recent content in Tags on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Mar 2024 22:11:21 -0800</lastBuildDate>
+    <lastBuildDate>Wed, 03 Apr 2024 22:31:49 -0700</lastBuildDate>
     <atom:link href="https://shrenikm.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Control</title>
       <link>https://shrenikm.com/tags/control/</link>
-      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
       <guid>https://shrenikm.com/tags/control/</guid>
       <description></description>
     </item>
     <item>
       <title>Drake</title>
       <link>https://shrenikm.com/tags/drake/</link>
-      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
       <guid>https://shrenikm.com/tags/drake/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Legged</title>
+      <link>https://shrenikm.com/tags/legged/</link>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <guid>https://shrenikm.com/tags/legged/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Motion_planning</title>
+      <link>https://shrenikm.com/tags/motion_planning/</link>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <guid>https://shrenikm.com/tags/motion_planning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Robotics</title>
+      <link>https://shrenikm.com/tags/robotics/</link>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <guid>https://shrenikm.com/tags/robotics/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Trajectory_optimization</title>
+      <link>https://shrenikm.com/tags/trajectory_optimization/</link>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <guid>https://shrenikm.com/tags/trajectory_optimization/</guid>
       <description></description>
     </item>
     <item>
@@ -27,13 +55,6 @@
       <link>https://shrenikm.com/tags/manipulation/</link>
       <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate>
       <guid>https://shrenikm.com/tags/manipulation/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Robotics</title>
-      <link>https://shrenikm.com/tags/robotics/</link>
-      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate>
-      <guid>https://shrenikm.com/tags/robotics/</guid>
       <description></description>
     </item>
     <item>
@@ -58,24 +79,10 @@
       <description></description>
     </item>
     <item>
-      <title>Motion_planning</title>
-      <link>https://shrenikm.com/tags/motion_planning/</link>
-      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate>
-      <guid>https://shrenikm.com/tags/motion_planning/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Numerical_optimization</title>
       <link>https://shrenikm.com/tags/numerical_optimization/</link>
       <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate>
       <guid>https://shrenikm.com/tags/numerical_optimization/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Trajectory_optimization</title>
-      <link>https://shrenikm.com/tags/trajectory_optimization/</link>
-      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate>
-      <guid>https://shrenikm.com/tags/trajectory_optimization/</guid>
       <description></description>
     </item>
     <item>
