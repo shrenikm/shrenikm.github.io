@@ -4,23 +4,25 @@
     <title>Pages on </title>
     <link>https://shrenikm.com/pages/</link>
     <description>Recent content in Pages on </description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
+    <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
+    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
     <lastBuildDate>Sat, 28 Aug 2021 16:53:20 -0700</lastBuildDate>
     <atom:link href="https://shrenikm.com/pages/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Projects</title>
       <link>https://shrenikm.com/pages/projects/</link>
-      <pubDate>Sat, 28 Aug 2021 16:53:20 -0700</pubDate>
+      <pubDate>Sat, 28 Aug 2021 16:53:20 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/pages/projects/</guid>
-      <description>Atium Atium is a more formal collection of some of my motion planning experiments, research ideas and paper implementations. Details of the individual implementations can be found within the subdirectories of the repo.&#xA;Repository&#xA;Manipulation Research This is a collection of manipulation algorithms for execution in simulation and a real hardware robot.&#xA;Repository&#xA;Legged Research This is a collection of algorithms for legged robots. Everything here is purely simulation in Drake.</description>
+      <description>&lt;h2 id=&#34;atium&#34;&gt;Atium&lt;/h2&gt;&#xA;&lt;p&gt;Atium is a more formal collection of some of my motion planning experiments, research ideas and paper implementations. Details of the individual implementations can be found within the subdirectories of the repo.&lt;/p&gt;&#xA;&#xA;&#xA;&lt;div class=&#34;box&#34; &gt;&#xA;  &lt;figure  itemprop=&#34;associatedMedia&#34; itemscope itemtype=&#34;http://schema.org/ImageObject&#34;&gt;&#xA;    &lt;div class=&#34;img&#34;&gt;&#xA;      &lt;img itemprop=&#34;thumbnail&#34; src=&#34;https://shrenikm.com/pages/gifs/mvmip_setup8.gif&#34; alt=&#34;mvmip_setup8&#34;/&gt;&#xA;    &lt;/div&gt;&#xA;    &lt;a href=&#34;https://shrenikm.com/pages/gifs/mvmip_setup8.gif&#34; itemprop=&#34;contentUrl&#34;&gt;&lt;/a&gt;&#xA;  &lt;/figure&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;p&gt;&lt;a href=&#34;https://github.com/shrenikm/Atium&#34;&gt;Repository&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;manipulation-research&#34;&gt;Manipulation Research&lt;/h2&gt;&#xA;&lt;p&gt;This is a collection of manipulation algorithms for execution in simulation and a real hardware robot.&lt;/p&gt;&#xA;&lt;/br&gt;&#xA;&#xA;&#xA;&lt;div class=&#34;box&#34; &gt;&#xA;  &lt;figure  itemprop=&#34;associatedMedia&#34; itemscope itemtype=&#34;http://schema.org/ImageObject&#34;&gt;&#xA;    &lt;div class=&#34;img&#34;&gt;&#xA;      &lt;img itemprop=&#34;thumbnail&#34; src=&#34;https://shrenikm.com/pages/gifs/lite6_simple_pick_place_combined.gif&#34; alt=&#34;lite6_simple_pick_place_combined&#34;/&gt;&#xA;    &lt;/div&gt;&#xA;    &lt;a href=&#34;https://shrenikm.com/pages/gifs/lite6_simple_pick_place_combined.gif&#34; itemprop=&#34;contentUrl&#34;&gt;&lt;/a&gt;&#xA;  &lt;/figure&gt;&#xA;&lt;/div&gt;&#xA;&#xA;&lt;/br&gt;&#xA;&lt;p&gt;&lt;a href=&#34;https://github.com/shrenikm/manipulation_research&#34;&gt;Repository&lt;/a&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;legged-research&#34;&gt;Legged Research&lt;/h2&gt;&#xA;&lt;p&gt;This is a collection of algorithms for legged robots. Everything here is purely simulation in Drake.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Shrenik Muralidhar</title>
       <link>https://shrenikm.com/pages/about/</link>
-      <pubDate>Sat, 28 Aug 2021 16:52:40 -0700</pubDate>
+      <pubDate>Sat, 28 Aug 2021 16:52:40 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/pages/about/</guid>
-      <description>I&amp;rsquo;m a roboticist, currently working as a motion planning research engineer at Brain Corporation.&#xA;I have a Master&amp;rsquo;s degree in Robotics from the University of Pennsylvania. While at University, I was a part of the DAIR Lab, working on optimal control for bipedal robots.&#xA;My interests lie in enabling robots to function autonomously in the real world, using planning, optimization and learning based approaches.&#xA;Brief descriptions of some of my projects can be found here.</description>
+      <description>&lt;p&gt;I&amp;rsquo;m a roboticist, currently working in R&amp;amp;D at &lt;a href=&#34;https://www.braincorp.com&#34;&gt;Brain Corporation&lt;/a&gt;, where I lead the motion planning team. I also work on mobile manipulation (Check out &lt;a href=&#34;https://www.youtube.com/playlist?list=PLijih0JSNM0-3n57yE22ae5eiMSJn1eaR&#34;&gt;Project Brawn!&lt;/a&gt;).&lt;/p&gt;&#xA;&lt;p&gt;I have a Master&amp;rsquo;s degree in Robotics from the University of Pennsylvania. While at University, I was a part of the &lt;a href=&#34;https://dair.seas.upenn.edu&#34;&gt;DAIR Lab&lt;/a&gt;, working on optimal control for bipedal robots.&lt;/p&gt;&#xA;&lt;p&gt;My interests lie in enabling robots to function autonomously in the real world, using planning, optimization and learning based approaches.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

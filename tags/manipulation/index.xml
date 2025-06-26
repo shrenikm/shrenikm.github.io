@@ -4,16 +4,25 @@
     <title>Manipulation on </title>
     <link>https://shrenikm.com/tags/manipulation/</link>
     <description>Recent content in Manipulation on </description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 08 Mar 2024 22:11:21 -0800</lastBuildDate>
+    <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
+    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
+    <lastBuildDate>Thu, 26 Jun 2025 00:57:00 -0700</lastBuildDate>
     <atom:link href="https://shrenikm.com/tags/manipulation/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reference: Behavior Cloning for Manipulation</title>
+      <link>https://shrenikm.com/posts/2025-05-17-reference-behavior-cloning-for-manipulation/</link>
+      <pubDate>Thu, 26 Jun 2025 00:57:00 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/posts/2025-05-17-reference-behavior-cloning-for-manipulation/</guid>
+      <description>&lt;!--- Post 9 --&gt;&#xA;&lt;p&gt;Hello, it&amp;rsquo;s time for my yearly post! The goal of this one is to be a handy reference for behavior cloning as applied to manipulation &amp;ndash; something I&amp;rsquo;ve been spending quite a bit of time on over the past 6-9 months. The field has been progressing at an absurdly rapid pace of late (somehow we&amp;rsquo;re at a point where robots can do &lt;a href=&#34;https://www.physicalintelligence.company/blog/pi0&#34;&gt;laundry&lt;/a&gt;), so I thought it&amp;rsquo;d be a good exercise to summarize where we&amp;rsquo;re at right now and how we got here (at least from my perspective and based on what I&amp;rsquo;ve read so far). I&amp;rsquo;m hoping this becomes a useful resource for any manipulation enthusiasts stumbling upon it, and of course, for future me as well!&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Setting Up a Robotic Manipulator</title>
       <link>https://shrenikm.com/posts/2024-03-08-setting-up-a-manipulator/</link>
-      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate>
+      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/posts/2024-03-08-setting-up-a-manipulator/</guid>
-      <description>Let&amp;rsquo;s take a look at how we can set up a framework for streamlined simulation and hardware control of a manipulator. The robot under consideration is Ufactory&amp;rsquo;s Lite6 manipulator and the simulation/setup tool used is Drake.&#xA;All the code used in this post can be found in my repo. But before we start, some explanations are in order.&#xA;Lite6?&#xA;The Lite6 is one of the more economical (not to be confused with cheap) manipulators one can buy, especially for personal research where you&amp;rsquo;re not going to be spending tens of thousands of dollars on some of the more well established robots out there.</description>
+      <description>&lt;!-- Post 7 --&gt;&#xA;&lt;p&gt;Let&amp;rsquo;s take a look at how we can set up a framework for streamlined simulation and hardware control of a manipulator. The robot under consideration is Ufactory&amp;rsquo;s Lite6 manipulator and the simulation/setup tool used is Drake.&lt;/p&gt;&#xA;&lt;p&gt;All the code used in this post can be found in my &lt;a href=&#34;https://github.com/shrenikm/manipulation_research&#34;&gt;repo&lt;/a&gt;. But before we start, some explanations are in order.&lt;/p&gt;&#xA;&lt;p&gt;Lite6?&lt;/p&gt;&#xA;&lt;p&gt;The &lt;a href=&#34;https://www.ufactory.cc/lite-6-collaborative-robot/&#34;&gt;Lite6&lt;/a&gt; is one of the more economical (not to be confused with cheap) manipulators one can buy, especially for personal research where you&amp;rsquo;re not going to be spending tens of thousands of dollars on some of the more well established robots out there. It&amp;rsquo;s well built, has surprisingly good specifications for the price point, and comes with an integrated controller. You can get a parallel and vacuum gripper for it, but also comes with hardware interfaces that can support custom grippers. The product is well supported and their API (python and C++) is easy to use. The main pain point is its parallel gripper, which can only open by 1.6 cm. This severely limits the type of objects you can pick/place, but luckily for us, pick and place is only a small part of robotic manipulation!&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

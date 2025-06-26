@@ -1,0 +1,719 @@
+
+
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+ 
+
+
+      <title>Reference: Behavior Cloning for Manipulation - </title>
+
+  <meta name="description" content="
+Hello, it&rsquo;s time for my yearly post! The goal of this one is to be a handy reference for behavior cloning as applied to manipulation &ndash; something I&rsquo;ve been spending quite a bit of time on over the past 6-9 months. The field has been progressing at an absurdly rapid pace of late (somehow we&rsquo;re at a point where robots can do laundry), so I thought it&rsquo;d be a good exercise to summarize where we&rsquo;re at right now and how we got here (at least from my perspective and based on what I&rsquo;ve read so far). I&rsquo;m hoping this becomes a useful resource for any manipulation enthusiasts stumbling upon it, and of course, for future me as well!">
+  <meta name="author" content="Shrenik M"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "",
+    
+    "url": "https:\/\/shrenikm.com\/"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/shrenikm.com\/"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/shrenikm.com\/",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/shrenikm.com\/posts\/2025-05-17-reference-behavior-cloning-for-manipulation\/",
+          "name": "Reference behavior cloning for manipulation"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "Shrenik M"
+  },
+  "headline": "Reference: Behavior Cloning for Manipulation",
+  "description" : " Hello, it\u0026rsquo;s time for my yearly post! The goal of this one is to be a handy reference for behavior cloning as applied to manipulation \u0026ndash; something I\u0026rsquo;ve been spending quite a bit of time on over the past 6-9 months. The field has been progressing at an absurdly rapid pace of late (somehow we\u0026rsquo;re at a point where robots can do laundry), so I thought it\u0026rsquo;d be a good exercise to summarize where we\u0026rsquo;re at right now and how we got here (at least from my perspective and based on what I\u0026rsquo;ve read so far). I\u0026rsquo;m hoping this becomes a useful resource for any manipulation enthusiasts stumbling upon it, and of course, for future me as well!\n",
+  "inLanguage" : "en",
+  "wordCount":  9493 ,
+  "datePublished" : "2025-06-26T00:57:00-07:00",
+  "dateModified" : "2025-06-26T00:57:00-07:00",
+  "image" : "https:\/\/shrenikm.com\/",
+  "keywords" : [ "reference, robotics, manipulation, behavior_cloning, machine_learning, generalist_policies, VLA" ],
+  "mainEntityOfPage" : "https:\/\/shrenikm.com\/posts\/2025-05-17-reference-behavior-cloning-for-manipulation\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/shrenikm.com\/",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/shrenikm.com\/",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+
+<meta property="og:title" content="Reference: Behavior Cloning for Manipulation" />
+<meta property="og:description" content="
+Hello, it&rsquo;s time for my yearly post! The goal of this one is to be a handy reference for behavior cloning as applied to manipulation &ndash; something I&rsquo;ve been spending quite a bit of time on over the past 6-9 months. The field has been progressing at an absurdly rapid pace of late (somehow we&rsquo;re at a point where robots can do laundry), so I thought it&rsquo;d be a good exercise to summarize where we&rsquo;re at right now and how we got here (at least from my perspective and based on what I&rsquo;ve read so far). I&rsquo;m hoping this becomes a useful resource for any manipulation enthusiasts stumbling upon it, and of course, for future me as well!">
+<meta property="og:url" content="https://shrenikm.com/posts/2025-05-17-reference-behavior-cloning-for-manipulation/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="" />
+
+  <meta name="twitter:title" content="Reference: Behavior Cloning for Manipulation" />
+  <meta name="twitter:description" content="
+Hello, it&rsquo;s time for my yearly post! The goal of this one is to be a handy reference for behavior cloning as applied to manipulation &ndash; something I&rsquo;ve been spending quite a bit of …&lt;/!---&gt;">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="generator" content="Hugo 0.147.9">
+  <link rel="alternate" href="https://shrenikm.com/index.xml" type="application/rss+xml" title=""><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://shrenikm.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+  <link rel="stylesheet" href="https://shrenikm.com/css/highlight.min.css" /><link rel="stylesheet" href="https://shrenikm.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2P4DFRG5B"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-E2P4DFRG5B');
+        }
+      </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://shrenikm.com/"></a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Posts" href="/">Posts</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Projects" href="/pages/projects/">Projects</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/pages/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Tags" href="/tags">Tags</a>
+            </li>
+          
+        
+
+        
+
+        
+      </ul>
+    </div>
+
+    
+
+  </div>
+</nav>
+
+
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="posts-heading">
+              
+                <h1>Reference: Behavior Cloning for Manipulation</h1>
+              
+              
+                <hr class="small">
+              
+              
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        <!--- Post 9 -->
+<p>Hello, it&rsquo;s time for my yearly post! The goal of this one is to be a handy reference for behavior cloning as applied to manipulation &ndash; something I&rsquo;ve been spending quite a bit of time on over the past 6-9 months. The field has been progressing at an absurdly rapid pace of late (somehow we&rsquo;re at a point where robots can do <a href="https://www.physicalintelligence.company/blog/pi0">laundry</a>), so I thought it&rsquo;d be a good exercise to summarize where we&rsquo;re at right now and how we got here (at least from my perspective and based on what I&rsquo;ve read so far). I&rsquo;m hoping this becomes a useful resource for any manipulation enthusiasts stumbling upon it, and of course, for future me as well!</p>
+<p>The topic of interest here is going to be behavior cloning (BC). Why behavior cloning you ask? Because it is currently the most promising way of training policies that can perform dexterous manipulation. I highly recommend reading this <a href="https://medium.com/data-science/shifting-winds-in-robot-learning-research-2ead21671a65">post</a> by Vincent Vanhoucke, which delves into how/why the field made this transition in the first place. And while you&rsquo;re at it, I would also recommend reading another one of his relevant <a href="https://vanhoucke.medium.com/the-state-of-robot-learning-639dafffbcf8">posts</a> on robot learning. None of this to say that other methods like RL isn&rsquo;t useful now, it just isn&rsquo;t the protagonist of this particular post.</p>
+<p>Now that we&rsquo;ve got the motivation part out of the way, let&rsquo;s talk about what we&rsquo;re actually gonna talk about. Sidelining our protagonist for now, we highlight some of the supporting cast that will make this a compelling story. This is going to include some conceptual groundwork, some history lessons (starting from the pre-BC era), teleoperation, simulation and some miscellaneous topics. Analogies aside, there are certain things we need to know about how such systems are set up, trained and evaluated, and I&rsquo;m hoping to give a broad but general overview of these items.</p>
+<p>This isn&rsquo;t going to be an all-encompassing, self-sufficient post on the subject matter. Neither is it going to explain any of the theory/concepts being introduced. Each item will be briefly summarized, with references for deeper reading. The hope is that the references listed here, along with the references in these references, paints a well rounded introduction (or refresher) to the field.</p>
+<h2 id="groundwork">Groundwork</h2>
+<p>For brevity, I&rsquo;m going to avoid listing core ML concepts such as LayerNorm, Residual Networks, etc. Information on these topics can be obtained by tracing references from the listed papers and tend to be more accessible in general.</p>
+<p>The first idea here is going to be the original paper on transformers <a href="#ref1">[1]</a> (No prizes for guessing this one). A transformer is a neural network architecture designed to learn how elements of a sequence relate to each other. They&rsquo;re also the major driving force behind the current boom in AI. Instead of attempting to explain this any further, I&rsquo;m just going to list out a few resources that I&rsquo;ve found to be extremely helpful (but please do read the original paper first):</p>
+<ul>
+<li>This <a href="https://www.youtube.com/watch?v=aircAruvnKk&amp;list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi">series</a> by 3B1B provides some good intuition on the topic</li>
+<li>This <a href="https://transformer-circuits.pub/2021/framework/index.html">paper</a> from Anthropic dives deeper into the topic by trying to reverse engineer the model</li>
+<li>This <a href="https://www.youtube.com/watch?v=kCc8FmEb1nY">video</a> by Andrej Karpathy implements a transformer model from scratch</li>
+</ul>
+<p>And countless others. There definitely isn&rsquo;t any shortage of information/tutorials on transformers at this point.</p>
+<p>We now move over to BERT <a href="#ref2">[2]</a>. BERT introduced a bidirectional encoder-only transformer model that was able to achieve state of the art performance on a number of NLP tasks. It followed the now popular pre-training -&gt; fine-tuning procedure.</p>
+<p>Up next we have the GPT-3 paper <a href="#ref3">[3]</a>. This was also where I had my &ldquo;Oh crap&rdquo; moment with LLMs. A few realizations were had after this one:</p>
+<ul>
+<li>We can just scale up the size of the model and the amount of data the model is trained on, and we get better performance</li>
+<li>These models are actually generating text that is difficult to distinguish from human written text</li>
+<li>These models have the potential to be incredibly useful</li>
+</ul>
+<p>The only thing that was changed from GPT-2 was the model size and amount of input data. But apparently that&rsquo;s all it takes because transformers scale unreasonably well with data.</p>
+<p>Time to go beyond language models and see how these ideas made their way into robotics. A lot of it had to do with being able to work with multi-modal data (language + images, etc.). TL;DR: Researchers quickly realized that transformers weren&rsquo;t just useful for modelling languages, they&rsquo;re extremely adept at modeling sequences. So basically, if you can transform (pun intended) your problem into a sequence of representations/embeddings, chances are that using some sort of transformer model will likely solve the problem.</p>
+<p>We start off this section with ViTs <a href="#ref4">[4]</a>. This paper is the answer to the question: Can we use transformers for image recognition tasks? Each image is split into 16x16 patches that are flattened, mapped through a linear layer and then passed as input to a transformer model. The output of the self-attention encoder can then be used for classification tasks.</p>
+<p>Moving on to some multi-modal stuff, we have CLIP <a href="#ref5">[5]</a>. CLIP combines text and vision encoders to train a joint embedding representation that can perform zero-shot tasks like image classification. The core idea here is that once we express both text and images in the same multi-modal embedding space, we can use the cosine similarity between the embedding vectors to learn a relationship between text and the contents of images. CLIP was pre-trained on 400 million image-text paris, and the resulting model was able to perform zero-shot image classification, image retrieval, etc.</p>
+<p>I wasn&rsquo;t too sure about adding this one as it might be getting too specific, but I thought it was worth mentioning as it gets used in Pi-Zero (stay tuned). And by this one, I mean the PaLI series of models <a href="#ref6">[6]</a>, <a href="#ref7">[7]</a>, <a href="#ref8">[8]</a>, <a href="#ref9">[9]</a>. PaLI <a href="#ref6">[6]</a> is a multilingual vision-language model that was (similar to CLIP) trained on a large amount of image-text data. Images are encoded using a pre-trained ViT and text is encoded using a per-trained language model. They are then jointly trained on a variety of tasks such as image captioning, visual question answering (VQA), OCR, etc. This enables the model to then zero-shot these vision-language tasks in multiple languages. PaLI-X <a href="#ref7">[7]</a> scales up both the model size and training data to achieve better performance on these tasks. PaLI-3 <a href="#ref8">[8]</a> changes the architecture a bit, making it a smaller and faster model while still achieving SOTA comparable performance on vision-language tasks. Finally, PaLI-Gemma <a href="#ref9">[9]</a> is a 3B parameter VLM that is basically the open-source equivalent of PaLI-3. It uses a 400M SigLIP <a href="#ref10">[10]</a> model for encoding images and a 2B Gemma <a href="#ref11">[11]</a> model for encoding text, which makes it a pretty good candidate for a lightweight VLM backbone.</p>
+<p>Stepping away from LLM/VLM architectures, let&rsquo;s look at a few ideas that get used in building and training the actual models. First in line is FiLM <a href="#ref12">[12]</a>. FiLM is a technique for conditioning the features of a neural network on some additional information. It applies a linear (affine) transformation to the features where the parameters of the transformation are learned from the additional information. As we&rsquo;ll see later, this is pretty useful when we have encoded image/text and we want to condition the output of the model (robot actions in our case) on the encoded features.</p>
+<p>We&rsquo;ve talked a lot about architectures, so here&rsquo;s an important reference on the training aspect of things: LoRA  <a href="#ref13">[13]</a>. LoRA is a technique that allows us to fine-tune LLMs and VLMs with a small number of parameters. It does this by adding a weight delta matrix to the original weight matrices of the model, and then updating only the delta matrices during training (keeping the original weights frozen). The delta matrices are represented as low rank matrices, formed by the product of two smaller matrices. This allows us to fine-tune large models with a small number of parameters, and is the key idea that makes the fine-tuning of some of the recent robotics foundational models possible without requiring beefy compute.</p>
+<p>VLMs are the part that have made manipulation policies &ldquo;smart&rdquo;. They allow us to use natural language to describe tasks, and allow models to reason about how to go about performing the given tasks. They&rsquo;re able to encode common sense reasoning and knowledge about the world, which was almost impossible to do previously. But there&rsquo;s still a missing piece here: robots still need to be able to convert these high level descriptions and reasoning capabilities into low level controls/actions, which brings us to the final part of this section.</p>
+<p>Diffusion <a href="#ref14">[14]</a> models have been the state of the art for image/video generation for a while now (think Dall-E, Stable Diffusion, Midjourney, Sora, etc). Notably, they have certain properties that make them suitable for generating robot actions as well (primarily their ability to generate multi-modal trajectories). In general, diffusion models are generative models that learn to generate data in a particular distribution through an iterative denoising process. Given a noisy input, the model learns how to denoise it step by step until the final output is close to the original data distribution. In the case of images, we start with an image that is just noise, and then iteratively denoise it to get a final image that resembles the images in the training set. The same idea can be applied to robot actions, where we start with a noisy action sequence and iteratively denoise it to get a final action sequence that resembles the actions in the training set. It would be remiss of me to not mention the Denoising Diffusion Implicit Models (DDIM) <a href="#ref15">[15]</a> paper here, which is a variant of diffusion models that allows for generation with fewer denoising steps. Most diffusion implementations in BC use the DDIM implementation as it allows for faster generation of actions while still maintaining the quality of the generated actions. The training process is similar, but during sampling, instead of adding noise at each step, we treat it as a deterministic process. A resource that I&rsquo;ve found to be extremely helpful for diffusion is this tutorial <a href="#ref16">[16]</a> by Stanley Chan.</p>
+<p>And finally we have Flow Matching <a href="#ref17">[17]</a>, <a href="#ref18">[18]</a>, something that has been gaining more popularity recently. Flow matching can be thought of as a generalization of diffusion models, where instead of learning to denoise a noisy input, the model learns a vector field that describes how to move from the noise distribution to a target distribution. The sampling process is similar to DDIM, where the learned vector field can be integrated starting from a noise sample. When the flow is defined in certain ways, the process learns something similar to the score function in diffusion. Flow matching also allows for different kinds of smooth paths that define how we move from the noise distribution to the target distribution, instead of being limited to a noise schedule. Like DDIM, flow matching models are also easy to train and generate samples from, while allowing for greater flexibility. <a href="https://diffusionflow.github.io/">Here&rsquo;s</a> a very good post from Deepmind that compares the two generative modeling approaches.</p>
+<p>And with that we have laid all the groundwork we need for the rest of the post. Next up, we will look at some of the history of manipulation policies and try to trace a line from the days of yore to the current state of the art.</p>
+<h2 id="pit-stop-behavior-cloning">Pit stop: Behavior Cloning</h2>
+<p>Before we get to the meat of the post, let&rsquo;s talk about behavior cloning (BC) itself. Behavior cloning falls under the umbrella of imitation learning and is a form of supervised learning where we train a model to mimic the behavior of an expert. In the context of manipulation, this means collecting expert data (usually from human teleoperators) and using this to train a policy that mimics the expert&rsquo;s actions. Unlike reinforcement learning (RL), the algorithm itself does not explore and learn from rewards. This makes it a lot more sample efficient and practical as we can treat it as a regression problem, with the model learning the distribution of the expert actions.</p>
+<p>As with anything, there are some caveats to this approach:</p>
+<ol>
+<li>BC algorithms can suffer from compounding errors, taking the robot&rsquo;s state away from the data distribution that the model has seen (also known as distribution shift)</li>
+<li>There can be an inherent lack of understanding of the task and lack of generalization to unseen scenarios</li>
+<li>It is difficult to train a model to correct for mistakes as the model is only trained on positive examples from the expert</li>
+<li>Expert data must be of high quality and the performance of the model is usually bounded by the performance of the expert</li>
+</ol>
+<p>In the next section, we&rsquo;ll take a look at how some of the recent advances in the field have tried to address these issues.</p>
+<h2 id="evolution-of-bc">Evolution of BC</h2>
+<p>I wasn&rsquo;t kidding when I said that this would be a history lesson. The earliest attempt at behavior cloning and a &ldquo;pixels to actions&rdquo; approach was ALVINN <a href="#ref19">[19]</a>, which was developed in 1988! It was a simple neural network (multilayer perceptron) that was trained to predict the steering direction of a van given an input image from a camera and a lidar.</p>
+<p>We now jump forward to 2016, to one of the earliest attempts at using deep learning for manipulation by training an end-end visuomotor policy <a href="#ref20">[20]</a>. While not exactly behavior cloning, this paper is a bit too important to be left out, as it demonstrated that we could train practical end-end policies to perform non-trivial manipulation tasks. The model is CNN based and takes in an RGB image and robot state as input and outputs motor torques directly. The model was able to perform manipulation tasks such as shape sorting, screwing a cap onto a bottle, etc.</p>
+<p>Moving on to some of the earlier BC methods for manipulation, we have <a href="#ref21">[21]</a> and <a href="#ref22">[22]</a>. <a href="#ref23">[21]</a> employed VR based teleoperation to collect expert data for training a CNN based network that output the required linear and angular velocities of the end-effector (along with gripper state). <a href="#ref24">[22]</a> used Leap Motion/Play Station controllers for teleoperation and a VAE-GAN autoencoder to learn a latent representation, which was then fed into an LSTM to produce the robot actions (joint commands in this case). A one-hot task selector vector was also used to condition the model on different tasks.</p>
+<p>There was then some research done on trying to scale this process up. Transformer models for manipulation wasn&rsquo;t popular yet, but people were thinking about:</p>
+<ol>
+<li>How to scale up the amount of data collected through teleoperation</li>
+<li>Generating large open source datasets for training policies</li>
+</ol>
+<p>RoboTurk <a href="#ref23">[23]</a> developed a teleoperation method that anyone around the world could use to collect data. The method involved using phones as the medium for teleoperation, while streaming image data to the client&rsquo;s web browser. It was possible to remotely collect around 130 hours of manipulation data (picking, assembly, etc) in a day. This was then used to train a demonstration guided PPO policy to perform these tasks.</p>
+<p>RoboNet <a href="#ref24">[24]</a> came later, with the intention of creating a large scale diverse dataset for manipulation. It was a collection of ~160,000 trajectories along with video data from 7 different robots performing a variety of different tasks. Foundational models for robotics weren&rsquo;t quite a thing during the time, but this paper had the right idea: Using a large amount of diverse data to train models that can generalize zero shot to new tasks. The models could also be fine-tuned on smaller datasets to improve performance on specific tasks. Sound familiar?</p>
+<p>Next in line is BC-Zero <a href="#ref25">[25]</a>, which takes this idea of creating a large scale generalist policy a step further. BC-Zero was trained on imitation learning data consisting of 25,000+ episodes over 100+ tasks and was able to generalize to unseen some unseen tasks with a decent success rate. The models inputs are RGB images and a task command. The task command takes the form of a language instruction or a video of the task to be performed. CNNs (ResNet-18 based) are used to encode the input images and the task command videos. Language commands were encoded using a separate multilingual language encoder (Even though this was published in 2022, transformers for robotics weren&rsquo;t as common yet). The encoded language/video task commands condition the vision encoder through FiLM <a href="#ref12">[12]</a> layers. This final conditioned encoding is then passed through an action head (linear layers + ReLU) to compute the final actions. The actions in this case are end-effector deltas in terms of XYZ and axis-angle, along with the gripper state. A VR based teleoperation strategy was used to collect data, with each episode/task being labelled with a task command (text description or a human demonstration video of the same task). Some of the data was also collected using a human in the loop approach, similar to HG-DAgger <a href="#ref26">[26]</a>. The result of all this, was a model that could not only perform single task BC with a high success rate, but also generalize (zero and few shot) to unseen tasks that were held out from the training set (with a respectable success rate of ~40%). This work made it clear (if it wasn&rsquo;t already) that scaling up the models and the amount of training data was the way to go for generalist policies. It also laid some of the groundwork for the robotics foundational models that would come later.</p>
+<p>Once roboticists got a taste of what was possible with large scale data and models, it was time to go all in. SayCan <a href="#ref27">[27]</a> combined the power of LLMs and BC policies, not by building a large scale model operating on language instructions, but by using an existing LLM to generate sub-tasks. The sub-tasks were then fed to a BC/RL policy (like BC-Zero) to perform the task. The  robot was already trained to be able to perform a set of atomic tasks (picking items, etc), and the LLM was used to generate a sequence of these atomic tasks given a potentially complex user instruction. The thing that integrates these two portions is an affordance function (value function) that evaluates the sub-tasks generated by the LLM and selects the ones that are most likely to succeed given the current state of the robot. This part is basically learning a Q function to pick the best sub-task conditioned on the current robot state and a language description. This helps ground the LLM generated sub-tasks in the real world, ensuring that the robot tries to execute sub-tasks that are actually feasible. The affordance function was trained using a TD based method based on trial and error data collected from the robot attempting to perform various sub-tasks. The function was conditioned on the language description of the sub-task through a frozen language encoder. The robot was able to execute tasks specified through complex natural language instructions in a zero-shot manner.</p>
+<p>And now we reach another major checkpoint: The RT (Robotics Transformer) series of papers. RT-1 <a href="#ref28">[28]</a> came out in 2022 and was one of the first successful attempts at using transformers trained on large scale data for manipulation. The ~35M model takes in a history of RGB images and a language instruction and output robot actions, all in one model. The image input is encoded using a pre-trained EfficientNet <a href="#ref29">[29]</a> model conditioned on the encoded language instruction through FiLM <a href="#ref12">[12]</a>. The output tokens (after computing a more compact representation) are then passed through a transformer (self-attention) network to produce the final output actions at a frequency of 3 Hz. The actions themselves are tokens that represent the end-effector deltas (xyz, rpy), gripper state, pose deltas of the mobile base and an additional token that indicates whether the arm or the base should be moved or if the given task is done. To learn the output actions as tokens, the actions from the training set are discretized into bins (of size 256). Almost 130k episdoes of robot data were fed into this model during training, making full use of the transformer architecture&rsquo;s scaling capabilities. What do we get for all this effort? A policy that boasts a 97% success rate on tasks seen during training, beating existing methods like BC-Zero. The model was also capable of generalizing to unseen tasks, distractors and more realistic instructions. It was also capable of performing long horizon tasks, achieving SOTA performance here as well (over SayCan).</p>
+<p>So now we have a large scale dataset, a transformer model, and proof that it is possible to train a large scale model for manipulation. What next? Scale everything up, obviously. Enter RT-2 <a href="#ref30">[30]</a>, a much larger model trained not just on the robot data from RT-1, but also on vision-language internet data. The paper also coined the term VLA (Vision-Language-Action model), which we&rsquo;ll see being used a lot from this point onwards.  The idea is that by treating the discretized actions as separate tokens, a transformer model can be trained to output language tokens as well as action tokens. By training the model to predict tokens for tasks such as image captioning, VQA, etc. along with robot actions, the model is able to learn a joint representation allowing it to perform tasks that require deep visual and language understanding. This also enables it to perform chain-of-thought reasoning in a planning step which enables it to output better actions for more complex tasks. The model is build on top of existing pre-trained VLMs such as PaLI-X <a href="#ref7">[7]</a>. The PaLI-X version was built on both a 5B and a 55B model, marking a significant increase in the model size compared to the RT-1 model. The size of these models also means that they had to be run as a cloud service at a rate of 1-3 Hz for the 55B model and 5Hz for the 5B model. RT-2 was shown to produce state of the art results, outclassing other models (including RT-1) on a variety of tasks. It also performed a lot better in unseen environments/tasks, in no small part due to the large scale internet data it was trained on.</p>
+<p>LLMs pre-trained on internet scale data are known to outperform models trained on smaller task specific datasets. Open-X embodiment <a href="#ref31">[31]</a> is the embodiment of this idea for robotic manipulation. It introduces truly generalist policies, not just by proposing any novel architecture changes, but by taking the existing models (RT-1 and RT-2) and training them on a more diverse dataset. How diverse you ask? The paper introduces the Open-X embodiment dataset (OXE): An open source large scale dataset (Currently still the largest open source dataset for robot learning), whose size is only surpassed by the number of authors on the paper. It features ~1M trajectories from 22 different robot embodiments (single arm, dual arm, quadrupeds, etc) all packaged into a tensorflow dataset format. For training the RT models, a subset of the dataset containing 9 manipulator embodiments are used. The inputs and outputs are made homogenous to an extent &ndash; A single RGB image is chosen as input, along with a language instruction. The output is a set of 8 tokens (7 for the arm and 1 for the end of the episode) that represent actions discretized into bins. The inputs and outputs could still mean different things as the camera views for each dataset within OXE are different, along with different interpretations of the actions (position vs velocity, etc). But what would come as a surprise to most people reading the paper for the first time is the fact that the model trained on this dataset performs and generalizes better than the models trained on just the RT data. It exhibits positive transfer across different embodiments, and the RT models trained on the OXE dataset (referred to as RT-1-X and RT-2-X) outperform the original models. Note that RT-1-X trained on a large scale task specific dataset, did not outperform RT-1. But RT-2-X was able to outperform both RT-1 and RT-2, showing the need for model capacity while dealing with data of this magnitude.</p>
+<p>If the efficacy of cross embodiment training wasn&rsquo;t surprising enough, turns out that we can also train models with data from non-manipulator embodiments (navigation robots, quadrupeds, etc). This results in more robust policies that match the performance of specialist policies. Without spending too much time here, couple of the papers that introduce this idea are extreme cross embodiment <a href="#ref32">[32]</a> and Crossformer <a href="#ref33">[33]</a>.</p>
+<p>That brings us to the end of the scaling section. Time to focus more on some of the model architectures that power today&rsquo;s SOTA BC policies. We start off with the Action Chunking Transformer (ACT) <a href="#ref34">[34]</a>. The paper has two major contributions: An economical open source platform for bimanual manipulation and teleoperation (ALOHA) and an 80M transformer architecture for learning end-end policies for fine-grained manipulation tasks. The paper also introduced the &ldquo;action chunking&rdquo; concept which is fancy talk for saying that the model predicts a horizon of actions instead of a single action. Before we get to the specifics of the model, let&rsquo;s address the elephant in the room: The $20k economical platform. Yes, it is economical given how absurdly expensive manipulation hardware is (Don&rsquo;t believe me? <a href="https://thinkbotsolutions.com/products/onrobot-rg6">How about after seeing grippers that cost $6k?</a>). Hardware in the space is getting a lot cheaper, but it wasn&rsquo;t too long ago that research labs were spending upwards of $100k on arms. Now that the elephant has been eviscerated, let&rsquo;s talk about the model. A transformer encoder takes as input 4 RGB images, all encoded through ResNet-18 feature extraction, along with the current joint positions. A transformer decoder then takes the encoded features and outputs a tensor of size <code>k</code> x 14  where <code>k</code> is the action horizon and 14 is the dimension of the action space. Unlike some of the previous papers, the model predicts joint angles instead of end-effector deltas. Also note that the model doesn&rsquo;t do action binning, it directly outputs the action tensor instead of tokens, which is then trained using an L1 loss (which worked better than the more common L2 loss. Another interesting read on this topic is this <a href="https://github.com/alexander-soare/little_experiments/blob/main/action_multimodality.md">experiment</a>). The model was able to achieve pretty good performance (80-90%) on some tasks like opening the cap of a small cup, etc that require precise control. This was possible with a dataset of just 50 episodes for the individual tasks. It also improved on other methods such as BeT, which we&rsquo;ll get to in a bit.</p>
+<p>The downside of a field moving this rapidly is that some good ideas tend to get overshadowed by the next shiny thing pretty quickly. Octo <a href="#ref35">[35]</a> found itself at the receiving end of this phenomenon. Octo is a small (27M and 93M) transformer model that was designed with the primary goal of being modular. It includes encoders for instructions, observations and goals and a transformer network that operate on the encoded features as tokens to output action chunks (through a diffusion process). The model processes and outputs tokens in a way that makes it very easy to add/remove inputs and action heads, making it easy to adapt it to different use cases. It also makes it easy to fine tune on custom data. All of this is enabled by some clever masking on the transfomer side of things. The model was trained on ~800k trajectories from the OXE dataset and is published as an open source model. Despite how interesting and altruistic the paper is, it unfortunately got trumped by some of the other models that came out right after. These days you&rsquo;ll find Octo in the comparison tables of policies that perform better :(</p>
+<p>That thing about Octo being overshadowed? Meet OpenVLA <a href="#ref36">[36]</a> which came out a few weeks after Octo did. Seeing the model be able to respond to natural language instructions and manipulate objects, even for objects/tasks weren&rsquo;t entirely in distribution was quite a sight to behold. And I&rsquo;m talking about the out of the box model here, not even a fine-tuned version. OpenVLA is a 7B parameter model trained on ~970k episodes from OXE. The model takes in an input RGB image and a language instruction and outputs a single action (not a chunk) in the form of an end-effector delta. To encode the input image, patches that make up the image are encoded using a combination of DinoV2 <a href="#ref37">[37]</a> and SigLIP <a href="#ref10">[10]</a>. They mention that the DinoV2 encoder helps improve spatial reasoning capabilities. It uses LLama 2 <a href="#ref38">[38]</a> as the VLM backbone, helping it with being able to reason about its inputs (something that Octo was lacking). The instruction is encoded using the LLama tokenizer and all of the tokens are processed through the Llama 2 7B model. Similar to what we&rsquo;ve seen previously, the model outputs tokens corresponding to binned actions. The trained model is capable of inference at a frequency of ~6Hz on an RTX 4090 GPU. OpenVLA was able to achieve better performance that RT-1-X, Octo and even RT-2-X, a model that is ~8x larger. The best part is that all of the code and the model weights are open source, making it easy to be used and fine-tuned.</p>
+<p>One of the challenges with behavior cloning is being able to model multi-modality in the expert data. A very good example of this is the <a href="https://huggingface.co/lerobot/diffusion_pusht">Push T task</a>. BeT was one of the earlier works that tried to address this issue. BeT <a href="#ref39">[39]</a> explicitly captured modes in the data by learning a separate k-means encoder/decoder that is capable of decomposing a given action vector into a discrete action bin and an error correction offset. During training, the transformer model learns to predict the action bin (from among the &lsquo;k&rsquo; action classes) and offset given a history of observations (images). During inference, the model outputs the action offset and a probability vector for the action bins, which is then used to sample an action bin. This sampled action and the predicted offset are then decoded into the final continuous action vector. BeT was able to achieve good performance on some multi-modal simulation environments. VQ-BeT <a href="#ref40">[40]</a>, that came in a couple of years after BeT, is the successor of BeT. It employed a residual Vector Quantization (VQ) <a href="#ref41">[41]</a> based approach to encode the actions. Similar to BeT, VQ-BeT has an action discretization phase and a learning phase. In the discretization phase, an encoder and decoder network are learned to discretize the action chunks (not a single action vector anymore) into vectors from the hierarchical codebooks. The paper used 2 VQ residual layers for all the experiments. The training phase is similar to BeT: A sequence of images are encoded and passed through a transformer model that outputs probabilities for the action chunk classes. The difference being that instead of outputting a single set of probabilities, each VQ layer has its own set of probabilities that need to be sampled to compute the final continuous action chunk. VQ-BeT addresses one of the main pain points of BeT, which was having to pre determine the number of action classes <code>k</code>, while also dealing with the model&rsquo;s sensitivity to this value. VQ-BeT was shown to be more effective than BeT and even Diffusion Policy (which we&rsquo;ll get to next) on multiple simulation and real world environments.</p>
+<p>And now we finally get to one of my favorites: Diffusion Policy (DP) <a href="#ref42">[42]</a>. It does what you would expect, which is generate robot actions using a diffusion <a href="#ref14">[14]</a> process. Diffusion is able to naturally model multi-modality in the data and is another method to tackle this problem in the context of BC. The inputs to the model are a history of observations (RGB images and robot poses). The model outputs an action trajectory that is generated through a de-noising process. More specifically, the model outputs the predicted error for the given noisy action input. This process is repeated for a number of steps until the noisy action (which started as a gaussian noise sample) has been completely denoised into an action trajectory that makes sense. FiLM <a href="#ref12">[12]</a> layers are used to condition the diffusion model on the observations. The paper proposes a CNN and a transformer based model. The CNN based model uses ResNet-18 to encode the images feeding into FiLM. The transformer model uses a multi-head cross attention scheme to process the observation encodings (Images encoded through a ViT). This was evaluated on a multitude of simulation and real world tasks (some involving non trivial contact dynamics) and was able to achieve SOTA performance on most of them, surpassing models like BeT (VQ-BeT wasn&rsquo;t out yet). The paper mentions that the CNN based model was sufficient for most tasks, with the transformer model only being necessary for tasks that required finer high frequency control (Eg: velocity control). Despite the transformer based model achieving better performance in most of the tasks, it was also sensitive to model parameters and was difficult to train. Now&rsquo;s also a good time to quickly mention that papers like DiT-Block policy <a href="#ref43">[43]</a> came out later that were able to address some of these issues with utilizing transformers in diffusion based BC policies.</p>
+<p>Remember ACT and ALOHA? ALOHA Unleashed <a href="#ref44">[44]</a> was also unleashed towards the end of 2024 that featured a diffusion based policy for training bi-manual policies on the ALOHA platform. The model looks similar to the formula that we&rsquo;ve been seeing: ResNet to encode the images and a transformer architecture to process the encodings. In this case, a transformer encoder block generates the tokens and a transformer decoder blocks denoises the noisy action chunks. Naturally, the decoder block needs to run multiple times during inference to generate the final denoised action chunk. This isn&rsquo;t that much of the problem as the policy is run open loop, enabling its execution at frequencies &gt;50 Hz on an RTX 4090 GPU (Well not a problem unless you&rsquo;re trying to run it on edge).</p>
+<p>All of this finally brings us to Pi-0 <a href="#ref45">[45]</a>. By no means is this the end state of BC, but I thought it&rsquo;d be a good place to end the storyline of the post given that it&rsquo;s probably the state of the art imitation learning policy for manipulation (Although Deepmind might disagree <a href="#ref46">[46]</a>). Pi-0 is a generalist policy built on top of a pre-trained VLM. It tries to best make use of the large scale model and data to train a model that is capable of some astonishing feats of manipulation. I would highly recommend watching the <a href="https://www.physicalintelligence.company/blog/pi0">policy in action</a> before reading the paper. What powers the model is the absolutely monstrous amount of data that was collected &ndash; ~10,000 hours of teleoperation data, amounting to ~900M timesteps! It follows a pre-train -&gt; fine-tune scheme where the ungodly amount of data is first used to train a base model, after which more curated datasets are used to fine-tune for specific tasks. The VLM backbone used in the model is the 3B Pali-Gemma <a href="#ref9">[9]</a> model, that is able to ingest language instructions. RGB image inputs are encoded using ViTs. A separate 300M action expert is used to output action chunks. The action head also takes in robot proprioception data. The action head doesn&rsquo;t use any causal masking, allowing all the action tokens to attend to each other. Instead of using diffusion, Pi-0 uses flow matching <a href="#ref17">[17]</a> to generate the action chunks. The model is capable of executing complex long horizon manipulation tasks such as table bussing, folding clothes, laundry picking and sorting, etc. Pi-0 outclasses DP, ACT, OpenVLA and poor Octo, while also being adept at following language instructions, making it a truly generalist policy.</p>
+<p>The storyline of the main quest for this post ends here, but I need to do justice to a few more papers that didn&rsquo;t quite fit the collection above.</p>
+<h2 id="datasets">Datasets</h2>
+<p>I&rsquo;ll keep this section short and sweet. Datasets are the lifeline of VLAs. More data = good. More open source data = even better. We&rsquo;ve already talked about the OXE dataset <a href="#ref31">[31]</a>, which is the largest open source collection of dataset for imitation learning (especially for manipulation). It is composed of individual open source datasets, the full list of which can be found in the paper. But I specifically wanted to highlight the Bridge <a href="#ref47">[47]</a> and Droid <a href="#ref48">[48]</a> datasets. Bridge is a collection of ~7000 episodes of teleoperated manipulation data collected on the WidowX robot. Droid is a collection of ~70000 episodes (~350 hours) of teleoperated data collected on the Franka Panda arm.</p>
+<h2 id="hardware">Hardware</h2>
+<p>We&rsquo;ve talked a lot about the algorithmic side of things, but now it&rsquo;s time to talk about hardware. I&rsquo;m not going to talk about robotic arms/grippers and nor am I going to talk about teleoperation system (Need to save these for another post). Instead, I&rsquo;ll just mention a few papers that introduced interesting hardware platforms.</p>
+<p>We&rsquo;ve already seen ALOHA <a href="#ref34">[34]</a> before, but thought I&rsquo;d give it another mention. The platform has gotten pretty popular in the research community, with similarly designed platforms being more widely adopted. In a world where dexterous manipulators designed with revolute joints is the norm, the Hello Stretch <a href="#ref49">[49]</a> platform takes a different approach. I&rsquo;m not entirely sold on its practicality, but it is interesting nonetheless. You can see it featured in papers like this <a href="#ref50">[50]</a> one.</p>
+<p>Moving over to hardware for teleoperation/data collection, we start with one of my favorite ideas from last year. UMI <a href="#ref51">[51]</a> is a hardware setup that allows people to collect data themselves without the need for doing it through teleoperation. This is done by using a gripper like device with a camera setup that users can hold. Robots can then be fitted with a similar setup and voila, whatever policies were trained with data collected through human manipulation can now be transferred to the robot. There are some limitations like being restricted to using wrist cameras, etc. but don&rsquo;t let that distract you from the novelty of the idea. On the topic of effective methods of data collection, I&rsquo;ll end the section with Meta&rsquo;s Project Aria glasses <a href="#ref52">[52]</a>, a wearable device that can be used to collect egocentric data. An example of how this can be used for imitation learning is the EgoMimic <a href="#ref53">[53]</a> paper, which enables users to wear the glasses and collect data naturally without the need for teleoperation, or having to cosplay as a crab.</p>
+<h2 id="simulation-and-benchmarking">Simulation and Benchmarking</h2>
+<p>Simulation offers two primary benefits: It can allow us to collect data at scale and it can be used to evaluate and compare policies in a structured manner. Neither of these things are straightforward as it depends on the simulator&rsquo;s ability to produce realistic sensor data and realistically model the physics of the environemnt. You&rsquo;ll find researchers on both sides of the fence, some who swear by simulation and others who would rather put in the effort to collect real world data. This obviously isn&rsquo;t a black and white issue, but it&rsquo;s unclear to me what the balance here looks like. What is clear though, is the fact that simulators keep getting better every day, and even though most of the best models today are trained on real world data, this trend is likely to shift in the near future (I&rsquo;m sure Nvidia would agree).</p>
+<p>I can&rsquo;t not start this section off with MuJoCo <a href="#ref54">[54]</a>. It started off as a project at the University of Washington, made its way to being used as the de-facto physics engine for RL (OpenAI Gym, etc) and was eventually acquired and open-sourced by Deepmind who currently maintain it. A lot of the other simulators and environments that we&rsquo;ll see below are built on top of MuJoCo. It&rsquo;s impact on the field cannot be overstated, and it is still the go-to physics engine for learning based approaches. On the topic of physics engines, I can&rsquo;t stop myself from mentioning Drake <a href="#ref56">[56]</a>, being the Drake (not the rapper) fanboy that I am. Drake caters to an audience that is looking for more accurate and high fidelity modeling of contact and dynamics. Drake is much more than just a physics engine, but we don&rsquo;t need to get into that now.</p>
+<p>Moving away from physics engines and onto simulators, we have AI2-THOR <a href="#ref57">[57]</a>, a simulator that uses a Unity backend and provides photo-realistic environments for training agents in home-like environments. SAPIEN <a href="#ref58">[58]</a> is a versatile simulator that uses the <a href="https://developer.nvidia.com/physx-sdk">PhysX</a> physics engine and is capable of simulating a variety of robotic tasks. RLBench <a href="#ref59">[59]</a> is a simulation benchmark of 100 unique manipulation tasks, each with proprioception and RGBD observations, along with trajectories from motion planners. Robosuite <a href="#ref60">[60]</a> uses MuJoCo as its physics engine and offers a set of standardized environments and tasks for benchmarking RL and imitation learning policies. It also provides ways to procedurally generate new environments and tasks, making it easy to scale up the data collection process. ManiSkill <a href="#ref61">[61]</a> builds on top of SAPIEN and provides a set of benchmarking tasks, while also providing ~36,000 expert trajectories for training imitation learning policies. This <a href="#ref62">[62]</a> paper introduced the Franka kitchen environment, which is a MuJoCo based kitchen environment designed for training long horizon RL and imitation learning tasks. This next one reminds of this <a href="https://xkcd.com/927">xkcd comic</a>, but more simulators and environments are always going to be good for the field (probably). RoboHive <a href="#ref63">[63]</a> encompasses some other simulators and environments, but also provides its own set of MuJoCo powered benchmarking environments and tasks. It does this for a variety of different embodiments, while also providing methods of evaluation and baselines. SIMPLER <a href="#ref64">[64]</a> is a collection of SAPIEN based simulated environments specifically created for policies trained on real world data. Why do this? Because policy evaluation is an extremely annoying and expensive process. The paper delves deeper into the sim to real gap and some of the metrics used to quantify this, so do give it a read. MimicGen <a href="#ref65">[65]</a> and DexMimicGen <a href="#ref66">[66]</a> aren&rsquo;t simulators but the concept they propose is way too intriguing to be left out. They introduce a method to generate an exponential number of synthetic trajectories from a limited number of human demonstrations (more than 200x) that helps in accelerating BC training.</p>
+<p>I can&rsquo;t really end this section without talking about the work the Nvidia has been doing. <a href="https://developer.nvidia.com/isaac/sim">Isaac Sim</a> and <a href="https://developer.nvidia.com/isaac/lab">Isaac Lab</a> provide high fidelity simulation environments for a variety of tasks including robot learning. <a href="https://www.nvidia.com/en-us/ai/cosmos/">Cosmos</a> is their foundation model for generating synthetic data for different embodiments. Check out the Gr00t <a href="#ref67">[67]</a> paper for how various sources of data (including synthetic data) can be incorporated into the training process to create foundation models for robotics.</p>
+<h2 id="miscellaneous">Miscellaneous</h2>
+<p>There are a few papers that I couldn&rsquo;t really fit into the flow of the rest of the post, so I&rsquo;ll just mention them here. I&rsquo;ll start with this paper <a href="#ref68">[68]</a>, that identifies the most challenging aspects of learning from demonstrations and analyzes which model design and data choices matter most. Evaluations were done on both simulated and real world tasks. 6 different learning algorithms were used for evaluation (not restricted to BC algorithms). This paper came out before the VLA era, so you won&rsquo;t find the popular methods of today featured here. Some of the results/findings might also be less relevant today given how much the field has changed, but it is a very informative read nonetheless.</p>
+<p>Implicit Behavior Cloning <a href="#ref69">[69]</a> is the next one in this list. The gist of the paper is that policies learnt through implicit energy based models usually tend to outperform explicit policies. It features some nice visualizations and elucidates everything in a nice and intuitive manner. It also details how these energy based models can be trained for BC, while also evaluating it on real and simulated manipulation tasks.</p>
+<p>To close things out, we have data scaling laws <a href="#ref70">[70]</a>, which is a bit more recent compared to the previous two. Scaling laws for LLMs <a href="#ref71">[71]</a> are well known at this point, but how does this translate to robotics? The number of environments, embodiments and tasks make this learning space a lot more complex. We probably need more research in this area but the paper <a href="#ref70">[70]</a> does a good job at laying some of the groundwork for this by evaluating model performance against object/environment diversity and number of demonstrations.</p>
+<p>My big wall of text ends here. Honestly, I wasn&rsquo;t sure if I&rsquo;d see this all the way through, so I&rsquo;m gonna give myself a pat on the back for this one.</p>
+<h2 id="references">References</h2>
+<p><a id="ref1"></a></p>
+<ol>
+<li><strong>Ashish, V. (2017). Attention is all you need. Advances in neural information processing systems, 30, I.</strong> <a href="https://arxiv.org/abs/1706.03762">[Link]</a>
+<a id="ref2"></a></li>
+<li><strong>Devlin, J., Chang, M. W., Lee, K., &amp; Toutanova, K. (2019, June). Bert: Pre-training of deep bidirectional transformers for language understanding. In Proceedings of the 2019 conference of the North American chapter of the association for computational linguistics: human language technologies, volume 1 (long and short papers) (pp. 4171-4186).</strong> <a href="https://arxiv.org/abs/1810.04805">[Link]</a>
+<a id="ref3"></a></li>
+<li><strong>Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal, P., &hellip; &amp; Amodei, D. (2020). Language models are few-shot learners. Advances in neural information processing systems, 33, 1877-1901.</strong> <a href="https://arxiv.org/abs/2005.14165">[Link]</a>
+<a id="ref4"></a></li>
+<li><strong>Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn, D., Zhai, X., Unterthiner, T., &hellip; &amp; Houlsby, N. (2020). An image is worth 16x16 words: Transformers for image recognition at scale. arXiv preprint arXiv:2010.11929.</strong> <a href="https://arxiv.org/abs/2010.11929">[Link]</a>
+<a id="ref5"></a></li>
+<li><strong>Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., &hellip; &amp; Sutskever, I. (2021, July). Learning transferable visual models from natural language supervision. In International conference on machine learning (pp. 8748-8763). PmLR.</strong> <a href="https://arxiv.org/abs/2103.00020">[Link]</a>
+<a id="ref6"></a></li>
+<li><strong>Chen, X., Wang, X., Changpinyo, S., Piergiovanni, A. J., Padlewski, P., Salz, D., &hellip; &amp; Soricut, R. (2022). Pali: A jointly-scaled multilingual language-image model. arXiv preprint arXiv:2209.06794.</strong> <a href="https://arxiv.org/abs/2209.06794">[Link]</a>
+<a id="ref7"></a></li>
+<li><strong>Chen, X., Djolonga, J., Padlewski, P., Mustafa, B., Changpinyo, S., Wu, J., &hellip; &amp; Soricut, R. (2023). Pali-x: On scaling up a multilingual vision and language model. arXiv preprint arXiv:2305.18565.</strong> <a href="https://arxiv.org/abs/2305.18565">[Link]</a>
+<a id="ref8"></a></li>
+<li><strong>Chen, X., Wang, X., Beyer, L., Kolesnikov, A., Wu, J., Voigtlaender, P., &hellip; &amp; Soricut, R. (2023). Pali-3 vision language models: Smaller, faster, stronger. arXiv preprint arXiv:2310.09199.</strong> <a href="https://arxiv.org/abs/2310.09199">[Link]</a>
+<a id="ref9"></a></li>
+<li><strong>Beyer, L., Steiner, A., Pinto, A. S., Kolesnikov, A., Wang, X., Salz, D., &hellip; &amp; Zhai, X. (2024). Paligemma: A versatile 3b vlm for transfer. arXiv preprint arXiv:2407.07726.</strong> <a href="https://arxiv.org/abs/2407.07726">[Link]</a>
+<a id="ref10"></a></li>
+<li><strong>Zhai, X., Mustafa, B., Kolesnikov, A., &amp; Beyer, L. (2023). Sigmoid loss for language image pre-training. In Proceedings of the IEEE/CVF international conference on computer vision (pp. 11975-11986).</strong> <a href="https://arxiv.org/abs/2303.15343">[Link]</a>
+<a id="ref11"></a></li>
+<li><strong>Team, G., Mesnard, T., Hardin, C., Dadashi, R., Bhupatiraju, S., Pathak, S., &hellip; &amp; Kenealy, K. (2024). Gemma: Open models based on gemini research and technology. arXiv preprint arXiv:2403.08295.</strong> <a href="https://arxiv.org/abs/2403.08295">[Link]</a>
+<a id="ref12"></a></li>
+<li><strong>Perez, E., Strub, F., De Vries, H., Dumoulin, V., &amp; Courville, A. (2018, April). Film: Visual reasoning with a general conditioning layer. In Proceedings of the AAAI conference on artificial intelligence (Vol. 32, No. 1).</strong> <a href="https://arxiv.org/abs/1709.07871">[Link]</a>
+<a id="ref13"></a></li>
+<li><strong>Hu, E. J., Shen, Y., Wallis, P., Allen-Zhu, Z., Li, Y., Wang, S., &hellip; &amp; Chen, W. (2022). Lora: Low-rank adaptation of large language models. ICLR, 1(2), 3.</strong> <a href="https://arxiv.org/abs/2106.09685">[Link]</a>
+<a id="ref14"></a></li>
+<li><strong>Ho, J., Jain, A., &amp; Abbeel, P. (2020). Denoising diffusion probabilistic models. Advances in neural information processing systems, 33, 6840-6851.</strong> <a href="https://arxiv.org/abs/2006.11239">[Link]</a>
+<a id="ref15"></a></li>
+<li><strong>Song, J., Meng, C., &amp; Ermon, S. (2020). Denoising diffusion implicit models. arXiv preprint arXiv:2010.02502.</strong> <a href="https://arxiv.org/abs/2010.02502">[Link]</a>
+<a id="ref16"></a></li>
+<li><strong>Chan, S. (2024). Tutorial on diffusion models for imaging and vision. Foundations and Trends® in Computer Graphics and Vision, 16(4), 322-471.</strong> <a href="https://arxiv.org/abs/2403.18103">[Link]</a>
+<a id="ref17"></a></li>
+<li><strong>Lipman, Y., Chen, R. T., Ben-Hamu, H., Nickel, M., &amp; Le, M. (2022). Flow matching for generative modeling. arXiv preprint arXiv:2210.02747.</strong> <a href="https://arxiv.org/abs/2210.02747">[Link]</a>
+<a id="ref18"></a></li>
+<li><strong>Lipman, Y., Havasi, M., Holderrieth, P., Shaul, N., Le, M., Karrer, B., &hellip; &amp; Gat, I. (2024). Flow matching guide and code. arXiv preprint arXiv:2412.06264.</strong> <a href="https://arxiv.org/abs/2412.06264">[Link]</a>
+<a id="ref19"></a></li>
+<li><strong>Pomerleau, D. A. (1988). Alvinn: An autonomous land vehicle in a neural network. Advances in neural information processing systems, 1.</strong> <a href="https://proceedings.neurips.cc/paper/1988/file/812b4ba287f5ee0bc9d43bbf5bbe87fb-Paper.pdf">[Link]</a>
+<a id="ref20"></a></li>
+<li><strong>Levine, S., Finn, C., Darrell, T., &amp; Abbeel, P. (2016). End-to-end training of deep visuomotor policies. Journal of Machine Learning Research, 17(39), 1-40.</strong> <a href="https://arxiv.org/abs/1504.00702">[Link]</a>
+<a id="ref21"></a></li>
+<li><strong>Zhang, T., McCarthy, Z., Jow, O., Lee, D., Chen, X., Goldberg, K., &amp; Abbeel, P. (2018, May). Deep imitation learning for complex manipulation tasks from virtual reality teleoperation. In 2018 IEEE international conference on robotics and automation (ICRA) (pp. 5628-5635). Ieee.</strong> <a href="https://arxiv.org/abs/1710.04615">[Link]</a>
+<a id="ref22"></a></li>
+<li><strong>Rahmatizadeh, R., Abolghasemi, P., Bölöni, L., &amp; Levine, S. (2018, May). Vision-based multi-task manipulation for inexpensive robots using end-to-end learning from demonstration. In 2018 IEEE international conference on robotics and automation (ICRA) (pp. 3758-3765). IEEE.</strong> <a href="https://arxiv.org/abs/1707.02920">[Link]</a>
+<a id="ref23"></a></li>
+<li><strong>Mandlekar, A., Zhu, Y., Garg, A., Booher, J., Spero, M., Tung, A., &hellip; &amp; Fei-Fei, L. (2018, October). Roboturk: A crowdsourcing platform for robotic skill learning through imitation. In Conference on Robot Learning (pp. 879-893). PMLR.</strong> <a href="https://arxiv.org/abs/1811.02790">[Link]</a>
+<a id="ref24"></a></li>
+<li><strong>Dasari, S., Ebert, F., Tian, S., Nair, S., Bucher, B., Schmeckpeper, K., &hellip; &amp; Finn, C. (2019). Robonet: Large-scale multi-robot learning. arXiv preprint arXiv:1910.11215.</strong> <a href="https://arxiv.org/abs/1910.11215">[Link]</a>
+<a id="ref25"></a></li>
+<li><strong>Jang, E., Irpan, A., Khansari, M., Kappler, D., Ebert, F., Lynch, C., &hellip; &amp; Finn, C. (2022, January). Bc-z: Zero-shot task generalization with robotic imitation learning. In Conference on Robot Learning (pp. 991-1002). PMLR.</strong> <a href="https://arxiv.org/abs/2202.02005">[Link]</a>
+<a id="ref26"></a></li>
+<li><strong>Kelly, M., Sidrane, C., Driggs-Campbell, K., &amp; Kochenderfer, M. J. (2019, May). Hg-dagger: Interactive imitation learning with human experts. In 2019 International Conference on Robotics and Automation (ICRA) (pp. 8077-8083). IEEE.</strong> <a href="https://arxiv.org/abs/1810.02890">[Link]</a>
+<a id="ref27"></a></li>
+<li><strong>Ahn, M., Brohan, A., Brown, N., Chebotar, Y., Cortes, O., David, B., &hellip; &amp; Zeng, A. (2022). Do as i can, not as i say: Grounding language in robotic affordances. arXiv preprint arXiv:2204.01691.</strong> <a href="https://arxiv.org/abs/2204.01691">[Link]</a>
+<a id="ref28"></a></li>
+<li><strong>Brohan, A., Brown, N., Carbajal, J., Chebotar, Y., Dabis, J., Finn, C., &hellip; &amp; Zitkovich, B. (2022). Rt-1: Robotics transformer for real-world control at scale. arXiv preprint arXiv:2212.06817.</strong> <a href="https://arxiv.org/abs/2212.06817">[Link]</a>
+<a id="ref29"></a></li>
+<li><strong>Tan, M., &amp; Le, Q. (2019, May). Efficientnet: Rethinking model scaling for convolutional neural networks. In International conference on machine learning (pp. 6105-6114). PMLR.</strong> <a href="https://arxiv.org/abs/1905.11946">[Link]</a>
+<a id="ref30"></a></li>
+<li><strong>Brohan, A., Brown, N., Carbajal, J., Chebotar, Y., Chen, X., Choromanski, K., &hellip; &amp; Zitkovich, B. (2023). Rt-2: Vision-language-action models transfer web knowledge to robotic control. arXiv preprint arXiv:2307.15818.</strong> <a href="https://arxiv.org/abs/2307.15818">[Link]</a>
+<a id="ref31"></a></li>
+<li><strong>O’Neill, A., Rehman, A., Maddukuri, A., Gupta, A., Padalkar, A., Lee, A., &hellip; &amp; Chen, M. (2024, May). Open x-embodiment: Robotic learning datasets and rt-x models: Open x-embodiment collaboration 0. In 2024 IEEE International Conference on Robotics and Automation (ICRA) (pp. 6892-6903). IEEE.</strong> <a href="https://web3.arxiv.org/abs/2310.08864">[Link]</a>
+<a id="ref32"></a></li>
+<li><strong>Yang, J., Glossop, C., Bhorkar, A., Shah, D., Vuong, Q., Finn, C., &hellip; &amp; Levine, S. (2024). Pushing the limits of cross-embodiment learning for manipulation and navigation. arXiv preprint arXiv:2402.19432.</strong> <a href="https://arxiv.org/abs/2402.19432">[Link]</a>
+<a id="ref33"></a></li>
+<li><strong>Doshi, R., Walke, H., Mees, O., Dasari, S., &amp; Levine, S. (2024). Scaling cross-embodied learning: One policy for manipulation, navigation, locomotion and aviation. arXiv preprint arXiv:2408.11812.</strong> <a href="https://arxiv.org/abs/2408.11812">[Link]</a>
+<a id="ref34"></a></li>
+<li><strong>Zhao, T. Z., Kumar, V., Levine, S., &amp; Finn, C. (2023). Learning fine-grained bimanual manipulation with low-cost hardware. arXiv preprint arXiv:2304.13705.</strong> <a href="https://arxiv.org/abs/2304.13705">[Link]</a>
+<a id="ref35"></a></li>
+<li><strong>Team, O. M., Ghosh, D., Walke, H., Pertsch, K., Black, K., Mees, O., &hellip; &amp; Levine, S. (2024). Octo: An open-source generalist robot policy. arXiv preprint arXiv:2405.12213.</strong> <a href="https://arxiv.org/abs/2405.12213">[Link]</a>
+<a id="ref36"></a></li>
+<li><strong>Kim, M. J., Pertsch, K., Karamcheti, S., Xiao, T., Balakrishna, A., Nair, S., &hellip; &amp; Finn, C. (2024). Openvla: An open-source vision-language-action model. arXiv preprint arXiv:2406.09246.</strong> <a href="https://arxiv.org/abs/2406.09246">[Link]</a>
+<a id="ref37"></a></li>
+<li><strong>Oquab, M., Darcet, T., Moutakanni, T., Vo, H., Szafraniec, M., Khalidov, V., &hellip; &amp; Bojanowski, P. (2023). Dinov2: Learning robust visual features without supervision. arXiv preprint arXiv:2304.07193.</strong> <a href="https://arxiv.org/abs/2304.07193">[Link]</a>
+<a id="ref38"></a></li>
+<li><strong>Touvron, H., Martin, L., Stone, K., Albert, P., Almahairi, A., Babaei, Y., &hellip; &amp; Scialom, T. (2023). Llama 2: Open foundation and fine-tuned chat models. arXiv preprint arXiv:2307.09288.</strong> <a href="https://arxiv.org/abs/2307.09288">[Link]</a>
+<a id="ref39"></a></li>
+<li><strong>Shafiullah, N. M., Cui, Z., Altanzaya, A. A., &amp; Pinto, L. (2022). Behavior transformers: Cloning $ k $ modes with one stone. Advances in neural information processing systems, 35, 22955-22968.</strong> <a href="https://arxiv.org/abs/2206.11251">[Link]</a>
+<a id="ref40"></a></li>
+<li><strong>Lee, S., Wang, Y., Etukuru, H., Kim, H. J., Shafiullah, N. M. M., &amp; Pinto, L. (2024). Behavior generation with latent actions. arXiv preprint arXiv:2403.03181.</strong> <a href="https://arxiv.org/abs/2403.03181">[Link]</a>
+<a id="ref41"></a></li>
+<li><strong>Zeghidour, N., Luebs, A., Omran, A., Skoglund, J., &amp; Tagliasacchi, M. (2021). Soundstream: An end-to-end neural audio codec. IEEE/ACM Transactions on Audio, Speech, and Language Processing, 30, 495-507.</strong> <a href="https://arxiv.org/abs/2107.03312">[Link]</a>
+<a id="ref42"></a></li>
+<li><strong>Chi, C., Xu, Z., Feng, S., Cousineau, E., Du, Y., Burchfiel, B., &hellip; &amp; Song, S. (2023). Diffusion policy: Visuomotor policy learning via action diffusion. The International Journal of Robotics Research, 02783649241273668.</strong> <a href="https://arxiv.org/abs/2303.04137">[Link]</a>
+<a id="ref43"></a></li>
+<li><strong>Dasari, S., Mees, O., Zhao, S., Srirama, M. K., &amp; Levine, S. (2024). The ingredients for robotic diffusion transformers. arXiv preprint arXiv:2410.10088.</strong> <a href="https://arxiv.org/abs/2410.10088">[Link]</a>
+<a id="ref44"></a></li>
+<li><strong>Zhao, T. Z., Tompson, J., Driess, D., Florence, P., Ghasemipour, K., Finn, C., &amp; Wahid, A. (2024). Aloha unleashed: A simple recipe for robot dexterity. arXiv preprint arXiv:2410.13126.</strong> <a href="https://arxiv.org/abs/2410.13126">[Link]</a>
+<a id="ref45"></a></li>
+<li><strong>Black, K., Brown, N., Driess, D., Esmail, A., Equi, M., Finn, C., &hellip; &amp; Zhilinsky, U. (2024). $\pi_0 $: A Vision-Language-Action Flow Model for General Robot Control. arXiv preprint arXiv:2410.24164.</strong> <a href="https://arxiv.org/abs/2410.24164">[Link]</a>
+<a id="ref46"></a></li>
+<li><strong>Team, G. R., Abeyruwan, S., Ainslie, J., Alayrac, J. B., Arenas, M. G., Armstrong, T., &hellip; &amp; Zhou, Y. (2025). Gemini robotics: Bringing ai into the physical world. arXiv preprint arXiv:2503.20020.</strong> <a href="https://arxiv.org/abs/2503.20020">[Link]</a>
+<a id="ref47"></a></li>
+<li><strong>Ebert, F., Yang, Y., Schmeckpeper, K., Bucher, B., Georgakis, G., Daniilidis, K., &hellip; &amp; Levine, S. (2021). Bridge data: Boosting generalization of robotic skills with cross-domain datasets. arXiv preprint arXiv:2109.13396.</strong> <a href="https://arxiv.org/abs/2109.13396">[Link]</a>
+<a id="ref48"></a></li>
+<li><strong>Khazatsky, A., Pertsch, K., Nair, S., Balakrishna, A., Dasari, S., Karamcheti, S., &hellip; &amp; Finn, C. (2024). Droid: A large-scale in-the-wild robot manipulation dataset. arXiv preprint arXiv:2403.12945.</strong> <a href="https://arxiv.org/abs/2403.12945">[Link]</a>
+<a id="ref49"></a></li>
+<li><strong>Kemp, C. C., Edsinger, A., Clever, H. M., &amp; Matulevich, B. (2022, May). The design of stretch: A compact, lightweight mobile manipulator for indoor human environments. In 2022 International Conference on Robotics and Automation (ICRA) (pp. 3150-3157). IEEE.</strong> <a href="https://arxiv.org/abs/2109.10892">[Link]</a>
+<a id="ref50"></a></li>
+<li><strong>Etukuru, H., Naka, N., Hu, Z., Lee, S., Mehu, J., Edsinger, A., &hellip; &amp; Shafiullah, N. M. M. (2024). Robot utility models: General policies for zero-shot deployment in new environments. arXiv preprint arXiv:2409.05865.</strong> <a href="https://arxiv.org/abs/2409.05865">[Link]</a>
+<a id="ref51"></a></li>
+<li><strong>Chi, C., Xu, Z., Pan, C., Cousineau, E., Burchfiel, B., Feng, S., &hellip; &amp; Song, S. (2024). Universal manipulation interface: In-the-wild robot teaching without in-the-wild robots. arXiv preprint arXiv:2402.10329.</strong> <a href="https://arxiv.org/abs/2402.10329">[Link]</a>
+<a id="ref52"></a></li>
+<li><strong>Engel, J., Somasundaram, K., Goesele, M., Sun, A., Gamino, A., Turner, A., &hellip; &amp; Newcombe, R. (2023). Project aria: A new tool for egocentric multi-modal ai research. arXiv preprint arXiv:2308.13561.</strong> <a href="https://arxiv.org/abs/2308.13561">[Link]</a>
+<a id="ref53"></a></li>
+<li><strong>Kareer, S., Patel, D., Punamiya, R., Mathur, P., Cheng, S., Wang, C., &hellip; &amp; Xu, D. (2024). Egomimic: Scaling imitation learning via egocentric video. arXiv preprint arXiv:2410.24221.</strong> <a href="https://arxiv.org/abs/2410.24221">[Link]</a>
+<a id="ref54"></a></li>
+<li><strong>Todorov, E., Erez, T., &amp; Tassa, Y. (2012, October). Mujoco: A physics engine for model-based control. In 2012 IEEE/RSJ international conference on intelligent robots and systems (pp. 5026-5033). IEEE.</strong> <a href="https://ieeexplore.ieee.org/document/6386109">[Link]</a>
+<a id="ref55"></a></li>
+<li><strong>Brockman, G., Cheung, V., Pettersson, L., Schneider, J., Schulman, J., Tang, J., &amp; Zaremba, W. (2016). Openai gym. arXiv preprint arXiv:1606.01540.</strong> <a href="https://arxiv.org/abs/1606.01540">[Link]</a>
+<a id="ref56"></a></li>
+<li><strong>Tedrake, R., &amp; Team, T. D. D. (2019). Drake: Model-based design and verification for robotics. Retrieved from <a href="https://drake.mit.edu">https://drake.mit.edu</a></strong> <a href="https://drake.mit.edu/">[Link]</a>
+<a id="ref57"></a></li>
+<li><strong>Kolve, E., Mottaghi, R., Han, W., VanderBilt, E., Weihs, L., Herrasti, A., &hellip; &amp; Farhadi, A. (2017). Ai2-thor: An interactive 3d environment for visual ai. arXiv preprint arXiv:1712.05474.</strong> <a href="https://arxiv.org/abs/1712.05474">[Link]</a>
+<a id="ref58"></a></li>
+<li><strong>Xiang, F., Qin, Y., Mo, K., Xia, Y., Zhu, H., Liu, F., &hellip; &amp; Su, H. (2020). Sapien: A simulated part-based interactive environment. In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition (pp. 11097-11107).</strong> <a href="https://arxiv.org/abs/2003.08515">[Link]</a>
+<a id="ref59"></a></li>
+<li><strong>James, S., Ma, Z., Arrojo, D. R., &amp; Davison, A. J. (2020). Rlbench: The robot learning benchmark &amp; learning environment. IEEE Robotics and Automation Letters, 5(2), 3019-3026.</strong> <a href="https://arxiv.org/abs/1909.12271">[Link]</a>
+<a id="ref60"></a></li>
+<li><strong>Zhu, Y., Wong, J., Mandlekar, A., Martín-Martín, R., Joshi, A., Nasiriany, S., &amp; Zhu, Y. (2020). robosuite: A modular simulation framework and benchmark for robot learning. arXiv preprint arXiv:2009.12293.</strong> <a href="https://arxiv.org/abs/2009.12293">[Link]</a>
+<a id="ref61"></a></li>
+<li><strong>Mu, T., Ling, Z., Xiang, F., Yang, D., Li, X., Tao, S., &hellip; &amp; Su, H. (2021). Maniskill: Generalizable manipulation skill benchmark with large-scale demonstrations. arXiv preprint arXiv:2107.14483.</strong> <a href="https://arxiv.org/abs/2107.14483">[Link]</a>
+<a id="ref62"></a></li>
+<li><strong>Gupta, A., Kumar, V., Lynch, C., Levine, S., &amp; Hausman, K. (2019). Relay policy learning: Solving long-horizon tasks via imitation and reinforcement learning. arXiv preprint arXiv:1910.11956.</strong> <a href="https://arxiv.org/abs/1910.11956">[Link]</a>
+<a id="ref63"></a></li>
+<li><strong>Kumar, V., Shah, R., Zhou, G., Moens, V., Caggiano, V., Gupta, A., &amp; Rajeswaran, A. (2023). Robohive: A unified framework for robot learning. Advances in Neural Information Processing Systems, 36, 44323-44340.</strong> <a href="https://arxiv.org/abs/2310.06828">[Link]</a>
+<a id="ref64"></a></li>
+<li><strong>Li, X., Hsu, K., Gu, J., Pertsch, K., Mees, O., Walke, H. R., &hellip; &amp; Xiao, T. (2024). Evaluating real-world robot manipulation policies in simulation. arXiv preprint arXiv:2405.05941.</strong> <a href="https://arxiv.org/abs/2405.05941">[Link]</a>
+<a id="ref65"></a></li>
+<li><strong>Mandlekar, A., Nasiriany, S., Wen, B., Akinola, I., Narang, Y., Fan, L., &hellip; &amp; Fox, D. (2023). Mimicgen: A data generation system for scalable robot learning using human demonstrations. arXiv preprint arXiv:2310.17596.</strong> <a href="https://arxiv.org/abs/2310.17596">[Link]</a>
+<a id="ref66"></a></li>
+<li><strong>Jiang, Z., Xie, Y., Lin, K., Xu, Z., Wan, W., Mandlekar, A., &hellip; &amp; Zhu, Y. (2024). Dexmimicgen: Automated data generation for bimanual dexterous manipulation via imitation learning. arXiv preprint arXiv:2410.24185.</strong> <a href="https://arxiv.org/abs/2410.24185">[Link]</a>
+<a id="ref67"></a></li>
+<li><strong>Bjorck, J., Castañeda, F., Cherniadev, N., Da, X., Ding, R., Fan, L., &hellip; &amp; Zhu, Y. (2025). Gr00t n1: An open foundation model for generalist humanoid robots. arXiv preprint arXiv:2503.14734.</strong> <a href="https://arxiv.org/abs/2503.14734">[Link]</a>
+<a id="ref68"></a></li>
+<li><strong>Mandlekar, A., Xu, D., Wong, J., Nasiriany, S., Wang, C., Kulkarni, R., &hellip; &amp; Martín-Martín, R. (2021). What matters in learning from offline human demonstrations for robot manipulation. arXiv preprint arXiv:2108.03298.</strong> <a href="https://arxiv.org/abs/2108.03298">[Link]</a>
+<a id="ref69"></a></li>
+<li><strong>Florence, P., Lynch, C., Zeng, A., Ramirez, O. A., Wahid, A., Downs, L., &hellip; &amp; Tompson, J. (2022, January). Implicit behavioral cloning. In Conference on robot learning (pp. 158-168). PMLR.</strong> <a href="https://arxiv.org/abs/2109.00137">[Link]</a>
+<a id="ref70"></a></li>
+<li><strong>Lin, F., Hu, Y., Sheng, P., Wen, C., You, J., &amp; Gao, Y. (2024). Data scaling laws in imitation learning for robotic manipulation. arXiv preprint arXiv:2410.18647.</strong> <a href="https://arxiv.org/abs/2410.18647">[Link]</a></li>
+<li><strong>Kaplan, J., McCandlish, S., Henighan, T., Brown, T. B., Chess, B., Child, R., &hellip; &amp; Amodei, D. (2020). Scaling laws for neural language models. arXiv preprint arXiv:2001.08361.</strong> <a href="https://arxiv.org/abs/2001.08361">[Link]</a></li>
+</ol>
+
+
+        
+          <div class="blog-tags">
+            
+              
+              <a href="https://shrenikm.com/tags/reference/">reference</a>&nbsp;
+            
+              
+              <a href="https://shrenikm.com/tags/robotics/">robotics</a>&nbsp;
+            
+              
+              <a href="https://shrenikm.com/tags/manipulation/">manipulation</a>&nbsp;
+            
+              
+              <a href="https://shrenikm.com/tags/behavior_cloning/">behavior_cloning</a>&nbsp;
+            
+              
+              <a href="https://shrenikm.com/tags/machine_learning/">machine_learning</a>&nbsp;
+            
+              
+              <a href="https://shrenikm.com/tags/generalist_policies/">generalist_policies</a>&nbsp;
+            
+              
+              <a href="https://shrenikm.com/tags/vla/">VLA</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fshrenikm.com%2fposts%2f2025-05-17-reference-behavior-cloning-for-manipulation%2f&amp;text=Reference%3a%20Behavior%20Cloning%20for%20Manipulation&amp;via=" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fshrenikm.com%2fposts%2f2025-05-17-reference-behavior-cloning-for-manipulation%2f&amp;title=Reference%3a%20Behavior%20Cloning%20for%20Manipulation" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fshrenikm.com%2fposts%2f2025-05-17-reference-behavior-cloning-for-manipulation%2f&amp;title=Reference%3a%20Behavior%20Cloning%20for%20Manipulation" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+
+              </div>
+            </section>
+        
+
+        
+          
+            
+          
+
+          
+                  <h4 class="see-also">See also</h4>
+                  <ul>
+                
+                
+                    <li><a href="/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/">ZMP: Generating Bipedal Walking Trajectories</a></li>
+                
+                    <li><a href="/posts/2024-03-08-setting-up-a-manipulator/">Setting Up a Robotic Manipulator</a></li>
+                
+                    <li><a href="/posts/2024-01-06-understanding-trajopt/">Understanding TrajOpt</a></li>
+                
+                    <li><a href="/posts/2023-12-24-multi-vehicle-mixed-integer-programming/">Multi Vehicle Mixed Integer Programming</a></li>
+                
+              </ul>
+
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+              <a href="https://shrenikm.com/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/" data-toggle="tooltip" data-placement="top" title="ZMP: Generating Bipedal Walking Trajectories">&larr; Previous Post</a>
+            </li>
+          
+          
+        </ul>
+      
+
+
+      
+      
+      
+      
+      
+          
+          <div class="disqus-comments">
+            
+  
+    <div class="comments">
+      <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "https-shrenikm-com" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+
+
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+      <footer>
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+		
+		  <a href="mailto:shrenik95@gmail.com" title="Email me">
+		
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              Shrenik M
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2025
+          
+
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="https://gohugo.io">Hugo v0.147.9</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><script>
+      var reg = new RegExp("^\\s*\\$.*\\$\\s*$");
+      $('code').each(function(i) {
+        var elem = $(this);
+        if(reg.test(elem.text())) {
+          var contents = elem.contents();
+          contents.unwrap();
+          if (contents.parent().is('pre')) contents.unwrap();
+        }
+      });
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$','$$'], ['\\[', '\\]']],
+          processEscapes: true,
+          processEnvironments: true
+        }
+      };
+    </script><script type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script><script src="https://shrenikm.com/js/main.js"></script>
+<script src="https://shrenikm.com/js/highlight.min.js"></script>
+<script> hljs.initHighlightingOnLoad(); </script>
+<script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://shrenikm.com/js/load-photoswipe.js"></script>
+
+
+
+
+
+
+
+
+
+
+    
+  </body>
+</html>
+
