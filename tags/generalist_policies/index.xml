@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Generalist_policies on </title>
+    <link>https://shrenikm.com/tags/generalist_policies/</link>
+    <description>Recent content in Generalist_policies on </description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
+    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
+    <lastBuildDate>Thu, 26 Jun 2025 00:57:00 -0700</lastBuildDate>
+    <atom:link href="https://shrenikm.com/tags/generalist_policies/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Reference: Behavior Cloning for Manipulation</title>
+      <link>https://shrenikm.com/posts/2025-05-17-reference-behavior-cloning-for-manipulation/</link>
+      <pubDate>Thu, 26 Jun 2025 00:57:00 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/posts/2025-05-17-reference-behavior-cloning-for-manipulation/</guid>
+      <description>&lt;!--- Post 9 --&gt;&#xA;&lt;p&gt;Hello, it&amp;rsquo;s time for my yearly post! The goal of this one is to be a handy reference for behavior cloning as applied to manipulation &amp;ndash; something I&amp;rsquo;ve been spending quite a bit of time on over the past 6-9 months. The field has been progressing at an absurdly rapid pace of late (somehow we&amp;rsquo;re at a point where robots can do &lt;a href=&#34;https://www.physicalintelligence.company/blog/pi0&#34;&gt;laundry&lt;/a&gt;), so I thought it&amp;rsquo;d be a good exercise to summarize where we&amp;rsquo;re at right now and how we got here (at least from my perspective and based on what I&amp;rsquo;ve read so far). I&amp;rsquo;m hoping this becomes a useful resource for any manipulation enthusiasts stumbling upon it, and of course, for future me as well!&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

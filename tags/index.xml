@@ -4,105 +4,163 @@
     <title>Tags on </title>
     <link>https://shrenikm.com/tags/</link>
     <description>Recent content in Tags on </description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Apr 2024 22:31:49 -0700</lastBuildDate>
+    <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
+    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
+    <lastBuildDate>Thu, 26 Jun 2025 00:57:00 -0700</lastBuildDate>
     <atom:link href="https://shrenikm.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Behavior_cloning</title>
+      <link>https://shrenikm.com/tags/behavior_cloning/</link>
+      <pubDate>Thu, 26 Jun 2025 00:57:00 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/behavior_cloning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Generalist_policies</title>
+      <link>https://shrenikm.com/tags/generalist_policies/</link>
+      <pubDate>Thu, 26 Jun 2025 00:57:00 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/generalist_policies/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Machine_learning</title>
+      <link>https://shrenikm.com/tags/machine_learning/</link>
+      <pubDate>Thu, 26 Jun 2025 00:57:00 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/machine_learning/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Manipulation</title>
+      <link>https://shrenikm.com/tags/manipulation/</link>
+      <pubDate>Thu, 26 Jun 2025 00:57:00 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/manipulation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Reference</title>
+      <link>https://shrenikm.com/tags/reference/</link>
+      <pubDate>Thu, 26 Jun 2025 00:57:00 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/reference/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Robotics</title>
+      <link>https://shrenikm.com/tags/robotics/</link>
+      <pubDate>Thu, 26 Jun 2025 00:57:00 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/robotics/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>VLA</title>
+      <link>https://shrenikm.com/tags/vla/</link>
+      <pubDate>Thu, 26 Jun 2025 00:57:00 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/vla/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Concept</title>
+      <link>https://shrenikm.com/tags/concept/</link>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/concept/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Control</title>
       <link>https://shrenikm.com/tags/control/</link>
-      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/control/</guid>
       <description></description>
     </item>
     <item>
       <title>Drake</title>
       <link>https://shrenikm.com/tags/drake/</link>
-      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/drake/</guid>
       <description></description>
     </item>
     <item>
       <title>Legged</title>
       <link>https://shrenikm.com/tags/legged/</link>
-      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/legged/</guid>
       <description></description>
     </item>
     <item>
       <title>Motion_planning</title>
       <link>https://shrenikm.com/tags/motion_planning/</link>
-      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/motion_planning/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Robotics</title>
-      <link>https://shrenikm.com/tags/robotics/</link>
-      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
-      <guid>https://shrenikm.com/tags/robotics/</guid>
       <description></description>
     </item>
     <item>
       <title>Trajectory_optimization</title>
       <link>https://shrenikm.com/tags/trajectory_optimization/</link>
-      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/trajectory_optimization/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Manipulation</title>
-      <link>https://shrenikm.com/tags/manipulation/</link>
-      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate>
-      <guid>https://shrenikm.com/tags/manipulation/</guid>
       <description></description>
     </item>
     <item>
       <title>Simulation</title>
       <link>https://shrenikm.com/tags/simulation/</link>
-      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate>
+      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/simulation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tutorial</title>
+      <link>https://shrenikm.com/tags/tutorial/</link>
+      <pubDate>Fri, 08 Mar 2024 22:11:21 -0800</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/tutorial/</guid>
       <description></description>
     </item>
     <item>
       <title>Implementation</title>
       <link>https://shrenikm.com/tags/implementation/</link>
-      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate>
+      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/implementation/</guid>
       <description></description>
     </item>
     <item>
       <title>Jax</title>
       <link>https://shrenikm.com/tags/jax/</link>
-      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate>
+      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/jax/</guid>
       <description></description>
     </item>
     <item>
       <title>Numerical_optimization</title>
       <link>https://shrenikm.com/tags/numerical_optimization/</link>
-      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate>
+      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/numerical_optimization/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Paper</title>
+      <link>https://shrenikm.com/tags/paper/</link>
+      <pubDate>Sat, 06 Jan 2024 11:11:12 -0800</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
+      <guid>https://shrenikm.com/tags/paper/</guid>
       <description></description>
     </item>
     <item>
       <title>Numerical_analysis</title>
       <link>https://shrenikm.com/tags/numerical_analysis/</link>
-      <pubDate>Sat, 25 Sep 2021 20:11:57 -0700</pubDate>
+      <pubDate>Sat, 25 Sep 2021 20:11:57 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/numerical_analysis/</guid>
       <description></description>
     </item>
     <item>
       <title>Linear_algebra</title>
       <link>https://shrenikm.com/tags/linear_algebra/</link>
-      <pubDate>Mon, 20 Sep 2021 01:02:55 -0700</pubDate>
+      <pubDate>Mon, 20 Sep 2021 01:02:55 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/linear_algebra/</guid>
       <description></description>
     </item>
     <item>
       <title>Math</title>
       <link>https://shrenikm.com/tags/math/</link>
-      <pubDate>Mon, 20 Sep 2021 01:02:55 -0700</pubDate>
+      <pubDate>Mon, 20 Sep 2021 01:02:55 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/tags/math/</guid>
       <description></description>
     </item>

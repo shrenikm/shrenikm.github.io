@@ -4,16 +4,18 @@
     <title>Legged on </title>
     <link>https://shrenikm.com/tags/legged/</link>
     <description>Recent content in Legged on </description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
+    <managingEditor>shrenik95@gmail.com (Shrenik M)</managingEditor>
+    <webMaster>shrenik95@gmail.com (Shrenik M)</webMaster>
     <lastBuildDate>Wed, 03 Apr 2024 22:31:49 -0700</lastBuildDate>
     <atom:link href="https://shrenikm.com/tags/legged/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ZMP: Generating Bipedal Walking Trajectories</title>
       <link>https://shrenikm.com/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/</link>
-      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate>
+      <pubDate>Wed, 03 Apr 2024 22:31:49 -0700</pubDate><author>shrenik95@gmail.com (Shrenik M)</author>
       <guid>https://shrenikm.com/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/</guid>
-      <description>Legged robot research has been an active area of study since the late nineties. Let&amp;rsquo;s take a look at how we can generate walking trajectories for bipedal robots, using some of these ideas.&#xA;The Objective: Implement a quick and dirty way of generating walking trajectories&#xA;Constraints: Do it quickly. Minimize sophistication. Anything goes!&#xA;What this post will cover:&#xA;Overview of the minimal set of ideas required to develop walking algorithms Computation of bipedal joint trajectories for a simple walking gait What will not be covered:</description>
+      <description>&lt;!--- Post 8 --&gt;&#xA;&lt;p&gt;Legged robot research has been an active area of study since the late nineties. Let&amp;rsquo;s take a look at how we can generate walking trajectories for bipedal robots, using some of these ideas.&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;The Objective:&lt;/strong&gt; Implement a quick and dirty way of generating walking trajectories&lt;br&gt;&#xA;&lt;strong&gt;Constraints:&lt;/strong&gt; Do it quickly. Minimize sophistication. Anything goes!&lt;/p&gt;&#xA;&lt;p&gt;What this post will cover:&lt;/p&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Overview of the minimal set of ideas required to develop walking algorithms&lt;/li&gt;&#xA;&lt;li&gt;Computation of bipedal joint trajectories for a simple walking gait&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;What will not be covered:&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

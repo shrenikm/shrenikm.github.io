@@ -3,6 +3,39 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://shrenikm.com/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/behavior_cloning/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/generalist_policies/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/machine_learning/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/manipulation/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/posts/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/reference/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/posts/2025-05-17-reference-behavior-cloning-for-manipulation/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/robotics/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/vla/</loc>
+    <lastmod>2025-06-26T00:57:00-07:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/concept/</loc>
     <lastmod>2024-04-03T22:31:49-07:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/tags/control/</loc>
@@ -17,28 +50,19 @@
     <loc>https://shrenikm.com/tags/motion_planning/</loc>
     <lastmod>2024-04-03T22:31:49-07:00</lastmod>
   </url><url>
-    <loc>https://shrenikm.com/posts/</loc>
-    <lastmod>2024-04-03T22:31:49-07:00</lastmod>
-  </url><url>
-    <loc>https://shrenikm.com/tags/robotics/</loc>
-    <lastmod>2024-04-03T22:31:49-07:00</lastmod>
-  </url><url>
-    <loc>https://shrenikm.com/tags/</loc>
-    <lastmod>2024-04-03T22:31:49-07:00</lastmod>
-  </url><url>
     <loc>https://shrenikm.com/tags/trajectory_optimization/</loc>
     <lastmod>2024-04-03T22:31:49-07:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/</loc>
     <lastmod>2024-04-03T22:31:49-07:00</lastmod>
   </url><url>
-    <loc>https://shrenikm.com/tags/manipulation/</loc>
-    <lastmod>2024-03-08T22:11:21-08:00</lastmod>
-  </url><url>
     <loc>https://shrenikm.com/posts/2024-03-08-setting-up-a-manipulator/</loc>
     <lastmod>2024-03-08T22:11:21-08:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/tags/simulation/</loc>
+    <lastmod>2024-03-08T22:11:21-08:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/tutorial/</loc>
     <lastmod>2024-03-08T22:11:21-08:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/tags/implementation/</loc>
@@ -48,6 +72,9 @@
     <lastmod>2024-01-06T11:11:12-08:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/tags/numerical_optimization/</loc>
+    <lastmod>2024-01-06T11:11:12-08:00</lastmod>
+  </url><url>
+    <loc>https://shrenikm.com/tags/paper/</loc>
     <lastmod>2024-01-06T11:11:12-08:00</lastmod>
   </url><url>
     <loc>https://shrenikm.com/posts/2024-01-06-understanding-trajopt/</loc>

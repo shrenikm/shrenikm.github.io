@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en" itemscope itemtype="http://schema.org/WebPage">
   <head>
@@ -12,9 +14,52 @@
 
       <title>Multi Vehicle Mixed Integer Programming - </title>
 
-  <meta name="description" content="In this post, we take a look at this $[1]$ paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.
+  <meta name="description" content="
+In this post, we take a look at this $[1]$ paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.
 My implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found here
-$\newcommand{\ith}{i^{th}}$ $\newcommand{\pth}{p^{th}}$ $\newcommand{\qth}{q^{th}}$ $\newcommand{\lth}{l^{th}}$ $\newcommand{\MR}{\mathbb{R}}$ $\newcommand{\xpi}{x_{pi}}$ $\newcommand{\ypi}{y_{pi}}$ $\newcommand{\xqi}{x_{qi}}$ $\newcommand{\yqi}{y_{qi}}$ $\newcommand{\xmin}{x_{min}}$ $\newcommand{\xmax}{x_{max}}$ $\newcommand{\ymin}{y_{min}}$ $\newcommand{\ymax}{y_{max}}$ $\newcommand{\xlmin}{x_{l,min}}$ $\newcommand{\xlmax}{x_{l,max}}$ $\newcommand{\ylmin}{y_{l,min}}$ $\newcommand{\ylmax}{y_{l,max}}$ $\newcommand{\xlimin}{x_{li,min}}$ $\newcommand{\xlimax}{x_{li,max}}$ $\newcommand{\ylimin}{y_{li,min}}$ $\newcommand{\ylimax}{y_{li,max}}$ $\newcommand{\cplx}{c_{pl,x}}$ $\newcommand{\cply}{c_{pl,y}}$ $\newcommand{\dpqx}{d_{pq,x}}$ $\newcommand{\dpqy}{d_{pq,y}}$ $\newcommand{\tpli}{t_{pli}}$ $\newcommand{\spi}{s_{pi}}$ $\newcommand{\spij}{s_{pij}}$ $\newcommand{\spinext}{s_{p,i&#43;1}}$ $\newcommand{\spn}{s_{pN}}$ $\newcommand{\spf}{s_{pf}}$ $\newcommand{\wpi}{w_{pi}}$ $\newcommand{\wpij}{w_{pij}}$ $\newcommand{\wpn}{w_{pN}}$ $\newcommand{\upi}{u_{pi}}$ $\newcommand{\upik}{u_{pik}}$ $\newcommand{\vpi}{v_{pi}}$ $\newcommand{\vpik}{v_{pik}}$ $\newcommand{\Ap}{A_{p}}$ $\newcommand{\Bp}{B_{p}}$ $\newcommand{\qp}{q_{p}}$ $\newcommand{\rp}{r_{p}}$ $\newcommand{\pp}{p_{p}}$">
+$\newcommand{\ith}{i^{th}}$
+$\newcommand{\pth}{p^{th}}$
+$\newcommand{\qth}{q^{th}}$
+$\newcommand{\lth}{l^{th}}$
+$\newcommand{\MR}{\mathbb{R}}$
+$\newcommand{\xpi}{x_{pi}}$
+$\newcommand{\ypi}{y_{pi}}$
+$\newcommand{\xqi}{x_{qi}}$
+$\newcommand{\yqi}{y_{qi}}$
+$\newcommand{\xmin}{x_{min}}$
+$\newcommand{\xmax}{x_{max}}$
+$\newcommand{\ymin}{y_{min}}$
+$\newcommand{\ymax}{y_{max}}$
+$\newcommand{\xlmin}{x_{l,min}}$
+$\newcommand{\xlmax}{x_{l,max}}$
+$\newcommand{\ylmin}{y_{l,min}}$
+$\newcommand{\ylmax}{y_{l,max}}$
+$\newcommand{\xlimin}{x_{li,min}}$
+$\newcommand{\xlimax}{x_{li,max}}$
+$\newcommand{\ylimin}{y_{li,min}}$
+$\newcommand{\ylimax}{y_{li,max}}$
+$\newcommand{\cplx}{c_{pl,x}}$
+$\newcommand{\cply}{c_{pl,y}}$
+$\newcommand{\dpqx}{d_{pq,x}}$
+$\newcommand{\dpqy}{d_{pq,y}}$
+$\newcommand{\tpli}{t_{pli}}$
+$\newcommand{\spi}{s_{pi}}$
+$\newcommand{\spij}{s_{pij}}$
+$\newcommand{\spinext}{s_{p,i&#43;1}}$
+$\newcommand{\spn}{s_{pN}}$
+$\newcommand{\spf}{s_{pf}}$
+$\newcommand{\wpi}{w_{pi}}$
+$\newcommand{\wpij}{w_{pij}}$
+$\newcommand{\wpn}{w_{pN}}$
+$\newcommand{\upi}{u_{pi}}$
+$\newcommand{\upik}{u_{pik}}$
+$\newcommand{\vpi}{v_{pi}}$
+$\newcommand{\vpik}{v_{pik}}$
+$\newcommand{\Ap}{A_{p}}$
+$\newcommand{\Bp}{B_{p}}$
+$\newcommand{\qp}{q_{p}}$
+$\newcommand{\rp}{r_{p}}$
+$\newcommand{\pp}{p_{p}}$">
   <meta name="author" content="Shrenik M"/><script type="application/ld+json">
 {
     "@context": "http://schema.org",
@@ -63,13 +108,13 @@ $\newcommand{\ith}{i^{th}}$ $\newcommand{\pth}{p^{th}}$ $\newcommand{\qth}{q^{th
     "name" : "Shrenik M"
   },
   "headline": "Multi Vehicle Mixed Integer Programming",
-  "description" : "In this post, we take a look at this $[1]$ paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.\nMy implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found here\n$\\newcommand{\\ith}{i^{th}}$ $\\newcommand{\\pth}{p^{th}}$ $\\newcommand{\\qth}{q^{th}}$ $\\newcommand{\\lth}{l^{th}}$ $\\newcommand{\\MR}{\\mathbb{R}}$ $\\newcommand{\\xpi}{x_{pi}}$ $\\newcommand{\\ypi}{y_{pi}}$ $\\newcommand{\\xqi}{x_{qi}}$ $\\newcommand{\\yqi}{y_{qi}}$ $\\newcommand{\\xmin}{x_{min}}$ $\\newcommand{\\xmax}{x_{max}}$ $\\newcommand{\\ymin}{y_{min}}$ $\\newcommand{\\ymax}{y_{max}}$ $\\newcommand{\\xlmin}{x_{l,min}}$ $\\newcommand{\\xlmax}{x_{l,max}}$ $\\newcommand{\\ylmin}{y_{l,min}}$ $\\newcommand{\\ylmax}{y_{l,max}}$ $\\newcommand{\\xlimin}{x_{li,min}}$ $\\newcommand{\\xlimax}{x_{li,max}}$ $\\newcommand{\\ylimin}{y_{li,min}}$ $\\newcommand{\\ylimax}{y_{li,max}}$ $\\newcommand{\\cplx}{c_{pl,x}}$ $\\newcommand{\\cply}{c_{pl,y}}$ $\\newcommand{\\dpqx}{d_{pq,x}}$ $\\newcommand{\\dpqy}{d_{pq,y}}$ $\\newcommand{\\tpli}{t_{pli}}$ $\\newcommand{\\spi}{s_{pi}}$ $\\newcommand{\\spij}{s_{pij}}$ $\\newcommand{\\spinext}{s_{p,i\u002b1}}$ $\\newcommand{\\spn}{s_{pN}}$ $\\newcommand{\\spf}{s_{pf}}$ $\\newcommand{\\wpi}{w_{pi}}$ $\\newcommand{\\wpij}{w_{pij}}$ $\\newcommand{\\wpn}{w_{pN}}$ $\\newcommand{\\upi}{u_{pi}}$ $\\newcommand{\\upik}{u_{pik}}$ $\\newcommand{\\vpi}{v_{pi}}$ $\\newcommand{\\vpik}{v_{pik}}$ $\\newcommand{\\Ap}{A_{p}}$ $\\newcommand{\\Bp}{B_{p}}$ $\\newcommand{\\qp}{q_{p}}$ $\\newcommand{\\rp}{r_{p}}$ $\\newcommand{\\pp}{p_{p}}$",
+  "description" : " In this post, we take a look at this $[1]$ paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.\nMy implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found here\n$\\newcommand{\\ith}{i^{th}}$ $\\newcommand{\\pth}{p^{th}}$ $\\newcommand{\\qth}{q^{th}}$ $\\newcommand{\\lth}{l^{th}}$ $\\newcommand{\\MR}{\\mathbb{R}}$ $\\newcommand{\\xpi}{x_{pi}}$ $\\newcommand{\\ypi}{y_{pi}}$ $\\newcommand{\\xqi}{x_{qi}}$ $\\newcommand{\\yqi}{y_{qi}}$ $\\newcommand{\\xmin}{x_{min}}$ $\\newcommand{\\xmax}{x_{max}}$ $\\newcommand{\\ymin}{y_{min}}$ $\\newcommand{\\ymax}{y_{max}}$ $\\newcommand{\\xlmin}{x_{l,min}}$ $\\newcommand{\\xlmax}{x_{l,max}}$ $\\newcommand{\\ylmin}{y_{l,min}}$ $\\newcommand{\\ylmax}{y_{l,max}}$ $\\newcommand{\\xlimin}{x_{li,min}}$ $\\newcommand{\\xlimax}{x_{li,max}}$ $\\newcommand{\\ylimin}{y_{li,min}}$ $\\newcommand{\\ylimax}{y_{li,max}}$ $\\newcommand{\\cplx}{c_{pl,x}}$ $\\newcommand{\\cply}{c_{pl,y}}$ $\\newcommand{\\dpqx}{d_{pq,x}}$ $\\newcommand{\\dpqy}{d_{pq,y}}$ $\\newcommand{\\tpli}{t_{pli}}$ $\\newcommand{\\spi}{s_{pi}}$ $\\newcommand{\\spij}{s_{pij}}$ $\\newcommand{\\spinext}{s_{p,i\u002b1}}$ $\\newcommand{\\spn}{s_{pN}}$ $\\newcommand{\\spf}{s_{pf}}$ $\\newcommand{\\wpi}{w_{pi}}$ $\\newcommand{\\wpij}{w_{pij}}$ $\\newcommand{\\wpn}{w_{pN}}$ $\\newcommand{\\upi}{u_{pi}}$ $\\newcommand{\\upik}{u_{pik}}$ $\\newcommand{\\vpi}{v_{pi}}$ $\\newcommand{\\vpik}{v_{pik}}$ $\\newcommand{\\Ap}{A_{p}}$ $\\newcommand{\\Bp}{B_{p}}$ $\\newcommand{\\qp}{q_{p}}$ $\\newcommand{\\rp}{r_{p}}$ $\\newcommand{\\pp}{p_{p}}$\n",
   "inLanguage" : "en",
   "wordCount":  3294 ,
-  "datePublished" : "2023-12-24T18:54:32",
-  "dateModified" : "2023-12-24T18:54:32",
+  "datePublished" : "2023-12-24T18:54:32-08:00",
+  "dateModified" : "2023-12-24T18:54:32-08:00",
   "image" : "https:\/\/shrenikm.com\/",
-  "keywords" : [ "robotics, implementation, numerical_optimization, motion_planning, trajectory_optimization, simulation" ],
+  "keywords" : [ "paper, implementation, robotics, numerical_optimization, motion_planning, trajectory_optimization, simulation" ],
   "mainEntityOfPage" : "https:\/\/shrenikm.com\/posts\/2023-12-24-multi-vehicle-mixed-integer-programming\/",
   "publisher" : {
     "@type": "Organization",
@@ -84,37 +129,85 @@ $\newcommand{\ith}{i^{th}}$ $\newcommand{\pth}{p^{th}}$ $\newcommand{\qth}{q^{th
 }
 </script>
 
+
 <meta property="og:title" content="Multi Vehicle Mixed Integer Programming" />
-<meta property="og:description" content="In this post, we take a look at this $[1]$ paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.
+<meta property="og:description" content="
+In this post, we take a look at this $[1]$ paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.
 My implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found here
-$\newcommand{\ith}{i^{th}}$ $\newcommand{\pth}{p^{th}}$ $\newcommand{\qth}{q^{th}}$ $\newcommand{\lth}{l^{th}}$ $\newcommand{\MR}{\mathbb{R}}$ $\newcommand{\xpi}{x_{pi}}$ $\newcommand{\ypi}{y_{pi}}$ $\newcommand{\xqi}{x_{qi}}$ $\newcommand{\yqi}{y_{qi}}$ $\newcommand{\xmin}{x_{min}}$ $\newcommand{\xmax}{x_{max}}$ $\newcommand{\ymin}{y_{min}}$ $\newcommand{\ymax}{y_{max}}$ $\newcommand{\xlmin}{x_{l,min}}$ $\newcommand{\xlmax}{x_{l,max}}$ $\newcommand{\ylmin}{y_{l,min}}$ $\newcommand{\ylmax}{y_{l,max}}$ $\newcommand{\xlimin}{x_{li,min}}$ $\newcommand{\xlimax}{x_{li,max}}$ $\newcommand{\ylimin}{y_{li,min}}$ $\newcommand{\ylimax}{y_{li,max}}$ $\newcommand{\cplx}{c_{pl,x}}$ $\newcommand{\cply}{c_{pl,y}}$ $\newcommand{\dpqx}{d_{pq,x}}$ $\newcommand{\dpqy}{d_{pq,y}}$ $\newcommand{\tpli}{t_{pli}}$ $\newcommand{\spi}{s_{pi}}$ $\newcommand{\spij}{s_{pij}}$ $\newcommand{\spinext}{s_{p,i&#43;1}}$ $\newcommand{\spn}{s_{pN}}$ $\newcommand{\spf}{s_{pf}}$ $\newcommand{\wpi}{w_{pi}}$ $\newcommand{\wpij}{w_{pij}}$ $\newcommand{\wpn}{w_{pN}}$ $\newcommand{\upi}{u_{pi}}$ $\newcommand{\upik}{u_{pik}}$ $\newcommand{\vpi}{v_{pi}}$ $\newcommand{\vpik}{v_{pik}}$ $\newcommand{\Ap}{A_{p}}$ $\newcommand{\Bp}{B_{p}}$ $\newcommand{\qp}{q_{p}}$ $\newcommand{\rp}{r_{p}}$ $\newcommand{\pp}{p_{p}}$">
+$\newcommand{\ith}{i^{th}}$
+$\newcommand{\pth}{p^{th}}$
+$\newcommand{\qth}{q^{th}}$
+$\newcommand{\lth}{l^{th}}$
+$\newcommand{\MR}{\mathbb{R}}$
+$\newcommand{\xpi}{x_{pi}}$
+$\newcommand{\ypi}{y_{pi}}$
+$\newcommand{\xqi}{x_{qi}}$
+$\newcommand{\yqi}{y_{qi}}$
+$\newcommand{\xmin}{x_{min}}$
+$\newcommand{\xmax}{x_{max}}$
+$\newcommand{\ymin}{y_{min}}$
+$\newcommand{\ymax}{y_{max}}$
+$\newcommand{\xlmin}{x_{l,min}}$
+$\newcommand{\xlmax}{x_{l,max}}$
+$\newcommand{\ylmin}{y_{l,min}}$
+$\newcommand{\ylmax}{y_{l,max}}$
+$\newcommand{\xlimin}{x_{li,min}}$
+$\newcommand{\xlimax}{x_{li,max}}$
+$\newcommand{\ylimin}{y_{li,min}}$
+$\newcommand{\ylimax}{y_{li,max}}$
+$\newcommand{\cplx}{c_{pl,x}}$
+$\newcommand{\cply}{c_{pl,y}}$
+$\newcommand{\dpqx}{d_{pq,x}}$
+$\newcommand{\dpqy}{d_{pq,y}}$
+$\newcommand{\tpli}{t_{pli}}$
+$\newcommand{\spi}{s_{pi}}$
+$\newcommand{\spij}{s_{pij}}$
+$\newcommand{\spinext}{s_{p,i&#43;1}}$
+$\newcommand{\spn}{s_{pN}}$
+$\newcommand{\spf}{s_{pf}}$
+$\newcommand{\wpi}{w_{pi}}$
+$\newcommand{\wpij}{w_{pij}}$
+$\newcommand{\wpn}{w_{pN}}$
+$\newcommand{\upi}{u_{pi}}$
+$\newcommand{\upik}{u_{pik}}$
+$\newcommand{\vpi}{v_{pi}}$
+$\newcommand{\vpik}{v_{pik}}$
+$\newcommand{\Ap}{A_{p}}$
+$\newcommand{\Bp}{B_{p}}$
+$\newcommand{\qp}{q_{p}}$
+$\newcommand{\rp}{r_{p}}$
+$\newcommand{\pp}{p_{p}}$">
 <meta property="og:url" content="https://shrenikm.com/posts/2023-12-24-multi-vehicle-mixed-integer-programming/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="" />
 
   <meta name="twitter:title" content="Multi Vehicle Mixed Integer Programming" />
-  <meta name="twitter:description" content="In this post, we take a look at this $[1]$ paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.
-My implementation of the algorithm that was used …">
+  <meta name="twitter:description" content="
+In this post, we take a look at this $[1]$ paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.
+My implementation of the algorithm that was …&lt;/!---&gt;">
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="generator" content="Hugo 0.124.1">
-  <link rel="alternate" href="https://shrenikm.com/index.xml" type="application/rss+xml" title="">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <meta name="generator" content="Hugo 0.147.9">
+  <link rel="alternate" href="https://shrenikm.com/index.xml" type="application/rss+xml" title=""><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" integrity="sha384-3UiQGuEI4TTMaFmGIZumfRPtfKQ3trwQE2JgosJxCnGmQpL/lJdjpcHkaaFwHlcI" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.6.0/css/all.css" integrity="sha384-h/hnnw1Bi4nbpD6kE7nYfCXzovi622sY5WBxww8ARKwpdLj5kUWjRuyiXaD1U2JT" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous"><link rel="stylesheet" href="https://shrenikm.com/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
   <link rel="stylesheet" href="https://shrenikm.com/css/highlight.min.css" /><link rel="stylesheet" href="https://shrenikm.com/css/codeblock.css" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-E2P4DFRG5B"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-E2P4DFRG5B', { 'anonymize_ip': false });
-}
-</script>
-
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-E2P4DFRG5B"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-E2P4DFRG5B');
+        }
+      </script>
   </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
@@ -262,7 +355,7 @@ if (!doNotTrack) {
       <article role="main" class="blog-post">
         <!--- Post 5 -->
 <p>In this post, we take a look at this <a href="#references">$[1]$</a> paper, which introduces a simple, yet interesting approach to solving a multi-vehicle path planning problem.</p>
-<p>My implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found <a href="https://github.com/shrenikm/Atium/tree/main/algorithms/multi_vehicle_mip">here</a></p>
+<p>My implementation of the algorithm that was used to evaluate its performance and generate all the results in this post can be found <a href="https://github.com/shrenikm/Atium/tree/main/atium/implementations/multi_vehicle_mip">here</a></p>
 <p>$\newcommand{\ith}{i^{th}}$
 $\newcommand{\pth}{p^{th}}$
 $\newcommand{\qth}{q^{th}}$
@@ -365,8 +458,7 @@ This is nice because it lets us keep a linear objective and represent the absolu
 \text{s.t.} \ \ x_i \le s_i\\
 -x_i \le s_i
 \end{aligned}
-\end{equation}</p>
-</blockquote>
+\end{equation}</p></blockquote>
 <p>With this knowledge, we can now introduce slack variables $w$ and $v$ for $s$ and $u$ respectively. Representing the objective as an LP in these slack terms, along with taking the sum for every vehicle (assuming $K$ vehicles), we have the final objective function:</p>
 <p>\begin{equation}
 \begin{aligned}
@@ -393,12 +485,10 @@ g_3(x) \le c_3\\
 \end{aligned}
 \end{equation}
 Solving this would mean solving for the fact that <strong><em>ALL</em></strong> of the constraints need to be satisfied.<br>
-$g_1(x) \le c_1$ <strong><em>AND</em></strong> $g_2(x) \le c_2$ <strong><em>AND</em></strong> $g_3(x) \le c_3$, etc.</p>
-</blockquote>
+$g_1(x) \le c_1$ <strong><em>AND</em></strong> $g_2(x) \le c_2$ <strong><em>AND</em></strong> $g_3(x) \le c_3$, etc.</p></blockquote>
 <blockquote>
 <p>But what if we want don&rsquo;t want each constraint to be satisfied? What if the our requirement is that at least one of them be active?<br>
-$g_1(x) \le c_1$ <strong><em>OR</em></strong> $g_2(x) \le c_2$ <strong><em>OR</em></strong> $g_3(x) \le c_3$, etc.</p>
-</blockquote>
+$g_1(x) \le c_1$ <strong><em>OR</em></strong> $g_2(x) \le c_2$ <strong><em>OR</em></strong> $g_3(x) \le c_3$, etc.</p></blockquote>
 <blockquote>
 <p>In this case, we can use a variant of the big-M method to help reframe the constraints.
 First we introduce binary integer variables $b_i \in \set{0, 1}$ for each constraint. We also introduce a constant $M$ that is an extremely large number relative to the range of the $g_i$ functions. The constraints can then be written as:
@@ -422,18 +512,14 @@ if a particular $b_i = 0$, we have:
 \begin{equation}
 g_1(x) \le c_1\\
 \end{equation}
-Which is just the original constraint.</p>
-</blockquote>
+Which is just the original constraint.</p></blockquote>
 <blockquote>
 <p>So if $b_i = 1, \forall i \in \set{1, \ldots n}$, then this means that each constraint would trivially be satisfied, so this would be equivalent to not having any constraints at all.<br>
-On the other hand if $b_i = 0, \forall i \in \set{1, \ldots n}$, then then problem will be treated as an optimization problem where each of the original constraints need to be satisfied.</p>
-</blockquote>
+On the other hand if $b_i = 0, \forall i \in \set{1, \ldots n}$, then then problem will be treated as an optimization problem where each of the original constraints need to be satisfied.</p></blockquote>
 <blockquote>
-<p>What happens if at least one of the $b_i$ values are restricted to be $0$? This would mean that at least one of the constraints (the ones where $b_i = 0$) will need to be satisfied (active), but the rest wouldn&rsquo;t need to be active as they would be trivially satisfied due to $M$.</p>
-</blockquote>
+<p>What happens if at least one of the $b_i$ values are restricted to be $0$? This would mean that at least one of the constraints (the ones where $b_i = 0$) will need to be satisfied (active), but the rest wouldn&rsquo;t need to be active as they would be trivially satisfied due to $M$.</p></blockquote>
 <blockquote>
-<p>Hence by having an additional constraint on the sum of $b_i$ values, restricting them to a maximum value of $n-1$, we can guarantee that at least one $b_i = 0$. This then translates to our desired property of the optimization problem requiring only one of the constraints to be satisfied!</p>
-</blockquote>
+<p>Hence by having an additional constraint on the sum of $b_i$ values, restricting them to a maximum value of $n-1$, we can guarantee that at least one $b_i = 0$. This then translates to our desired property of the optimization problem requiring only one of the constraints to be satisfied!</p></blockquote>
 <p>Equipped with this, we can now look at how the paper frames collision avoidance constraints. It is assumed that each obstacle is rectangular and the vehicle moves in a two dimensional space (It can easily be extended to 3D). Each vehicle/robot is also assumed to be a point.</p>
 <p>If $s_i$ is the current state of the vehicle, we assume that the state contains some $x_i$ and $y_i$, which correspond to the $x$ and $y$ coordinates of the vehicle in 2D space. If the mid point of the obstacle is $(x_c, y_c)$ and its size is $(d_x, d_y)$, we can compute the bottom left and top right points as:
 \begin{equation}
@@ -506,7 +592,7 @@ u_{pi} \ge u_{p,min}\\
 u_{pi} \le u_{p,max}\\
 \end{aligned}
 \end{equation}</p>
-<p>Please refer to the paper <a href="#references">$[1]$</a>, to see the entire LP written out in all its glory. The state and control constraints can also be formulated as approximate second order ball constraints using a collection of linear constraints (instead of box constraints) as seen in <a href="#references">$[2]$</a>.</p>
+<p>Please refer to the paper <a href="#ref1">[1]</a>, to see the entire LP written out in all its glory. The state and control constraints can also be formulated as approximate second order ball constraints using a collection of linear constraints (instead of box constraints) as seen in <a href="#ref2">[2]</a>.</p>
 <p>The papers model the obstacles as being rectangular, but we can always extend it to being general convex polygons. In this case, we would want the vehicle to lie outside the intersection of the half-spaces formed by the edges of the polygon.</p>
 <p>\begin{equation}
 \begin{aligned}
@@ -516,7 +602,7 @@ O_l = \set{z: a_{lk}^Tz \le b_{lk}, \ \forall k \in \set{1, \ldots P}}\\
 \end{equation}</p>
 <p>Where $O_l$ represents the space inside the $\lth$ convex $P$ sided polygon.</p>
 <h2 id="implementation">Implementation</h2>
-<p>The MVMIP can be solved by setting up the objective and constraints and passing it to a linear solver that supports mixed integer programming. My <a href="https://github.com/shrenikm/Atium/tree/main/algorithms/multi_vehicle_mip">implementation</a> uses Google&rsquo;s OR-Tools</p>
+<p>The MVMIP can be solved by setting up the objective and constraints and passing it to a linear solver that supports mixed integer programming. My <a href="https://github.com/shrenikm/Atium/tree/main/atium/implementations/multi_vehicle_mip">implementation</a> uses Google&rsquo;s OR-Tools</p>
 <p>The problem can be treated as a one-shot fixed arrival time problem where we set a large time step ($N$) and solve for each vehicle trajectory. This method ensures that there is only a fixed initial cost to run the algorithm and we don&rsquo;t make any adjustments later. The advantage of this method being that we are guaranteed to find the optimal solution to the initial problem setup.</p>
 <p>The fixed long horizon method would not run well on a real system running in a dynamic environment. For such systems, we can cast it as a shorter receding horizon problem and execute the first few commands of the solution MPC style. This will make the MVMIP responsive to dynamic changes to the environment, but also comes at a cost for executing the algorithm at every timestep and will lead to a solution that will theoretically not be optimal (But is about the best it can do given that the environment is only going to be partially observable).</p>
 <p>The biggest pain point of the algorithm is how the number of variables and constraints scale with $K$, $L$ and $N$. As we&rsquo;ll see the time take to solve the MVMIP will explode as we deal with multiple vehicles and obstacles in a long horizon setup.</p>
@@ -638,26 +724,37 @@ The single vehicle, single static obstacle case had 240 variables and 300 constr
 <p>The last one &ndash; multi vehicle, multi dynamic obstacle case had 8400 variables and 10500 constraints and took upwards of 30 min to solve. Obviously there are other factors such as how easy it is to actually find a solution given the constraints and so on, but in general the solve times explode as we have more vehicles and obstacles.</p>
 <p>Some of this can be mitigated by using the receding horizon approach.</p>
 <h2 id="references">References</h2>
+<p><a id="ref1"></a></p>
 <ol>
-<li><strong>Schouwenaars, T., De Moor, B., Feron, E., &amp; How, J. (2001, September). Mixed integer programming for multi-vehicle path planning. In 2001 European control conference (ECC) (pp. 2603-2608). IEEE.</strong> <a href="https://ieeexplore.ieee.org/abstract/document/7076321">[Link]</a></li>
-<li>Richards, A., &amp; How, J. P. (2002, May). Aircraft trajectory planning with collision avoidance using mixed integer linear programming. In Proceedings of the 2002 American Control Conference (IEEE Cat. No. CH37301) (Vol. 3, pp. 1936-1941). IEEE.  <a href="https://ieeexplore.ieee.org/abstract/document/1023918">[Link]</a></li>
+<li><strong>Schouwenaars, T., De Moor, B., Feron, E., &amp; How, J. (2001, September). Mixed integer programming for multi-vehicle path planning. In 2001 European control conference (ECC) (pp. 2603-2608). IEEE.</strong> <a href="https://ieeexplore.ieee.org/abstract/document/7076321">[Link]</a>
+<a id="ref2"></a></li>
+<li><strong>Richards, A., &amp; How, J. P. (2002, May). Aircraft trajectory planning with collision avoidance using mixed integer linear programming. In Proceedings of the 2002 American Control Conference (IEEE Cat. No. CH37301) (Vol. 3, pp. 1936-1941). IEEE.</strong>  <a href="https://ieeexplore.ieee.org/abstract/document/1023918">[Link]</a></li>
 </ol>
 
 
         
           <div class="blog-tags">
             
-              <a href="https://shrenikm.com//tags/robotics/">robotics</a>&nbsp;
+              
+              <a href="https://shrenikm.com/tags/paper/">paper</a>&nbsp;
             
-              <a href="https://shrenikm.com//tags/implementation/">implementation</a>&nbsp;
+              
+              <a href="https://shrenikm.com/tags/implementation/">implementation</a>&nbsp;
             
-              <a href="https://shrenikm.com//tags/numerical_optimization/">numerical_optimization</a>&nbsp;
+              
+              <a href="https://shrenikm.com/tags/robotics/">robotics</a>&nbsp;
             
-              <a href="https://shrenikm.com//tags/motion_planning/">motion_planning</a>&nbsp;
+              
+              <a href="https://shrenikm.com/tags/numerical_optimization/">numerical_optimization</a>&nbsp;
             
-              <a href="https://shrenikm.com//tags/trajectory_optimization/">trajectory_optimization</a>&nbsp;
+              
+              <a href="https://shrenikm.com/tags/motion_planning/">motion_planning</a>&nbsp;
             
-              <a href="https://shrenikm.com//tags/simulation/">simulation</a>&nbsp;
+              
+              <a href="https://shrenikm.com/tags/trajectory_optimization/">trajectory_optimization</a>&nbsp;
+            
+              
+              <a href="https://shrenikm.com/tags/simulation/">simulation</a>&nbsp;
             
           </div>
         
@@ -708,6 +805,8 @@ The single vehicle, single static obstacle case had 240 variables and 300 constr
                   <ul>
                 
                 
+                    <li><a href="/posts/2025-05-17-reference-behavior-cloning-for-manipulation/">Reference: Behavior Cloning for Manipulation</a></li>
+                
                     <li><a href="/posts/2024-04-03-zmp-generating-bipedal-walking-trajectories/">ZMP: Generating Bipedal Walking Trajectories</a></li>
                 
                     <li><a href="/posts/2024-03-08-setting-up-a-manipulator/">Setting Up a Robotic Manipulator</a></li>
@@ -739,10 +838,16 @@ The single vehicle, single static obstacle case had 240 variables and 300 constr
 
 
       
-        
+      
+      
+      
+      
           
           <div class="disqus-comments">
-            <div id="disqus_thread"></div>
+            
+  
+    <div class="comments">
+      <div id="disqus_thread"></div>
 <script>
     window.disqus_config = function () {
     
@@ -762,6 +867,10 @@ The single vehicle, single static obstacle case had 240 variables and 300 constr
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+
+
           </div>
           
         
@@ -772,8 +881,7 @@ The single vehicle, single static obstacle case had 240 variables and 300 constr
   </div>
 </div>
 
-      
-<footer>
+      <footer>
   <div class="container">
     
     <div class="row">
@@ -790,35 +898,8 @@ The single vehicle, single static obstacle case had 240 variables and 300 constr
                   </span>
                 </a>
               </li>
-              <li>
-		
-		  <a href="https://github.com/shrenikm" title="GitHub">
-		
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
-              <li>
-		
-		  <a href="https://linkedin.com/in/shrenik95" title="LinkedIn">
-		
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x"></i>
-                    <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
-                  </span>
-                </a>
-              </li>
           
-          <li>
-            <a href="" title="RSS">
-              <span class="fa-stack fa-lg">
-                <i class="fas fa-circle fa-stack-2x"></i>
-                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
-              </span>
-            </a>
-          </li>
+          
           
         </ul>
         <p class="credits copyright text-muted">
@@ -830,14 +911,14 @@ The single vehicle, single static obstacle case had 240 variables and 300 constr
 
           &nbsp;&bull;&nbsp;&copy;
           
-            2024
+            2025
           
 
           
         </p>
         
         <p class="credits theme-by text-muted">
-          <a href="https://gohugo.io">Hugo v0.124.1</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
+          <a href="https://gohugo.io">Hugo v0.147.9</a> powered &nbsp;&bull;&nbsp; Theme <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a> adapted from <a href="https://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a>
           
         </p>
       </div>
@@ -867,6 +948,7 @@ The single vehicle, single static obstacle case had 240 variables and 300 constr
 <script> hljs.initHighlightingOnLoad(); </script>
 <script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://shrenikm.com/js/load-photoswipe.js"></script>
+
 
 
 
