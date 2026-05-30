@@ -10,6 +10,11 @@ interface Props {
 
 const { kind, title, date, hashTitle = false } = Astro.props;
 const showBanner = kind !== "home" && !!title;
+
+// The theme CSS styles page/post/tags/categories headings. A list page (tags
+// index, a tag's posts) has no dedicated style, so reuse the page heading
+// (centered, large) rather than an unstyled "list-heading".
+const headingClass = kind === "list" ? "page-heading" : `${kind}-heading`;
 ---
 
 {
@@ -19,7 +24,7 @@ const showBanner = kind !== "home" && !!title;
         <div class="container">
           <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-              <div class={`${kind}-heading`}>
+              <div class={headingClass}>
                 <h1>
                   {hashTitle ? "#" : ""}
                   {title}

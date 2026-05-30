@@ -30,7 +30,7 @@ const summary = excerpt(post.body);
     post.data.tags.length > 0 && (
       <div class="blog-tags">
         {post.data.tags.map((tag) => (
-          <a href={`/tags/${tag}/`}>{tag}</a>
+          <Fragment><a href={`/tags/${tag}/`}>{tag}</a>{" "}</Fragment>
         ))}
         {" "}
       </div>

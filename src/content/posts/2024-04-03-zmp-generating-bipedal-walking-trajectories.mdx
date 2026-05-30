@@ -30,33 +30,29 @@ The core idea here is that even for a bipedal system with complex dynamics, the 
 
 If we make an assumption that the height of the center of mass, of the robot, does not change, it simplifies things even further.
 
-$
+$$
 \dot{z_{com}} = 0
-$
-
+$$
 This also means that
 
-$
+$$
 \ddot{z_{com}} = 0
-$
-
+$$
 This is powerful, because this allows us to ignore the effects of feet-ground impact on the dynamics. Even though we have made a few concessions, the problem can now be solved kinematically without having to worry about any complicated dynamics.
 
 The COM to ZMP relationship then turns out to be:
 
-$
+$$
 \begin{aligned}
 \ddot{x_{com}} = \frac{g(x - x_{zmp})}{h}\\\\
 \ddot{y_{com}} = \frac{g(y - y_{zmp})}{h}
 \end{aligned}
-$
-
+$$
 Where
 
-$
+$$
 h = z - z_{zmp} = \text{constant}
-$
-
+$$
 The equations look similar to an inverted pendulum with linearized dynamics, which is why using ZMP in this way tends to be considered an LIP model, with the mass of the robot assumed to be concentrated at the center of mass.
 
 This relationship is linear! (affine if strictly speaking). If the position of the ZMP is given, it also tells us how the dynamics of the COM will evolve.
@@ -120,7 +116,7 @@ In order to generate smooth trajectories, we add a cost between the joint angles
 
 The optimization problem looks something like:
 
-$
+$$
 \begin{aligned}
 \min_{q_k} Q\sum_{k=0}^{K-1} \norm{q_{k + 1} - q_{k}}_2\\\\
 \st \fcom(q_k) = \gcom(t_k)\\\\
@@ -128,8 +124,7 @@ f_l(q_k) = g_l(t_k)\\\\
 f_r(q_k) = g_r(t_k)\\\\
 \qkj = 0, \ j \in U
 \end{aligned}
-$
-
+$$
 Solving this, will give us a series of joint angles $q_k$ corresponding to a single walking phase. We can accumulate these together and obtain a walking gait trajectory. This is what the end result looks like:
 
 <br />

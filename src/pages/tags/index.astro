@@ -17,13 +17,15 @@ const tags = [...counts.entries()].sort(
 <BaseLayout pageTitle="Tags" header={{ kind: "list", title: "Tags" }}>
   <div class="container" role="main">
     <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="blog-tags tag-list">
           {
             tags.map(([tag, count]) => (
-              <a href={`/tags/${tag}/`}>
-                {tag} ({count})
-              </a>
+              <Fragment>
+                <a href={`/tags/${tag}/`}>
+                  {tag} ({count})
+                </a>{" "}
+              </Fragment>
             ))
           }
         </div>

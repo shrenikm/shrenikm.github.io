@@ -21,34 +21,31 @@ The fuel optimal cost function is formulated as a linear program, with the colli
 
 The planning problem under consideration is usually cast as an optimization problem with a quadratic cost.
 
-$
+$$
 \begin{aligned}
 \min_{s, u}J = \min_{s, u}\int_{0}^{\infty}(s^TQs + u^TRu)dt\\\\
 \text{s.t.} \ \ \dot{s} = As + Bu
 \end{aligned}
-$
-
+$$
 Where $s \in \MR^n$ represents the robot state and $u \in \MR^m$ represents the control input that need to be executed at each time step. $Q \in \MR^{n \times n}$ and $R \in \MR^{n \times m}$ are the cost matrices for the quadratic cost.
 
 Due to the fact that we want to cast this as an MIP, this cost will be cast as a linear cost that looks like:
 
-$
+$$
 \min_{s, u}J = \min_{s, u}\int_{0}^{\infty}(q^T|s| + r^T|u|)dt
-$
-
+$$
 Here $q \in \MR^n$ and $r \in \MR^m$ are cost vectors that form the linear equivalent of the quadratic cost. $|v|$ is a vector denoting the absolute values of the vector $v$ being operated on.
 
 ### Objective
 
 As is common in these scenarios, to make the problem tractable, it is discretized into $N$ time steps. Separate costs vectors are also introduced for the final state $s_N$. This is a familiar trope in planning and allows for greater flexibility in generating the results we need, which we will see later.
 
-$
+$$
 \begin{aligned}
 \min_{s, u}J = \min_{s, u}\sum_{i=0}^{N-1}(q^T|s_i| + r^T|u_i|)\Delta t + f(s_N)\\\\
 \text{s.t.} \ \ s_{i+1} = As_i + Bu_i
 \end{aligned}
-$
-
+$$
 $s_i$ and $u_i$ are the variables of the optimization and represent the robot's trajectory and control inputs required to generate the state trajectory. Solving for these for each robot will essentially solve the MVMIP problem. $s_0$ is the initial state of the robot and is not a variable. $s_f$ denotes the expected or required final state of the robot. $u_0$ is the control input at the first time step and is a variable, but $u_N$ is not as we don't expect to apply any control on the last step where the robot is expected to have reached $s_f$.
 
 As mentioned, $q$ applies to each state vector $s_1$ through $s_{N-1}$, with $s_N$ having a corresponding cost term of $f(s_N)$
@@ -59,40 +56,38 @@ Ideally we would want the state of the vehicle/robot to reach the final state $s
 
 And finally, we get to the multiple vehicle part of this whole thing, where we have states and control inputs for each required vehicle. The state and control of the $\pth$ vehicle will be represented as $\spi$ and the control input as $\upi$. The objective function for the $\pth$ vehicle is now (Note that some of the constant terms like $\Delta t$ can be ignored):
 
-$
+$$
 J_p = \sum_{i=1}^{N-1}\qp^T|\spi - \spf| + \sum_{i=0}^{N-1}\rp^T|\upi| + \pp^T|\spn - \spf|
-$
-
+$$
 The question now is how does one frame this objective that has $|\ . \|$ terms as a linear function with linear constraints? To answer this, we take a quick detour to go over a known result in linear programming.
 
 >Consider the following optimization problem:
-$
+$$
 \min_{x}q^T|x|
-$
+$$
 Where $q, x \in \MR^n$. This can be written as:
-$
+$$
 \min_{x}\sum_{i=1}^{n}q_i |x_i|
-$
+$$
 Where $|x_i|$ here is just the absolute value of the $\ith$ element of $x$.  
 We can now introduce slack variables $s_i$ for each $|x_i|$ such that $|x_i| \le s_i$ and frame the objective as a linear function in $s$. The objective will now be a minimization over $s$ and the constraint makes it so that minimizing $s$ will minimize each $|x_i|$
-$
+$$
 \begin{aligned}
 \min_{x}\sum_{i=1}^{n}q_i x_i = \min_{s}q^Ts\\\\
 \text{s.t.} \ \ |x_i| \le s_i
 \end{aligned}
-$
+$$
 This is nice because it lets us keep a linear objective and represent the absolute inequality as two linear inequalities:
-$
+$$
 \begin{aligned}
 \min_{s}q^Ts\\\\
 \text{s.t.} \ \ x_i \le s_i\\\\
 -x_i \le s_i
 \end{aligned}
-$
-
+$$
 With this knowledge, we can now introduce slack variables $w$ and $v$ for $s$ and $u$ respectively. Representing the objective as an LP in these slack terms, along with taking the sum for every vehicle (assuming $K$ vehicles), we have the final objective function:
 
-$
+$$
 \begin{aligned}
 \min_{w, v} \sum_{p=1}^{K}(\sum_{i=1}^{N-1}\qp^T\wpi + \sum_{i=1}^{N-1}\rp^T\vpi + \pp^T\wpn)\\\\
 \text{s.t.} \ \ \spij - \spf \le \wpij\\\\
@@ -101,8 +96,7 @@ $
 -\upik \le \vpik\\\\
 \spinext = \Ap\spi + \Bp\upi
 \end{aligned}
-$
-
+$$
 Note that we have the slack constraints for each element of the state and control vectors.
 
 ### Vehicle-Obstacle Collision Constraints
@@ -110,7 +104,7 @@ Note that we have the slack constraints for each element of the state and contro
 Before we get to this, let's take another detour to look at a concept that is something of a pre-requisite.
 
 >Let's say we have an optimization problem of the form
-$
+$$
 \begin{aligned}
 \min_{x}f(x)\\\\
 \text{s.t.} \ \ g_1(x) \le c_1\\\\
@@ -118,7 +112,7 @@ g_2(x) \le c_2\\\\
 g_3(x) \le c_3\\\\
 \vdots
 \end{aligned}
-$
+$$
 Solving this would mean solving for the fact that **_ALL_** of the constraints need to be satisfied.  
 $g_1(x) \le c_1$ **_AND_** $g_2(x) \le c_2$ **_AND_** $g_3(x) \le c_3$, etc.  
 
@@ -127,7 +121,7 @@ $g_1(x) \le c_1$ **_OR_** $g_2(x) \le c_2$ **_OR_** $g_3(x) \le c_3$, etc.
 
 >In this case, we can use a variant of the big-M method to help reframe the constraints.
 First we introduce binary integer variables $b_i \in \set{0, 1}$ for each constraint. We also introduce a constant $M$ that is an extremely large number relative to the range of the $g_i$ functions. The constraints can then be written as:
-$
+$$
 \begin{aligned}
 g_1(x) \le c_1 + Mb_1\\\\
 g_2(x) \le c_2 + Mb_2\\\\
@@ -136,17 +130,17 @@ g_3(x) \le c_3 + Mb_3\\\\
 g_n(x) \le c_n + Mb_n\\\\
 \sum_{i=1}^nb_i \le n-1
 \end{aligned}
-$
+$$
 Let's dissect what's happening here. Each $b_i$ can be either 0 or 1.  
 if a particular $b_i = 1$ (for the $\ith$ constraint), we have:
-$
+$$
 g_1(x) \le c_1 + M\\\\
-$
+$$
 And given that $M \gg g_1(x)$, this constraint will always be satisfied, irrespective of the value of $x$.
 if a particular $b_i = 0$, we have:
-$
+$$
 g_1(x) \le c_1\\\\
-$
+$$
 Which is just the original constraint.  
 
 >So if $b_i = 1, \forall i \in \set{1, \ldots n}$, then this means that each constraint would trivially be satisfied, so this would be equivalent to not having any constraints at all.  
@@ -159,28 +153,26 @@ On the other hand if $b_i = 0, \forall i \in \set{1, \ldots n}$, then then probl
 Equipped with this, we can now look at how the paper frames collision avoidance constraints. It is assumed that each obstacle is rectangular and the vehicle moves in a two dimensional space (It can easily be extended to 3D). Each vehicle/robot is also assumed to be a point.
 
 If $s_i$ is the current state of the vehicle, we assume that the state contains some $x_i$ and $y_i$, which correspond to the $x$ and $y$ coordinates of the vehicle in 2D space. If the mid point of the obstacle is $(x_c, y_c)$ and its size is $(d_x, d_y)$, we can compute the bottom left and top right points as:
-$
+$$
 \begin{aligned}
 \xmin = x_c - 0.5d_x\\\\
 \ymin = y_c - 0.5d_y\\\\
 \xmax = x_c + 0.5d_x\\\\
 \ymax = y_c + 0.5d_y\\\\
 \end{aligned}
-$
-
+$$
 The vehicle at $(x_i, y_i)$ will avoid the obstacle (not be in collision) iff:
-$
+$$
 \begin{aligned}
 x_i \le \xmin\\\\
 \text{OR} \ \ x_i \ge \xmax\\\\
 \text{OR} \ \ y_i \le \ymin\\\\
 \text{OR} \ \ y_i \ge \ymax\\\\
 \end{aligned}
-$
-
+$$
 We require at least one of these constraints to be true. So we can use the big-M method to reframe these constraints!  
 
-$
+$$
 \begin{aligned}
 x_i \le \xmin + Mt_{i1}\\\\
 -x_i \le -\xmax + Mt_{i2}\\\\
@@ -188,11 +180,10 @@ y_i \le \ymin + Mt_{i3}\\\\
 -y_i \le -\ymax + Mt_{i4}\\\\
 \sum_{k=1}^4t_{ik} \le 3
 \end{aligned}
-$
-
+$$
 These constraints ensure that the vehicle avoids the obstacle, but offers no additional clearance from it. It also does not account for the vehicle itself having volume. In order to account for these, we can add additional clearance terms $c_x$ and $c_y$ that encapsulate the size of the vehicle and any additional clearance to obstacles. Additionally we also express the constraints for the $\pth$ vehicle and the $\lth$ obstacle.
 
-$
+$$
 \begin{aligned}
 \xpi \le \xlmin + \cplx + Mt_{pli1}\\\\
 -\xpi \le -\xlmax - \cplx + Mt_{pli2}\\\\
@@ -200,13 +191,12 @@ $
 -\ypi \le -\ylmax - \cply + Mt_{pli4}\\\\
 \sum_{k=1}^4t_{plik} \le 3
 \end{aligned}
-$
-
+$$
 ### Moving Obstacles
 
 This framework easily extends to representing moving obstacles as well. Instead of having the min and max coordinates of the $\lth$ obstacle fixed at $(\xlmin, \ylmin)$ and $(\xlmax, \ylmax)$, we can have its coordinates be different at each time step $i$. Given the velocity of the object at each time step, we can estimate its coordinates and use them in the constraints as shown:
 
-$
+$$
 \begin{aligned}
 \xpi \le \xlimin + \cplx + Mt_{pli1}\\\\
 -\xpi \le -\xlimax - \cplx + Mt_{pli2}\\\\
@@ -214,13 +204,12 @@ $
 -\ypi \le -\ylimax - \cply + Mt_{pli4}\\\\
 \sum_{k=1}^4t_{plik} \le 3
 \end{aligned}
-$
-
+$$
 ### Vehicle-Vehicle Collision Constraints
 
 Vehicle-vehicle collision constraints can be represented the same way as vehicle-obstacle constraints. The only difference being that the constraint is between the coordinates of the $\pth$ and $\qth$ vehicles at the $\ith$ time step for every pair of vehicles. Instead of using the minimum and maximum coordinates of the rectangular obstacles, we represent the volumes of the vehicles and any additional clearances through distances $(d_x, d_y)$ for each pair of vehicles.
 
-$
+$$
 \begin{aligned}
 \xpi - \xqi \ge \dpqx - Mb_{pqi1}\\\\
 \xqi - \xpi \ge \dpqx - Mb_{pqi2}\\\\
@@ -228,34 +217,31 @@ $
 \yqi - \ypi \ge \dpqy - Mb_{pqi4}\\\\
 \sum_{k=1}^4b_{plik} \le 3
 \end{aligned}
-$
-
+$$
 Note that we have a different set of binary variables here.
 
 ### Extensions
 
 The entire problem has now reduced to a mixed integer linear program. The objective is a linear function and the constraints are linear in the state, control and binary variables for collision. Additionally, we can also enforce state and control limits for each vehicle as upper and lower bounds for each of these variables.
 
-$
+$$
 \begin{aligned}
 s_{pi} \ge s_{p,min}\\\\
 s_{pi} \le s_{p,max}\\\\
 u_{pi} \ge u_{p,min}\\\\
 u_{pi} \le u_{p,max}\\\\
 \end{aligned}
-$
-
+$$
 Please refer to the paper [[1]](#ref1), to see the entire LP written out in all its glory. The state and control constraints can also be formulated as approximate second order ball constraints using a collection of linear constraints (instead of box constraints) as seen in [[2]](#ref2).
 
 The papers model the obstacles as being rectangular, but we can always extend it to being general convex polygons. In this case, we would want the vehicle to lie outside the intersection of the half-spaces formed by the edges of the polygon.
 
-$
+$$
 \begin{aligned}
 O_l = \set{z: a_{lk}^Tz \le b_{lk}, \ \forall k \in \set{1, \ldots P}}\\\\
 (\xpi, \ypi) \notin O_l
 \end{aligned}
-$
-
+$$
 Where $O_l$ represents the space inside the $\lth$ convex $P$ sided polygon.
 
 ## Implementation
@@ -280,13 +266,12 @@ Turns out that we've run into a classic problem in planning caused due to discre
 
 How do we solve this? The simple LP formulation of the MVMIP makes it rather difficult to express anything too complex. We could model the space between successive states as another convex polygon and set up approximate constraints. An easier and less expensive way would be to just reduce the bounds of the control inputs such that each control step is guaranteed to move the robot by a maximum distance that is less than the size of the smallest obstacle.
 
-$
+$$
 \begin{aligned}
 u_{p, max} = \max_{u}\delta_{max} \approx \max_{u}u\\\\
 \text{s.t.} \ \ f(s, u)\Delta t \le \max{(\xlmax - \xlmin, \ylmax - \ylmin)}
 \end{aligned}
-$
-
+$$
 This obvious has its own downsides of limiting the max control input that can be applied, among others limitations, but keeps it simple in the spirit of the algorithm.
 
 Fixing the control limits now gives us the solution that we need:

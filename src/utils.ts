@@ -2,7 +2,7 @@
 // cards on list pages. Strips component tags, markdown syntax and math so the
 // preview reads as clean prose.
 
-export function excerpt(body: string | undefined, wordCount = 55): string {
+export function excerpt(body: string | undefined, wordCount = 70): string {
   if (!body) return "";
   let text = body;
 
@@ -15,7 +15,9 @@ export function excerpt(body: string | undefined, wordCount = 55): string {
   text = text.replace(/<[^>]+>/g, " ");
   // Strip markdown image and link syntax, keeping link text.
   text = text.replace(/!\[[^\]]*\]\([^)]*\)/g, " ");
-  text = text.replace(/\[([^\]]*)\]\([^)]*\)/g, "$1");
+  // Keep link text, including links whose text itself contains brackets,
+  // e.g. a reference link like [[1]](#ref1) should reduce to [1].
+  text = text.replace(/\[((?:\[[^\]]*\]|[^[\]])*)\]\([^)]*\)/g, "$1");
   // Strip common markdown markers.
   text = text.replace(/[#>*_`~]/g, " ");
   // Collapse whitespace.

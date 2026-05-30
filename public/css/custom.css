@@ -188,3 +188,9 @@
 .comments-heading {
   margin-bottom: 20px;
 }
+
+/* Contain the floated [Read More] link so it can never overlap the tags row
+   below it on a post card, regardless of how short the excerpt is. */
+.post-preview .post-entry {
+  overflow: auto;
+}

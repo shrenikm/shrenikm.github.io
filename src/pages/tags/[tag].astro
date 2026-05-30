@@ -19,15 +19,15 @@ export async function getStaticPaths() {
 }
 
 const { tag, posts } = Astro.props;
+
+// Match the old Hugo taxonomy term page: a title cased tag name as the heading.
+const heading = tag.charAt(0).toUpperCase() + tag.slice(1);
 ---
 
-<BaseLayout
-  pageTitle={`#${tag}`}
-  header={{ kind: "list", title: tag, hashTitle: true }}
->
+<BaseLayout pageTitle={`#${tag}`} header={{ kind: "list", title: heading }}>
   <div class="container" role="main">
     <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="posts-list">
           {posts.map((post) => <PostPreview post={post} />)}
         </div>
