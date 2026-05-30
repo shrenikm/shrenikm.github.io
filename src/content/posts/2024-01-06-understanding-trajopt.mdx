@@ -5,7 +5,7 @@ tags: ["paper", "implementation", "robotics", "control",  "numerical_optimizatio
 draft: false
 ---
 
-TrajOpt [[1]](#ref1) is an optimization based approach for motion planning. More specifically, it uses a sequential convex optimization procedure along with a formulation of collision constraints to find locally optimal planning trajectories, even for robotic systems that have a large number of degrees of freedom.
+TrajOpt [^ref1] is an optimization based approach for motion planning. More specifically, it uses a sequential convex optimization procedure along with a formulation of collision constraints to find locally optimal planning trajectories, even for robotic systems that have a large number of degrees of freedom.
 
 This post will go into the details of the optimization part, and give an outline of how it can be implemented. My implementation can be found [here](https://github.com/shrenikm/Atium/tree/main/atium/implementations/trajopt)
 
@@ -534,8 +534,4 @@ To top things off, we introduce another inequality constraint $(x - 4)^2 + (y - 
 
 <Figure src="/posts/6/gifs/trajopt_rosenbrock_6.gif" alt="trajopt_rosenbrock_6" />
 
-## References
-
-<a id="ref1"></a>
-
-1. **Schulman, J., Duan, Y., Ho, J., Lee, A., Awwal, I., Bradlow, H., ... & Abbeel, P. (2014). Motion planning with sequential convex optimization and convex collision checking. The International Journal of Robotics Research, 33(9), 1251-1270.** [[Link]](https://rll.berkeley.edu/~sachin/papers/Schulman-IJRR2014.pdf)
+[^ref1]: **Schulman, J., Duan, Y., Ho, J., Lee, A., Awwal, I., Bradlow, H., ... & Abbeel, P. (2014). Motion planning with sequential convex optimization and convex collision checking. The International Journal of Robotics Research, 33(9), 1251-1270.** [[Link]](https://rll.berkeley.edu/~sachin/papers/Schulman-IJRR2014.pdf)

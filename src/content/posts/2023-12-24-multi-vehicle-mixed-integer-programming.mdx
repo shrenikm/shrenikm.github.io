@@ -232,7 +232,7 @@ u_{pi} \ge u_{p,min}\\\\
 u_{pi} \le u_{p,max}\\\\
 \end{aligned}
 $$
-Please refer to the paper [[1]](#ref1), to see the entire LP written out in all its glory. The state and control constraints can also be formulated as approximate second order ball constraints using a collection of linear constraints (instead of box constraints) as seen in [[2]](#ref2).
+Please refer to the paper [^ref1], to see the entire LP written out in all its glory. The state and control constraints can also be formulated as approximate second order ball constraints using a collection of linear constraints (instead of box constraints) as seen in [^ref2].
 
 The papers model the obstacles as being rectangular, but we can always extend it to being general convex polygons. In this case, we would want the vehicle to lie outside the intersection of the half-spaces formed by the edges of the polygon.
 
@@ -320,10 +320,5 @@ The last one -- multi vehicle, multi dynamic obstacle case had 8400 variables an
 
 Some of this can be mitigated by using the receding horizon approach.
 
-## References
-
-<a id="ref1"></a>
-
-1. **Schouwenaars, T., De Moor, B., Feron, E., & How, J. (2001, September). Mixed integer programming for multi-vehicle path planning. In 2001 European control conference (ECC) (pp. 2603-2608). IEEE.** [[Link]](https://ieeexplore.ieee.org/abstract/document/7076321)
-<a id="ref2"></a>
-2. **Richards, A., & How, J. P. (2002, May). Aircraft trajectory planning with collision avoidance using mixed integer linear programming. In Proceedings of the 2002 American Control Conference (IEEE Cat. No. CH37301) (Vol. 3, pp. 1936-1941). IEEE.**  [[Link]](https://ieeexplore.ieee.org/abstract/document/1023918)
+[^ref1]: **Schouwenaars, T., De Moor, B., Feron, E., & How, J. (2001, September). Mixed integer programming for multi-vehicle path planning. In 2001 European control conference (ECC) (pp. 2603-2608). IEEE.** [[Link]](https://ieeexplore.ieee.org/abstract/document/7076321)
+[^ref2]: **Richards, A., & How, J. P. (2002, May). Aircraft trajectory planning with collision avoidance using mixed integer linear programming. In Proceedings of the 2002 American Control Conference (IEEE Cat. No. CH37301) (Vol. 3, pp. 1936-1941). IEEE.**  [[Link]](https://ieeexplore.ieee.org/abstract/document/1023918)

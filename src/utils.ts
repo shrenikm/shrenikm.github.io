@@ -11,6 +11,8 @@ export function excerpt(body: string | undefined, wordCount = 70): string {
   // Drop display and inline math.
   text = text.replace(/\$\$[\s\S]*?\$\$/g, " ");
   text = text.replace(/\$[^$\n]*\$/g, " ");
+  // Drop footnote reference markers like [^ref1].
+  text = text.replace(/\[\^[^\]]*\]/g, " ");
   // Drop component / html tags.
   text = text.replace(/<[^>]+>/g, " ");
   // Strip markdown image and link syntax, keeping link text.

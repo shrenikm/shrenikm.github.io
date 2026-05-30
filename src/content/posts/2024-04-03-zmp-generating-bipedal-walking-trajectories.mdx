@@ -80,7 +80,7 @@ We can just set the ZMP at any time to be the center of the convex polygon hull 
 
 Solving for the COM can be trickier that it looks from the ZMP equations. We need to compute a COM trajectory such that the derivatives of the trajectory at every point satisfy the required relationship.
 
-There are more recent methods that solves this problem using a closed form solution [[1]](#ref1). To comply with our initial objective and constraints, I used one of the earliest methods developed for solving this problem: COM generation using preview control. For details, see [[2]](#ref2) and [[3]](#ref3).
+There are more recent methods that solves this problem using a closed form solution [^ref1]. To comply with our initial objective and constraints, I used one of the earliest methods developed for solving this problem: COM generation using preview control. For details, see [^ref2] and [^ref3].
 
 The end result is this:
 
@@ -139,12 +139,6 @@ On a real robot, it is also common to have sensor modules to help compute estima
 
 All in all, even though we haven't executed these gaits, just computing the trajectories can teach us a lot about the nuances of the problem and help us appreciate the beauty of bipedal robots.
 
-## References
-
-<a id="ref1"></a>
-
-1. **Tedrake, R., Kuindersma, S., Deits, R., & Miura, K. (2015, November). A closed-form solution for real-time ZMP gait generation and feedback stabilization. In 2015 IEEE-RAS 15th International Conference on Humanoid Robots (Humanoids) (pp. 936-940). IEEE.** [[Link]](https://groups.csail.mit.edu/robotics-center/public_papers/Tedrake15.pdf)
-<a id="ref2"></a>
-2. **Kajita, S., Kanehiro, F., Kaneko, K., Fujiwara, K., Harada, K., Yokoi, K., & Hirukawa, H. (2003, September). Biped walking pattern generation by using preview control of zero-moment point. In 2003 IEEE international conference on robotics and automation (Cat. No. 03CH37422) (Vol. 2, pp. 1620-1626). IEEE.** [[Link]](https://mzucker.github.io/swarthmore/e91_s2013/readings/kajita2003preview.pdf)
-<a id="ref3"></a>
-3. **Katayama, T., Ohki, T., Inoue, T., & Kato, T. (1985). Design of an optimal controller for a discrete-time system subject to previewable demand. International Journal of Control, 41(3), 677-699.** [[Link]](https://people.csail.mit.edu/katiebyl/kb/DW2008/papers_of_tangential_interest/katayama85.pdf)
+[^ref1]: **Tedrake, R., Kuindersma, S., Deits, R., & Miura, K. (2015, November). A closed-form solution for real-time ZMP gait generation and feedback stabilization. In 2015 IEEE-RAS 15th International Conference on Humanoid Robots (Humanoids) (pp. 936-940). IEEE.** [[Link]](https://groups.csail.mit.edu/robotics-center/public_papers/Tedrake15.pdf)
+[^ref2]: **Kajita, S., Kanehiro, F., Kaneko, K., Fujiwara, K., Harada, K., Yokoi, K., & Hirukawa, H. (2003, September). Biped walking pattern generation by using preview control of zero-moment point. In 2003 IEEE international conference on robotics and automation (Cat. No. 03CH37422) (Vol. 2, pp. 1620-1626). IEEE.** [[Link]](https://mzucker.github.io/swarthmore/e91_s2013/readings/kajita2003preview.pdf)
+[^ref3]: **Katayama, T., Ohki, T., Inoue, T., & Kato, T. (1985). Design of an optimal controller for a discrete-time system subject to previewable demand. International Journal of Control, 41(3), 677-699.** [[Link]](https://people.csail.mit.edu/katiebyl/kb/DW2008/papers_of_tangential_interest/katayama85.pdf)

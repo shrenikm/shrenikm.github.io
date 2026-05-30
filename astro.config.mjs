@@ -31,6 +31,7 @@ export default defineConfig({
     syntaxHighlight: false,
     remarkPlugins: [remarkMath],
     rehypePlugins: [[rehypeKatex, { throwOnError: false, strict: false, macros }]],
+    remarkRehype: { footnoteLabel: "References", footnoteBackLabel: "Back to content" },
   },
   integrations: [mdx()],
 });
