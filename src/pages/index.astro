@@ -1,0 +1,21 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PostPreview from "../components/PostPreview.astro";
+
+const posts = (await getCollection("posts"))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout header={{ kind: "home" }}>
+  <div role="main" class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="posts-list">
+          {posts.map((post) => <PostPreview post={post} />)}
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

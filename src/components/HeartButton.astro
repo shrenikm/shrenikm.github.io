@@ -1,0 +1,79 @@
+---
+// Per post like / heart button. The count lives on a self hosted Cloudflare
+// Worker (see worker/). A reader can like a post once: a localStorage flag stops
+// re-liking from the same browser, and the worker enforces one like per IP as a
+// second line of defense. The button renders nothing until HEART_API_URL is set,
+// so the page is never broken while the worker is undeployed.
+
+import { HEART_API_URL } from "../consts";
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const enabled = HEART_API_URL.length > 0;
+---
+
+{
+  enabled && (
+    <div class="heart" data-heart data-slug={slug} data-api={HEART_API_URL}>
+      <button class="heart-btn" aria-label="Like this post" aria-pressed="false">
+        <i class="far fa-heart" />
+      </button>
+      <span class="heart-count" aria-live="polite" />
+    </div>
+  )
+}
+
+<script>
+  function initHearts() {
+    document.querySelectorAll<HTMLElement>("[data-heart]").forEach((el) => {
+      if (el.dataset.ready) return;
+      el.dataset.ready = "true";
+
+      const api = el.dataset.api!;
+      const slug = el.dataset.slug!;
+      const btn = el.querySelector<HTMLButtonElement>(".heart-btn")!;
+      const countEl = el.querySelector<HTMLElement>(".heart-count")!;
+      const icon = el.querySelector<HTMLElement>("i")!;
+      const storageKey = `liked:${slug}`;
+
+      function paint(count: number, liked: boolean) {
+        countEl.textContent = String(count);
+        btn.setAttribute("aria-pressed", liked ? "true" : "false");
+        icon.className = liked ? "fas fa-heart" : "far fa-heart";
+      }
+
+      const likedLocally = localStorage.getItem(storageKey) === "1";
+
+      // Show the current count on load. If the worker is unreachable the button
+      // stays usable but simply shows no number.
+      fetch(`${api}?slug=${encodeURIComponent(slug)}`)
+        .then((r) => r.json())
+        .then((d) => paint(d.count ?? 0, likedLocally))
+        .catch(() => {
+          countEl.textContent = "";
+        });
+
+      btn.addEventListener("click", () => {
+        if (localStorage.getItem(storageKey) === "1") return;
+        localStorage.setItem(storageKey, "1");
+
+        // Optimistic update, then reconcile with whatever the worker returns.
+        paint(Number(countEl.textContent || "0") + 1, true);
+        btn.classList.remove("pop");
+        void btn.offsetWidth;
+        btn.classList.add("pop");
+
+        fetch(`${api}?slug=${encodeURIComponent(slug)}`, { method: "POST" })
+          .then((r) => r.json())
+          .then((d) => paint(d.count ?? 0, true))
+          .catch(() => {});
+      });
+    });
+  }
+
+  initHearts();
+  document.addEventListener("astro:page-load", initHearts);
+</script>

@@ -1,0 +1,190 @@
+/* Styles for the custom content components (Figure, YouTube, Gallery). */
+
+/* Figures: centered image with an optional caption. */
+.post-figure {
+  text-align: center;
+  margin: 25px auto;
+}
+
+.post-figure img {
+  max-width: 100%;
+  height: auto;
+}
+
+.post-figure figcaption {
+  color: #808080;
+  font-size: 0.9em;
+  margin-top: 8px;
+}
+
+.post-figure figcaption h4 {
+  font-size: 1em;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* Responsive 16:9 YouTube embed. */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  margin: 25px 0;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Scrollable image gallery. */
+.gallery {
+  position: relative;
+  margin: 30px 0;
+}
+
+.gallery-track {
+  position: relative;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  border-radius: 4px;
+  background: #f5f5f5;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.gallery-track::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  margin: 0;
+  text-align: center;
+}
+
+.gallery-slide img {
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.gallery-slide figcaption {
+  color: #808080;
+  font-size: 0.9em;
+  padding: 8px;
+}
+
+.gallery-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.gallery-btn:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.gallery-prev {
+  left: 10px;
+}
+
+.gallery-next {
+  right: 10px;
+}
+
+.gallery-dots {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.gallery-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  margin: 0 4px;
+  border: none;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+}
+
+.gallery-dot.active {
+  background: #0085a1;
+}
+
+/* Like / heart button. */
+.heart {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 35px 0 5px;
+}
+
+.heart-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 28px;
+  line-height: 1;
+  color: #e0245e;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.heart-btn:hover {
+  transform: scale(1.15);
+}
+
+.heart-btn[aria-pressed="true"] {
+  cursor: default;
+}
+
+.heart-count {
+  font-size: 1.1em;
+  color: #404040;
+  min-width: 1ch;
+}
+
+.heart-btn.pop {
+  animation: heart-pop 0.3s ease;
+}
+
+@keyframes heart-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Comments section. */
+.post-comments {
+  margin-top: 40px;
+}
+
+.comments-heading {
+  margin-bottom: 20px;
+}

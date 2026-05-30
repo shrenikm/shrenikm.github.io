@@ -1,0 +1,15 @@
+node_modules
+dist
+.astro
+.DS_Store
+
+# Cloudflare Worker local state + secrets
+.wrangler
+.dev.vars
+
+# environment / secrets
+.env
+.env.*
+
+# logs
+*.log

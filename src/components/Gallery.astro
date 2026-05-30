@@ -1,0 +1,88 @@
+---
+// Scrollable image gallery. Lets a reader page through images inside a single
+// widget instead of stacking them one after another. This is the kind of
+// reusable escape hatch the markdown plus components model is built for: it is
+// authored once here and dropped into any post as <Gallery images={...} />.
+
+interface GalleryImage {
+  src: string;
+  alt?: string;
+  caption?: string;
+}
+
+interface Props {
+  images: GalleryImage[];
+}
+
+const { images } = Astro.props;
+---
+
+<div class="gallery" data-gallery>
+  <div class="gallery-track">
+    {
+      images.map((img) => (
+        <figure class="gallery-slide">
+          <img src={img.src} alt={img.alt ?? ""} loading="lazy" />
+          {img.caption && <figcaption>{img.caption}</figcaption>}
+        </figure>
+      ))
+    }
+  </div>
+  <button class="gallery-btn gallery-prev" aria-label="Previous image">&#8249;</button>
+  <button class="gallery-btn gallery-next" aria-label="Next image">&#8250;</button>
+  <div class="gallery-dots"></div>
+</div>
+
+<script>
+  function initGalleries() {
+    document.querySelectorAll<HTMLElement>("[data-gallery]").forEach((gallery) => {
+      const track = gallery.querySelector<HTMLElement>(".gallery-track");
+      const slides = Array.from(gallery.querySelectorAll<HTMLElement>(".gallery-slide"));
+      const dotsContainer = gallery.querySelector<HTMLElement>(".gallery-dots");
+      const prev = gallery.querySelector<HTMLElement>(".gallery-prev");
+      const next = gallery.querySelector<HTMLElement>(".gallery-next");
+      if (!track || !dotsContainer || slides.length === 0) return;
+
+      let index = 0;
+      const dots = slides.map((_, i) => {
+        const dot = document.createElement("button");
+        dot.className = "gallery-dot";
+        dot.addEventListener("click", () => go(i));
+        dotsContainer.appendChild(dot);
+        return dot;
+      });
+
+      function go(i: number) {
+        index = Math.max(0, Math.min(slides.length - 1, i));
+        track!.scrollTo({ left: slides[index].offsetLeft, behavior: "smooth" });
+        dots.forEach((d, j) => d.classList.toggle("active", j === index));
+      }
+
+      prev?.addEventListener("click", () => go(index - 1));
+      next?.addEventListener("click", () => go(index + 1));
+
+      // Keep the dots in sync when the reader scrolls the track directly.
+      let scrollTimer: number | undefined;
+      track.addEventListener("scroll", () => {
+        window.clearTimeout(scrollTimer);
+        scrollTimer = window.setTimeout(() => {
+          const nearest = slides.reduce(
+            (best, slide, i) =>
+              Math.abs(slide.offsetLeft - track.scrollLeft) <
+              Math.abs(slides[best].offsetLeft - track.scrollLeft)
+                ? i
+                : best,
+            0,
+          );
+          index = nearest;
+          dots.forEach((d, j) => d.classList.toggle("active", j === index));
+        }, 100);
+      });
+
+      go(0);
+    });
+  }
+
+  initGalleries();
+  document.addEventListener("astro:page-load", initGalleries);
+</script>

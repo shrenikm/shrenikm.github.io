@@ -1,0 +1,36 @@
+---
+import { SITE_TITLE, MAIN_MENU } from "../consts";
+---
+
+<nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button
+        type="button"
+        class="navbar-toggle"
+        data-toggle="collapse"
+        data-target="#main-navbar"
+      >
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">{SITE_TITLE}</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        {
+          MAIN_MENU.map((item) => (
+            <li>
+              <a title={item.name} href={item.url}>
+                {item.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</nav>

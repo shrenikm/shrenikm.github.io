@@ -1,0 +1,38 @@
+---
+import PostMeta from "./PostMeta.astro";
+
+interface Props {
+  kind: "home" | "post" | "page" | "list";
+  title?: string;
+  date?: Date;
+  hashTitle?: boolean;
+}
+
+const { kind, title, date, hashTitle = false } = Astro.props;
+const showBanner = kind !== "home" && !!title;
+---
+
+{
+  showBanner ? (
+    <header class="header-section">
+      <div class="intro-header no-img">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+              <div class={`${kind}-heading`}>
+                <h1>
+                  {hashTitle ? "#" : ""}
+                  {title}
+                </h1>
+                {kind !== "post" && <hr class="small" />}
+                {kind === "post" && date && <PostMeta date={date} />}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  ) : (
+    <div class="intro-header" />
+  )
+}
