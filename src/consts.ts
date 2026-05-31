@@ -16,6 +16,9 @@ export const SITE_TITLE = "";
 export const SITE_DESCRIPTION = "Posts for when I feel like it";
 export const BASE_URL = "https://shrenikm.com";
 
+// Google Analytics (GA4) measurement ID. Public by design; empty disables it.
+export const GA_MEASUREMENT_ID = "G-E2P4DFRG5B";
+
 export const AUTHOR = {
   name: "Shrenik Muralidhar",
   email: "shrenik95@gmail.com",
