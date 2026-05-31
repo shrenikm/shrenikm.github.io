@@ -1,39 +1,36 @@
 # heart-worker
 
-Cloudflare Worker that stores the site's per-post heart / like counts. One
-Durable Object per post slug holds the count and a set of salted-hashed visitor
-IPs (one like per IP; raw IPs are never stored). The static site calls it from
-the browser; nothing here runs on your machine after you deploy.
-
-## One-time deploy
-
-```sh
-cd worker
-npm install                 # installs wrangler locally
-npx wrangler login          # opens a browser, authorizes your Cloudflare account (free)
-# edit src/index.js: set IP_HASH_SALT to any random string
-npx wrangler deploy         # uploads the worker; prints its URL
-```
-
-After `deploy` you get a URL like `https://heart-worker.<you>.workers.dev`.
-Put that URL in `../src/consts.ts` as `HEART_API_URL`, rebuild the site, and the
-heart goes live. You only re-run `deploy` if you change this worker's code.
+Cloudflare Worker backing the site's per-post heart / like counts. One Durable
+Object per post slug holds the count plus salted-hashed visitor IPs (one like
+per IP; raw IPs are never stored). The static site calls it from the browser.
 
 ## Endpoints
 
-- `GET  /?slug=<post-id>` -> `{ "count": <n> }` (current likes)
-- `POST /?slug=<post-id>` -> `{ "count": <n> }` (records one like for this IP)
+- `GET  /?slug=<post-id>`  ->  `{ "count": <n> }`
+- `POST /?slug=<post-id>`  ->  `{ "count": <n> }`  (one like per IP)
+
+## Deploy
+
+```sh
+npm install
+# set IP_HASH_SALT in src/index.js to any random string
+# set ALLOWED_ORIGINS in src/index.js to the site's domain(s)
+npx wrangler deploy
+```
+
+Auth: either `npx wrangler login` (OAuth) or a scoped API token created from the
+"Edit Cloudflare Workers" template, passed as `CLOUDFLARE_API_TOKEN`.
+
+Gotcha: the first deploy on a fresh account fails until a workers.dev subdomain
+exists. Open the Workers section of the Cloudflare dashboard once to create it,
+then re-run `npx wrangler deploy`.
+
+After deploying, set `HEART_API_URL` in `../src/consts.ts` to the printed URL.
 
 ## Free tier
 
-Workers free allows 100,000 requests/day and Durable Objects (SQLite-backed
-storage) are included on the free plan. A blog doing a few hundred views a month
-is nowhere near any limit.
+100,000 requests/day; Durable Objects (SQLite-backed) included.
 
-## Local testing
+## Local
 
-```sh
-npx wrangler dev            # serves the worker at http://localhost:8787
-```
-
-`http://localhost:4321` (Astro dev) is already in the allowed CORS origins.
+`npx wrangler dev` runs it at http://localhost:8787 with no account needed.

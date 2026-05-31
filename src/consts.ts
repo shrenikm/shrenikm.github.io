@@ -38,7 +38,7 @@ export const MAIN_MENU: MenuItem[] = [
 // Heart / like button. Points at the self hosted Cloudflare Worker that stores
 // per post like counts. An empty string disables the button: it renders nothing
 // until the worker is deployed and this URL is filled in.
-export const HEART_API_URL = "http://localhost:8787";
+export const HEART_API_URL = "https://heart-worker.shrenikm.workers.dev";
 
 // giscus comments (https://giscus.app). Comments live in this site's GitHub
 // repository Discussions, so there is nothing to self host. Fill in the four
