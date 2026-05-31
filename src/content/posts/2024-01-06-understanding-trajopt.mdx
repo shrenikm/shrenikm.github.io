@@ -15,9 +15,9 @@ Motion planning problems can usually be fully represented as a non-linear, non-c
 
 $$
 \begin{aligned}
-\min f(\x)\\\\
-\st \quad g_i(\x) \le 0, \ \ i = 1, 2, \ldots , \nineq\\\\
-h_i(\x) = 0, \quad i = 1, 2, \ldots , \nineq\\\\
+\min f(\x)\\
+\st \quad g_i(\x) \le 0, \ \ i = 1, 2, \ldots , \nineq\\
+h_i(\x) = 0, \quad i = 1, 2, \ldots , \nineq\\
 \end{aligned}
 $$
 $f$, $g_i$ and $h_i$ are scalar non-convex functions with $\x \in \Rn$ being the vector of variables to optimize. For trajectory optimization algorithms, $\x$ consists of the sequence of control inputs and/or sequence of states (depending on the method used -- direct, indirect, etc.) that can then be optimized to find the optimal robot trajectory.
@@ -30,9 +30,9 @@ The main idea here is to convexify the non-convex problem at the current iterate
 
 $$
 \begin{aligned}
-\min \fcx \\\\
-\st \quad \gcxi \le 0, \ \ i = 1, 2, \ldots , \nineq\\\\
-\hcxi = 0, \ \ i = 1, 2, \ldots , \nineq\\\\
+\min \fcx \\
+\st \quad \gcxi \le 0, \ \ i = 1, 2, \ldots , \nineq\\
+\hcxi = 0, \ \ i = 1, 2, \ldots , \nineq\\
 \end{aligned}
 $$
 Here, $\fc$, $\gci$ and $\hci$ are the convexified functions at the current value of $\x$ (denoted by $\x^\ast$). The SCP procedure looks something like this:
@@ -134,17 +134,17 @@ The cost function of the convexified problem which initially was
 
 $$
 \begin{aligned}
-\min \fcx \\\\
-\st \quad \gcxi \le 0, \ \ i = 1, 2, \ldots , \nineq\\\\
-\hcxi = 0, \ \ i = 1, 2, \ldots , \nineq\\\\
+\min \fcx \\
+\st \quad \gcxi \le 0, \ \ i = 1, 2, \ldots , \nineq\\
+\hcxi = 0, \ \ i = 1, 2, \ldots , \nineq\\
 \end{aligned}
 $$
 Now has a more numerically tractable form:
 
 $$
 \begin{aligned}
-\min \fcx + \mu \sum_i^{\nineq} |\gcxi|^+ + \mu\sum_i^{\neq}|\hcxi|\\\\
-\st \quad \lVert \x - \xst \rVert_2 \le s\\\\
+\min \fcx + \mu \sum_i^{\nineq} |\gcxi|^+ + \mu\sum_i^{\neq}|\hcxi|\\
+\st \quad \lVert \x - \xst \rVert_2 \le s\\
 \end{aligned}
 $$
 Given the current trust region size $s$ and the penalty factor $\mu$. Larger the value of $\mu$, the more likely it is for the optimization to prioritize satisfying the constraints over minimizing the pure cost $\fx$. When $\mu$ is very large (theoretically close to $\infty$), solving the problem would attempt to satisfy the constraints at any cost.
@@ -204,11 +204,11 @@ More specifically, we can try to cast the problem into this specific form of the
 
 $$
 \begin{aligned}
-\min \half x^TPx + q^Tx\\\\
-\st \quad l \le Ax \le u\\\\
-\quad x \in \Rn\\\\
-\quad P \in \Rnn, q \in \Rn, A \in \Rmn\\\\
-\quad l \in \Rm, u \in \Rm\\\\
+\min \half x^TPx + q^Tx\\
+\st \quad l \le Ax \le u\\
+\quad x \in \Rn\\
+\quad P \in \Rnn, q \in \Rn, A \in \Rmn\\
+\quad l \in \Rm, u \in \Rm\\
 \end{aligned}
 $$
 Why this form in particular? Because this is a pretty standard form and also is the form of the inputs to [OSQP](https://osqp.org/), an open source and widely used optimization library for solving convex quadratic programs.
@@ -255,8 +255,8 @@ Similar to the cost function, we can convexify the constraint functions using th
 
 $$
 \begin{aligned}
-\gcx = g(\xst) + \Wgxst\Dx + \half \Dx^T \sum_i^{\nineq}\Tgixst \Dx\\\\
-\hcx = h(\xst) + \Whxst\Dx + \half \Dx^T \sum_i^{\neq}\Thixst \Dx\\\\
+\gcx = g(\xst) + \Wgxst\Dx + \half \Dx^T \sum_i^{\nineq}\Tgixst \Dx\\
+\hcx = h(\xst) + \Whxst\Dx + \half \Dx^T \sum_i^{\neq}\Thixst \Dx\\
 \end{aligned}
 $$
 ### Incorporating The Constraints
@@ -271,19 +271,19 @@ Can equivalently be written as
 
 $$
 \begin{aligned}
-\min \tg\\\\
-\st \quad \tg \ge 0\\\\
-a\cdot x + b \le \tg\\\\
+\min \tg\\
+\st \quad \tg \ge 0\\
+a\cdot x + b \le \tg\\
 \end{aligned}
 $$
 In a similar vein, $\min |\hxi|$ can be written as $\min |a\cdot x + b|$. Upon the introduction of more slack variables, we get:
 
 $$
 \begin{aligned}
-\min \sh + \th\\\\
-\st \quad \sh \ge 0\\\\
-\st \quad \th \ge 0\\\\
-\sh - \th = a\cdot x + b\\\\
+\min \sh + \th\\
+\st \quad \sh \ge 0\\
+\st \quad \th \ge 0\\
+\sh - \th = a\cdot x + b\\
 \end{aligned}
 $$
 But $\gcx$ and $\hcx$ have both quadratic and linear $\x$ terms. What do we do in this case?
@@ -292,8 +292,8 @@ Luckily the nature of the penalty functions makes it easy to separate them out.
 
 $$
 \begin{aligned}
-|\gci|^+ = |g(\xst) + \Wgxst\Dx + \half \Dx^T \sum_i^{\nineq}\Tgixst \Dx|^+\\\\
-= \half \Dx^T \sum_i^{\nineq}\Tgixst \Dx + |g(\xst) + \Wgxst\Dx|^+\\\\
+|\gci|^+ = |g(\xst) + \Wgxst\Dx + \half \Dx^T \sum_i^{\nineq}\Tgixst \Dx|^+\\
+= \half \Dx^T \sum_i^{\nineq}\Tgixst \Dx + |g(\xst) + \Wgxst\Dx|^+\\
 \end{aligned}
 $$
 We can pull the quadratic term out as it will be $\ge 0$ if each $\Tgixst \succeq 0$. Positive semi-definitiveness of the Hessians is a reasonable assumption to make, and even if they aren't, we can modify and deal with them numerically.
@@ -309,7 +309,7 @@ Similarly for the equality constraints:
 
 $$
 \begin{aligned}
-|\hci| = |h(\xst) + \Whxst\Dx + \half \Dx^T \sum_i^{\neq}\Thixst \Dx|\\\\
+|\hci| = |h(\xst) + \Whxst\Dx + \half \Dx^T \sum_i^{\neq}\Thixst \Dx|\\
 = \half \x^T\sum_i^{\neq}\Thixst \x - \half \xst^T \sum_i^{\neq} (\Thixst + \Thixst^T) \x + |h(\xst) + \Whxst\Dx|
 \end{aligned}
 $$
@@ -323,26 +323,26 @@ Finally, we look at what the linear constraint terms look like.
 
 $$
 \begin{aligned}
-g(\xst) + \Wgxst\Dx\\\\
+g(\xst) + \Wgxst\Dx\\
 \end{aligned}
 $$
 This is linear in $\Dx$ but we need them to be linear in $\x$. Similar to what we did for $f$, we can expand and separate out the terms. We then write out linear inequality in a way required by the QP. We have:
 
 $$
 \begin{aligned}
-g(\xst) + \Wgxst\Dx \le \tg\\\\
+g(\xst) + \Wgxst\Dx \le \tg\\
 \end{aligned}
 $$
 $$
 \begin{aligned}
-\Wgxst\x - \tg \le \Wgxst\xst - g(\xst)\\\\
+\Wgxst\x - \tg \le \Wgxst\xst - g(\xst)\\
 \end{aligned}
 $$
 For the non-convex equality constraints, we have:
 
 $$
 \begin{aligned}
-\Whxst\x - \sh + \th = \Whxst\xst - h(\xst)\\\\
+\Whxst\x - \sh + \th = \Whxst\xst - h(\xst)\\
 \end{aligned}
 $$
 ### Final QP
@@ -351,14 +351,14 @@ After convexifiying the functions, the QP can be written as:
 
 $$
 \begin{aligned}
-\min \half \x^T \Wfst \x + (\wfst - \half(\Wfst + \Wfst^T)\xst) ^T \x +\\\\
-\mu(\half \x^T\sum_i^{\nineq}\Tgist \x - \half \xst^T \sum_i^{\nineq} (\Tgist + \Tgist^T) \x) + \mu(\half \x^T\sum_i^{\neq}\Thist \x - \half \xst^T \sum_i^{\neq} (\Thist + \Thist^T) \x) + \mu(\tg + \sh + \th)\\\\
-\st \quad lb \le \x \le ub\\\\
-\lVert \xst - \x \rVert_2 \le s\\\\
-A_g\x \le b_g\\\\
-A_h\x = b_h\\\\
-\Wgst\x - \tg \le \Wgst\xst - \gcst\\\\
-\Whst\x - \sh + \th = \Whst\xst - \hcst\\\\
+\min \half \x^T \Wfst \x + (\wfst - \half(\Wfst + \Wfst^T)\xst) ^T \x +\\
+\mu(\half \x^T\sum_i^{\nineq}\Tgist \x - \half \xst^T \sum_i^{\nineq} (\Tgist + \Tgist^T) \x) + \mu(\half \x^T\sum_i^{\neq}\Thist \x - \half \xst^T \sum_i^{\neq} (\Thist + \Thist^T) \x) + \mu(\tg + \sh + \th)\\
+\st \quad lb \le \x \le ub\\
+\lVert \xst - \x \rVert_2 \le s\\
+A_g\x \le b_g\\
+A_h\x = b_h\\
+\Wgst\x - \tg \le \Wgst\xst - \gcst\\
+\Whst\x - \sh + \th = \Whst\xst - \hcst\\
 \end{aligned}
 $$
 We abuse the notation slightly, where $[ \ ]^\ast$ refers to a quantity measured at $\xst$.\
@@ -377,8 +377,8 @@ We can write the optimization problem in the standard QP form:
 
 $$
 \begin{aligned}
-\min \half z^TPz + q^Tz\\\\
-\st \quad l \le Az \le u\\\\
+\min \half z^TPz + q^Tz\\
+\st \quad l \le Az \le u\\
 \end{aligned}
 $$
 Where $z$ is a variable that holds the original variables and the slack terms.
@@ -400,25 +400,25 @@ $$
 $$
 \begin{aligned}
 q = \begin{bmatrix}
-\wfst - \half(\Wfst + \Wfst^T)\xst + \mu\left(- \half \xst^T \sum_i^{\nineq} (\Tgist + \Tgist^T) - \half \xst^T \sum_i^{\neq} (\Thist + \Thist^T)\right) \\\\
-\mu\\\\
-\vdots\\\\
-\mu\\\\
+\wfst - \half(\Wfst + \Wfst^T)\xst + \mu\left(- \half \xst^T \sum_i^{\nineq} (\Tgist + \Tgist^T) - \half \xst^T \sum_i^{\neq} (\Thist + \Thist^T)\right) \\
+\mu\\
+\vdots\\
+\mu\\
 \end{bmatrix}
 \end{aligned}
 $$
 $$
 \begin{aligned}
 A = \begin{bmatrix}
-I^{n \times n} & 0^{n \times ns}\\\\
-I^{n \times n} & 0^{n \times ns}\\\\
-A_g & 0^{n_{A_g} \times ns}\\\\
-A_h & 0^{n_{A_h} \times ns}\\\\
+I^{n \times n} & 0^{n \times ns}\\
+I^{n \times n} & 0^{n \times ns}\\
+A_g & 0^{n_{A_g} \times ns}\\
+A_h & 0^{n_{A_h} \times ns}\\
 \Wgst & \begin{bmatrix}
--I^{\nineq \times \nineq} & 0^{\nineq \times 2\neq}\\\\
-\end{bmatrix}\\\\
+-I^{\nineq \times \nineq} & 0^{\nineq \times 2\neq}\\
+\end{bmatrix}\\
 \Whst & \begin{bmatrix}
-0^{\neq \times \nineq} & -I^{\neq \times \neq} & I^{\neq \times \neq}\\\\
+0^{\neq \times \nineq} & -I^{\neq \times \neq} & I^{\neq \times \neq}\\
 \end{bmatrix}
 \end{bmatrix}
 \end{aligned}
@@ -426,24 +426,24 @@ $$
 $$
 \begin{aligned}
 l = \begin{bmatrix}
-lb\\\\
-\xst - s\\\\
--\infty^{n_{A_g}}\\\\
-b_h\\\\
--\infty^{\nineq}\\\\
-\Whst\xst - \hcst\\\\
+lb\\
+\xst - s\\
+-\infty^{n_{A_g}}\\
+b_h\\
+-\infty^{\nineq}\\
+\Whst\xst - \hcst\\
 \end{bmatrix}
 \end{aligned}
 $$
 $$
 \begin{aligned}
 u = \begin{bmatrix}
-ub\\\\
-\xst + s\\\\
-b_g\\\\
-b_h\\\\
-\Wgst\xst - \gcst\\\\
-\Whst\xst - \hcst\\\\
+ub\\
+\xst + s\\
+b_g\\
+b_h\\
+\Wgst\xst - \gcst\\
+\Whst\xst - \hcst\\
 \end{bmatrix}
 \end{aligned}
 $$

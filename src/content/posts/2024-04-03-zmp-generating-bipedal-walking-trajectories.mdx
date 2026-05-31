@@ -44,7 +44,7 @@ The COM to ZMP relationship then turns out to be:
 
 $$
 \begin{aligned}
-\ddot{x_{com}} = \frac{g(x - x_{zmp})}{h}\\\\
+\ddot{x_{com}} = \frac{g(x - x_{zmp})}{h}\\
 \ddot{y_{com}} = \frac{g(y - y_{zmp})}{h}
 \end{aligned}
 $$
@@ -118,10 +118,10 @@ The optimization problem looks something like:
 
 $$
 \begin{aligned}
-\min_{q_k} Q\sum_{k=0}^{K-1} \norm{q_{k + 1} - q_{k}}_2\\\\
-\st \fcom(q_k) = \gcom(t_k)\\\\
-f_l(q_k) = g_l(t_k)\\\\
-f_r(q_k) = g_r(t_k)\\\\
+\min_{q_k} Q\sum_{k=0}^{K-1} \norm{q_{k + 1} - q_{k}}_2\\
+\st \fcom(q_k) = \gcom(t_k)\\
+f_l(q_k) = g_l(t_k)\\
+f_r(q_k) = g_r(t_k)\\
 \qkj = 0, \ j \in U
 \end{aligned}
 $$

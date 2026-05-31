@@ -23,7 +23,7 @@ The planning problem under consideration is usually cast as an optimization prob
 
 $$
 \begin{aligned}
-\min_{s, u}J = \min_{s, u}\int_{0}^{\infty}(s^TQs + u^TRu)dt\\\\
+\min_{s, u}J = \min_{s, u}\int_{0}^{\infty}(s^TQs + u^TRu)dt\\
 \text{s.t.} \ \ \dot{s} = As + Bu
 \end{aligned}
 $$
@@ -42,7 +42,7 @@ As is common in these scenarios, to make the problem tractable, it is discretize
 
 $$
 \begin{aligned}
-\min_{s, u}J = \min_{s, u}\sum_{i=0}^{N-1}(q^T|s_i| + r^T|u_i|)\Delta t + f(s_N)\\\\
+\min_{s, u}J = \min_{s, u}\sum_{i=0}^{N-1}(q^T|s_i| + r^T|u_i|)\Delta t + f(s_N)\\
 \text{s.t.} \ \ s_{i+1} = As_i + Bu_i
 \end{aligned}
 $$
@@ -73,15 +73,15 @@ Where $|x_i|$ here is just the absolute value of the $\ith$ element of $x$.
 We can now introduce slack variables $s_i$ for each $|x_i|$ such that $|x_i| \le s_i$ and frame the objective as a linear function in $s$. The objective will now be a minimization over $s$ and the constraint makes it so that minimizing $s$ will minimize each $|x_i|$
 $$
 \begin{aligned}
-\min_{x}\sum_{i=1}^{n}q_i x_i = \min_{s}q^Ts\\\\
+\min_{x}\sum_{i=1}^{n}q_i x_i = \min_{s}q^Ts\\
 \text{s.t.} \ \ |x_i| \le s_i
 \end{aligned}
 $$
 This is nice because it lets us keep a linear objective and represent the absolute inequality as two linear inequalities:
 $$
 \begin{aligned}
-\min_{s}q^Ts\\\\
-\text{s.t.} \ \ x_i \le s_i\\\\
+\min_{s}q^Ts\\
+\text{s.t.} \ \ x_i \le s_i\\
 -x_i \le s_i
 \end{aligned}
 $$
@@ -89,11 +89,11 @@ With this knowledge, we can now introduce slack variables $w$ and $v$ for $s$ an
 
 $$
 \begin{aligned}
-\min_{w, v} \sum_{p=1}^{K}(\sum_{i=1}^{N-1}\qp^T\wpi + \sum_{i=1}^{N-1}\rp^T\vpi + \pp^T\wpn)\\\\
-\text{s.t.} \ \ \spij - \spf \le \wpij\\\\
--\spij + \spf \le \wpij\\\\
-\upik \le \vpik\\\\
--\upik \le \vpik\\\\
+\min_{w, v} \sum_{p=1}^{K}(\sum_{i=1}^{N-1}\qp^T\wpi + \sum_{i=1}^{N-1}\rp^T\vpi + \pp^T\wpn)\\
+\text{s.t.} \ \ \spij - \spf \le \wpij\\
+-\spij + \spf \le \wpij\\
+\upik \le \vpik\\
+-\upik \le \vpik\\
 \spinext = \Ap\spi + \Bp\upi
 \end{aligned}
 $$
@@ -106,10 +106,10 @@ Before we get to this, let's take another detour to look at a concept that is so
 >Let's say we have an optimization problem of the form
 $$
 \begin{aligned}
-\min_{x}f(x)\\\\
-\text{s.t.} \ \ g_1(x) \le c_1\\\\
-g_2(x) \le c_2\\\\
-g_3(x) \le c_3\\\\
+\min_{x}f(x)\\
+\text{s.t.} \ \ g_1(x) \le c_1\\
+g_2(x) \le c_2\\
+g_3(x) \le c_3\\
 \vdots
 \end{aligned}
 $$
@@ -123,23 +123,23 @@ $g_1(x) \le c_1$ **_OR_** $g_2(x) \le c_2$ **_OR_** $g_3(x) \le c_3$, etc.
 First we introduce binary integer variables $b_i \in \set{0, 1}$ for each constraint. We also introduce a constant $M$ that is an extremely large number relative to the range of the $g_i$ functions. The constraints can then be written as:
 $$
 \begin{aligned}
-g_1(x) \le c_1 + Mb_1\\\\
-g_2(x) \le c_2 + Mb_2\\\\
-g_3(x) \le c_3 + Mb_3\\\\
-\vdots\\\\
-g_n(x) \le c_n + Mb_n\\\\
+g_1(x) \le c_1 + Mb_1\\
+g_2(x) \le c_2 + Mb_2\\
+g_3(x) \le c_3 + Mb_3\\
+\vdots\\
+g_n(x) \le c_n + Mb_n\\
 \sum_{i=1}^nb_i \le n-1
 \end{aligned}
 $$
 Let's dissect what's happening here. Each $b_i$ can be either 0 or 1.  
 if a particular $b_i = 1$ (for the $\ith$ constraint), we have:
 $$
-g_1(x) \le c_1 + M\\\\
+g_1(x) \le c_1 + M\\
 $$
 And given that $M \gg g_1(x)$, this constraint will always be satisfied, irrespective of the value of $x$.
 if a particular $b_i = 0$, we have:
 $$
-g_1(x) \le c_1\\\\
+g_1(x) \le c_1\\
 $$
 Which is just the original constraint.  
 
@@ -155,29 +155,29 @@ Equipped with this, we can now look at how the paper frames collision avoidance 
 If $s_i$ is the current state of the vehicle, we assume that the state contains some $x_i$ and $y_i$, which correspond to the $x$ and $y$ coordinates of the vehicle in 2D space. If the mid point of the obstacle is $(x_c, y_c)$ and its size is $(d_x, d_y)$, we can compute the bottom left and top right points as:
 $$
 \begin{aligned}
-\xmin = x_c - 0.5d_x\\\\
-\ymin = y_c - 0.5d_y\\\\
-\xmax = x_c + 0.5d_x\\\\
-\ymax = y_c + 0.5d_y\\\\
+\xmin = x_c - 0.5d_x\\
+\ymin = y_c - 0.5d_y\\
+\xmax = x_c + 0.5d_x\\
+\ymax = y_c + 0.5d_y\\
 \end{aligned}
 $$
 The vehicle at $(x_i, y_i)$ will avoid the obstacle (not be in collision) iff:
 $$
 \begin{aligned}
-x_i \le \xmin\\\\
-\text{OR} \ \ x_i \ge \xmax\\\\
-\text{OR} \ \ y_i \le \ymin\\\\
-\text{OR} \ \ y_i \ge \ymax\\\\
+x_i \le \xmin\\
+\text{OR} \ \ x_i \ge \xmax\\
+\text{OR} \ \ y_i \le \ymin\\
+\text{OR} \ \ y_i \ge \ymax\\
 \end{aligned}
 $$
 We require at least one of these constraints to be true. So we can use the big-M method to reframe these constraints!  
 
 $$
 \begin{aligned}
-x_i \le \xmin + Mt_{i1}\\\\
--x_i \le -\xmax + Mt_{i2}\\\\
-y_i \le \ymin + Mt_{i3}\\\\
--y_i \le -\ymax + Mt_{i4}\\\\
+x_i \le \xmin + Mt_{i1}\\
+-x_i \le -\xmax + Mt_{i2}\\
+y_i \le \ymin + Mt_{i3}\\
+-y_i \le -\ymax + Mt_{i4}\\
 \sum_{k=1}^4t_{ik} \le 3
 \end{aligned}
 $$
@@ -185,10 +185,10 @@ These constraints ensure that the vehicle avoids the obstacle, but offers no add
 
 $$
 \begin{aligned}
-\xpi \le \xlmin + \cplx + Mt_{pli1}\\\\
--\xpi \le -\xlmax - \cplx + Mt_{pli2}\\\\
-\ypi \le \ylmin + \cply + Mt_{pli3}\\\\
--\ypi \le -\ylmax - \cply + Mt_{pli4}\\\\
+\xpi \le \xlmin + \cplx + Mt_{pli1}\\
+-\xpi \le -\xlmax - \cplx + Mt_{pli2}\\
+\ypi \le \ylmin + \cply + Mt_{pli3}\\
+-\ypi \le -\ylmax - \cply + Mt_{pli4}\\
 \sum_{k=1}^4t_{plik} \le 3
 \end{aligned}
 $$
@@ -198,10 +198,10 @@ This framework easily extends to representing moving obstacles as well. Instead 
 
 $$
 \begin{aligned}
-\xpi \le \xlimin + \cplx + Mt_{pli1}\\\\
--\xpi \le -\xlimax - \cplx + Mt_{pli2}\\\\
-\ypi \le \ylimin + \cply + Mt_{pli3}\\\\
--\ypi \le -\ylimax - \cply + Mt_{pli4}\\\\
+\xpi \le \xlimin + \cplx + Mt_{pli1}\\
+-\xpi \le -\xlimax - \cplx + Mt_{pli2}\\
+\ypi \le \ylimin + \cply + Mt_{pli3}\\
+-\ypi \le -\ylimax - \cply + Mt_{pli4}\\
 \sum_{k=1}^4t_{plik} \le 3
 \end{aligned}
 $$
@@ -211,10 +211,10 @@ Vehicle-vehicle collision constraints can be represented the same way as vehicle
 
 $$
 \begin{aligned}
-\xpi - \xqi \ge \dpqx - Mb_{pqi1}\\\\
-\xqi - \xpi \ge \dpqx - Mb_{pqi2}\\\\
-\ypi - \yqi \ge \dpqy - Mb_{pqi3}\\\\
-\yqi - \ypi \ge \dpqy - Mb_{pqi4}\\\\
+\xpi - \xqi \ge \dpqx - Mb_{pqi1}\\
+\xqi - \xpi \ge \dpqx - Mb_{pqi2}\\
+\ypi - \yqi \ge \dpqy - Mb_{pqi3}\\
+\yqi - \ypi \ge \dpqy - Mb_{pqi4}\\
 \sum_{k=1}^4b_{plik} \le 3
 \end{aligned}
 $$
@@ -226,10 +226,10 @@ The entire problem has now reduced to a mixed integer linear program. The object
 
 $$
 \begin{aligned}
-s_{pi} \ge s_{p,min}\\\\
-s_{pi} \le s_{p,max}\\\\
-u_{pi} \ge u_{p,min}\\\\
-u_{pi} \le u_{p,max}\\\\
+s_{pi} \ge s_{p,min}\\
+s_{pi} \le s_{p,max}\\
+u_{pi} \ge u_{p,min}\\
+u_{pi} \le u_{p,max}\\
 \end{aligned}
 $$
 Please refer to the paper [^ref1], to see the entire LP written out in all its glory. The state and control constraints can also be formulated as approximate second order ball constraints using a collection of linear constraints (instead of box constraints) as seen in [^ref2].
@@ -238,7 +238,7 @@ The papers model the obstacles as being rectangular, but we can always extend it
 
 $$
 \begin{aligned}
-O_l = \set{z: a_{lk}^Tz \le b_{lk}, \ \forall k \in \set{1, \ldots P}}\\\\
+O_l = \set{z: a_{lk}^Tz \le b_{lk}, \ \forall k \in \set{1, \ldots P}}\\
 (\xpi, \ypi) \notin O_l
 \end{aligned}
 $$
@@ -268,7 +268,7 @@ How do we solve this? The simple LP formulation of the MVMIP makes it rather dif
 
 $$
 \begin{aligned}
-u_{p, max} = \max_{u}\delta_{max} \approx \max_{u}u\\\\
+u_{p, max} = \max_{u}\delta_{max} \approx \max_{u}u\\
 \text{s.t.} \ \ f(s, u)\Delta t \le \max{(\xlmax - \xlmin, \ylmax - \ylmin)}
 \end{aligned}
 $$
