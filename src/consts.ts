@@ -13,6 +13,9 @@ export interface SocialLink {
 }
 
 export const SITE_TITLE = "";
+
+// Name shown in the browser tab and used for page <title>s.
+export const SITE_NAME = "shrenikm";
 export const SITE_DESCRIPTION = "Posts for when I feel like it";
 export const BASE_URL = "https://shrenikm.com";
 
