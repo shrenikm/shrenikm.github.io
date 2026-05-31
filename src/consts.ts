@@ -45,10 +45,10 @@ export const HEART_API_URL = "";
 // values from the giscus configurator. An empty repo or repoId disables
 // comments (they render nothing) until configured.
 export const GISCUS = {
-  repo: "",
-  repoId: "",
+  repo: "shrenikm/shrenikm.github.io",
+  repoId: "MDEwOlJlcG9zaXRvcnkxNjUxNTI0MzQ=",
   category: "Announcements",
-  categoryId: "",
+  categoryId: "DIC_kwDOCdgGss4C-Ln8",
 };
 
 export const SOCIAL_LINKS: SocialLink[] = [
