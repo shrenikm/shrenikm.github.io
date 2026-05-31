@@ -1,0 +1,27 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Figure from "../../components/Figure.astro";
+import YouTube from "../../components/YouTube.astro";
+import Gallery from "../../components/Gallery.astro";
+
+export async function getStaticPaths() {
+  const pages = await getCollection("pages");
+  return pages.map((page) => ({ params: { slug: page.id }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<BaseLayout pageTitle={page.data.title} header={{ kind: "page", title: page.data.title }}>
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <article role="main" class="blog-post">
+          <Content components={{ Figure, YouTube, Gallery }} />
+        </article>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

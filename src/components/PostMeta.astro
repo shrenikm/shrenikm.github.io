@@ -1,0 +1,14 @@
+---
+import { DATE_FORMAT } from "../consts";
+
+interface Props {
+  date: Date;
+}
+
+const { date } = Astro.props;
+const formatted = date.toLocaleDateString("en-US", DATE_FORMAT);
+---
+
+<span class="post-meta">
+  <i class="fas fa-calendar"></i>&nbsp;Posted on {formatted}
+</span>

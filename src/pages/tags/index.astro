@@ -1,0 +1,68 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// Group posts by tag and order tags by post count (descending), matching the
+// old Hugo taxonomy terms page (.Data.Terms.ByCount).
+const posts = (await getCollection("posts")).filter((p) => !p.data.draft);
+const byTag = new Map<string, typeof posts>();
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    if (!byTag.has(tag)) byTag.set(tag, []);
+    byTag.get(tag)!.push(post);
+  }
+}
+for (const list of byTag.values()) {
+  list.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+}
+const tags = [...byTag.entries()].sort(
+  (a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]),
+);
+---
+
+<BaseLayout pageTitle="Tags" header={{ kind: "list", title: "Tags" }}>
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <article class="post-preview">
+          <div class="panel-group" id="accordion">
+            {
+              tags.map(([tag, tagPosts]) => (
+                <div class="panel panel-default">
+                  <a
+                    class="collapsed"
+                    role="button"
+                    data-toggle="collapse"
+                    data-target={`#collapse-${tag}`}
+                    data-parent="#accordion"
+                  >
+                    <div class="panel-heading" id={`header-${tag}`}>
+                      <h4 class="panel-title">
+                        {tag}
+                        <span class="badge">{tagPosts.length}</span>
+                      </h4>
+                    </div>
+                  </a>
+                  <div id={`collapse-${tag}`} class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <a href={`/tags/${tag}/`} class="list-group-item view-all">
+                        View all
+                      </a>
+                      <div class="list-group">
+                        {tagPosts.map((p) => (
+                          <a href={`/posts/${p.id}/`} class="list-group-item">
+                            {p.data.title}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,96 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Figure from "../../components/Figure.astro";
+import YouTube from "../../components/YouTube.astro";
+import Gallery from "../../components/Gallery.astro";
+import HeartButton from "../../components/HeartButton.astro";
+import Comments from "../../components/Comments.astro";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("posts"))
+    .filter((p) => !p.data.draft)
+    .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+  return posts.map((post, i) => ({
+    params: { slug: post.id },
+    props: { post, older: posts[i - 1], newer: posts[i + 1] },
+  }));
+}
+
+const { post, older, newer } = Astro.props;
+const { Content } = await render(post);
+
+const related = (await getCollection("posts"))
+  .filter(
+    (p) =>
+      !p.data.draft &&
+      p.id !== post.id &&
+      p.data.tags.some((t) => post.data.tags.includes(t)),
+  )
+  .slice(0, 5);
+---
+
+<BaseLayout
+  pageTitle={post.data.title}
+  header={{ kind: "post", title: post.data.title, date: post.data.date }}
+>
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <article role="main" class="blog-post">
+          <Content components={{ Figure, YouTube, Gallery }} />
+
+          {
+            post.data.tags.length > 0 && (
+              <div class="blog-tags">
+                {post.data.tags.map((tag) => (
+                  <Fragment><a href={`/tags/${tag}/`}>{tag}</a>{" "}</Fragment>
+                ))}
+              </div>
+            )
+          }
+
+          {
+            related.length > 0 && (
+              <>
+                <h4 class="see-also">See Also</h4>
+                <ul>
+                  {related.map((p) => (
+                    <li>
+                      <a href={`/posts/${p.id}/`}>{p.data.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )
+          }
+
+          <HeartButton slug={post.id} />
+        </article>
+
+        {
+          (older || newer) && (
+            <ul class="pager blog-pager">
+              {older && (
+                <li class="previous">
+                  <a href={`/posts/${older.id}/`} title={older.data.title}>
+                    &larr; Previous Post
+                  </a>
+                </li>
+              )}
+              {newer && (
+                <li class="next">
+                  <a href={`/posts/${newer.id}/`} title={newer.data.title}>
+                    Next Post &rarr;
+                  </a>
+                </li>
+              )}
+            </ul>
+          )
+        }
+
+        <Comments />
+      </div>
+    </div>
+  </div>
+</BaseLayout>

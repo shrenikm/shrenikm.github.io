@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PostPreview from "../../components/PostPreview.astro";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("posts")).filter((p) => !p.data.draft);
+  const tags = new Set<string>();
+  posts.forEach((p) => p.data.tags.forEach((t) => tags.add(t)));
+  return [...tags].map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts
+        .filter((p) => p.data.tags.includes(tag))
+        .sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+
+// Match the old Hugo taxonomy term page: a title cased tag name as the heading.
+const heading = tag.charAt(0).toUpperCase() + tag.slice(1);
+---
+
+<BaseLayout pageTitle={`#${tag}`} header={{ kind: "list", title: heading }}>
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="posts-list">
+          {posts.map((post) => <PostPreview post={post} />)}
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

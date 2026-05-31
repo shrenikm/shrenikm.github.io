@@ -1,0 +1,49 @@
+---
+// giscus comments thread for a post. giscus stores comments in this site's
+// GitHub repository Discussions, so there is no server or database to run and
+// the data stays in the repo. Posting requires a GitHub login, which doubles
+// as spam control (no moderation queue needed). Comments are mapped to a
+// discussion by page pathname. Renders nothing until GISCUS is configured.
+
+import { GISCUS } from "../consts";
+
+const enabled = GISCUS.repo.length > 0 && GISCUS.repoId.length > 0;
+---
+
+{
+  enabled && (
+    <div class="post-comments">
+      <h4 class="comments-heading">Comments</h4>
+      <div class="giscus" />
+    </div>
+  )
+}
+
+<script define:vars={{ GISCUS, enabled }}>
+  if (enabled) {
+    const mount = () => {
+      const container = document.querySelector(".giscus");
+      // Avoid injecting twice if giscus has already mounted its iframe/script.
+      if (!container || container.querySelector("iframe, script")) return;
+
+      const s = document.createElement("script");
+      s.src = "https://giscus.app/client.js";
+      s.setAttribute("data-repo", GISCUS.repo);
+      s.setAttribute("data-repo-id", GISCUS.repoId);
+      s.setAttribute("data-category", GISCUS.category);
+      s.setAttribute("data-category-id", GISCUS.categoryId);
+      s.setAttribute("data-mapping", "pathname");
+      s.setAttribute("data-strict", "0");
+      s.setAttribute("data-reactions-enabled", "1");
+      s.setAttribute("data-emit-metadata", "0");
+      s.setAttribute("data-input-position", "bottom");
+      s.setAttribute("data-theme", "light");
+      s.setAttribute("data-lang", "en");
+      s.crossOrigin = "anonymous";
+      s.async = true;
+      container.appendChild(s);
+    };
+    mount();
+    document.addEventListener("astro:page-load", mount);
+  }
+</script>

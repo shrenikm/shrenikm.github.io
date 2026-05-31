@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from "astro:content";
+import PostMeta from "./PostMeta.astro";
+import { excerpt } from "../utils";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+const href = `/posts/${post.id}/`;
+const summary = excerpt(post.body);
+---
+
+<article class="post-preview">
+  <a href={href}>
+    <h2 class="post-title">{post.data.title}</h2>
+  </a>
+
+  <p class="post-meta">
+    <PostMeta date={post.data.date} />
+  </p>
+
+  <div class="post-entry">
+    {summary}
+    <a href={href} class="post-read-more">[Read More]</a>
+  </div>
+
+  {
+    post.data.tags.length > 0 && (
+      <div class="blog-tags">
+        {post.data.tags.map((tag) => (
+          <Fragment><a href={`/tags/${tag}/`}>{tag}</a>{" "}</Fragment>
+        ))}
+        {" "}
+      </div>
+    )
+  }
+</article>
