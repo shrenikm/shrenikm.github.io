@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   # Build and deploy on every push to main, and allow manual runs.
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 # Permissions the GitHub Pages deployment needs.
