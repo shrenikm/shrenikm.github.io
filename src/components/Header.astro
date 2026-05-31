@@ -14,7 +14,12 @@ const showBanner = kind !== "home" && !!title;
 // The theme CSS styles page/post/tags/categories headings. A list page (tags
 // index, a tag's posts) has no dedicated style, so reuse the page heading
 // (centered, large) rather than an unstyled "list-heading".
-const headingClass = kind === "list" ? "page-heading" : `${kind}-heading`;
+const headingClass =
+  kind === "list"
+    ? "page-heading"
+    : kind === "page"
+      ? "pages-heading"
+      : `${kind}-heading`;
 ---
 
 {
