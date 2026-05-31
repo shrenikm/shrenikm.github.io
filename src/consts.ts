@@ -13,11 +13,11 @@ export interface SocialLink {
 }
 
 export const SITE_TITLE = "";
-export const SITE_DESCRIPTION = "";
+export const SITE_DESCRIPTION = "Posts for when I feel like it";
 export const BASE_URL = "https://shrenikm.com";
 
 export const AUTHOR = {
-  name: "Shrenik M",
+  name: "Shrenik Muralidhar",
   email: "shrenik95@gmail.com",
   github: "shrenikm",
   linkedin: "shrenik95",
