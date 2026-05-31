@@ -8,7 +8,6 @@
 const ALLOWED_ORIGINS = [
   "https://shrenikm.com",
   "https://shrenikm.github.io",
-  "http://localhost:4321",
 ];
 
 // Change this to any random string before deploying. It salts the IP hashes so
