@@ -1,0 +1,67 @@
+---
+// Share row shown at the bottom of a post: links out to X and LinkedIn, plus a
+// copy to clipboard button for the canonical post URL.
+
+import Icon from "./Icon.astro";
+
+interface Props {
+  url: string;
+  title: string;
+}
+
+const { url, title } = Astro.props;
+
+const xShareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+---
+
+<div class="post-share" data-share data-url={url}>
+  <span class="post-share-label">Share</span>
+  <a
+    class="share-btn"
+    href={xShareUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    title="Share on X"
+  >
+    <Icon name="x-twitter" label="Share on X" />
+  </a>
+  <a
+    class="share-btn"
+    href={linkedInShareUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    title="Share on LinkedIn"
+  >
+    <Icon name="linkedin" label="Share on LinkedIn" />
+  </a>
+  <button class="share-btn share-copy" type="button" title="Copy link" aria-label="Copy link">
+    <Icon name="link" label="Copy link" />
+  </button>
+</div>
+
+<script>
+  function initShareCopy() {
+    document.querySelectorAll<HTMLElement>("[data-share]").forEach((el) => {
+      if (el.dataset.ready) return;
+      el.dataset.ready = "true";
+
+      const btn = el.querySelector<HTMLButtonElement>(".share-copy");
+      const url = el.dataset.url;
+      if (!btn || !url) return;
+
+      btn.addEventListener("click", () => {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            btn.classList.add("copied");
+            setTimeout(() => btn.classList.remove("copied"), 1200);
+          })
+          .catch(() => {});
+      });
+    });
+  }
+
+  initShareCopy();
+  document.addEventListener("astro:page-load", initShareCopy);
+</script>

@@ -1,14 +1,21 @@
 ---
 import { DATE_FORMAT } from "../consts";
+import Icon from "./Icon.astro";
 
 interface Props {
   date: Date;
+  readingMinutes?: number;
 }
 
-const { date } = Astro.props;
+const { date, readingMinutes } = Astro.props;
 const formatted = date.toLocaleDateString("en-US", DATE_FORMAT);
 ---
 
 <span class="post-meta">
-  <i class="fas fa-calendar"></i>&nbsp;Posted on {formatted}
+  <Icon name="calendar" class="meta-icon" />&nbsp;Posted on {formatted}
+  {
+    readingMinutes && (
+      <span class="reading-time">&nbsp;&middot;&nbsp;{readingMinutes} min read</span>
+    )
+  }
 </span>

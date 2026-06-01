@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Search from "astro-pagefind/components/Search.astro";
+---
+
+<BaseLayout pageTitle="Search" header={{ kind: "list", title: "Search" }}>
+  <div class="container" role="main">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="search-page">
+          <Search className="pagefind-ui" />
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -6,9 +6,11 @@ export interface MenuItem {
   url: string;
 }
 
+import type { IconName } from "./icons";
+
 export interface SocialLink {
   title: string;
-  icon: string;
+  icon: IconName;
   url: string;
 }
 
@@ -39,6 +41,7 @@ export const MAIN_MENU: MenuItem[] = [
   { name: "Posts", url: "/" },
   { name: "About", url: "/pages/about/" },
   { name: "Tags", url: "/tags/" },
+  { name: "Search", url: "/search/" },
 ];
 
 // Heart / like button. Points at the self hosted Cloudflare Worker that stores
@@ -60,22 +63,22 @@ export const GISCUS = {
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     title: "GitHub",
-    icon: "fab fa-github",
+    icon: "github",
     url: `https://github.com/${AUTHOR.github}`,
   },
   {
     title: "LinkedIn",
-    icon: "fab fa-linkedin-in",
+    icon: "linkedin",
     url: `https://linkedin.com/in/${AUTHOR.linkedin}`,
   },
   {
     title: "Email",
-    icon: "fas fa-envelope",
+    icon: "envelope",
     url: `mailto:${AUTHOR.email}`,
   },
   {
     title: "RSS",
-    icon: "fas fa-rss",
+    icon: "rss",
     url: "/rss.xml",
   },
 ];

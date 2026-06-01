@@ -14,7 +14,7 @@ const style = width
 ---
 
 <figure class="post-figure" style={style}>
-  <img src={src} alt={alt ?? caption ?? ""} />
+  <img src={src} alt={alt ?? caption ?? ""} loading="lazy" decoding="async" />
   {
     (title || caption) && (
       <figcaption>

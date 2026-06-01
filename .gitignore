@@ -3,6 +3,9 @@ dist
 .astro
 .DS_Store
 
+# Claude Code worktrees + local settings
+.claude/
+
 # Cloudflare Worker local state + secrets
 .wrangler
 .dev.vars
