@@ -16,8 +16,13 @@ export interface SocialLink {
 
 export const SITE_TITLE = "";
 
-// Name shown in the browser tab and used for page <title>s.
+// Canonical site name. Used for the Open Graph og:site_name and the RSS feed
+// link title, so it stays plain (no decoration).
 export const SITE_NAME = "shrenikm";
+
+// Name shown only in the browser tab / page <title>. Kept separate from
+// SITE_NAME so tab decoration does not leak into social cards or the RSS feed.
+export const BROWSER_TITLE = "shrenikm :)";
 export const SITE_DESCRIPTION = "Posts for when I feel like it";
 export const BASE_URL = "https://shrenikm.com";
 
