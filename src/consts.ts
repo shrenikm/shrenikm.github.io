@@ -6,13 +6,23 @@ export interface MenuItem {
   url: string;
 }
 
+import type { IconName } from "./icons";
+
 export interface SocialLink {
   title: string;
-  icon: string;
+  icon: IconName;
   url: string;
 }
 
 export const SITE_TITLE = "";
+
+// Canonical site name. Used for the Open Graph og:site_name and the RSS feed
+// link title, so it stays plain (no decoration).
+export const SITE_NAME = "shrenikm";
+
+// Name shown only in the browser tab / page <title>. Kept separate from
+// SITE_NAME so tab decoration does not leak into social cards or the RSS feed.
+export const BROWSER_TITLE = "shrenikm :)";
 export const SITE_DESCRIPTION = "Posts for when I feel like it";
 export const BASE_URL = "https://shrenikm.com";
 
@@ -36,6 +46,7 @@ export const MAIN_MENU: MenuItem[] = [
   { name: "Posts", url: "/" },
   { name: "About", url: "/pages/about/" },
   { name: "Tags", url: "/tags/" },
+  { name: "Search", url: "/search/" },
 ];
 
 // Heart / like button. Points at the self hosted Cloudflare Worker that stores
@@ -57,22 +68,22 @@ export const GISCUS = {
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     title: "GitHub",
-    icon: "fab fa-github",
+    icon: "github",
     url: `https://github.com/${AUTHOR.github}`,
   },
   {
     title: "LinkedIn",
-    icon: "fab fa-linkedin-in",
+    icon: "linkedin",
     url: `https://linkedin.com/in/${AUTHOR.linkedin}`,
   },
   {
     title: "Email",
-    icon: "fas fa-envelope",
+    icon: "envelope",
     url: `mailto:${AUTHOR.email}`,
   },
   {
     title: "RSS",
-    icon: "fas fa-rss",
+    icon: "rss",
     url: "/rss.xml",
   },
 ];

@@ -1,5 +1,6 @@
 ---
 import { SOCIAL_LINKS, AUTHOR } from "../consts";
+import Icon from "./Icon.astro";
 
 const year = new Date().getFullYear();
 ---
@@ -12,11 +13,8 @@ const year = new Date().getFullYear();
           {
             SOCIAL_LINKS.map((s) => (
               <li>
-                <a href={s.url} title={s.title}>
-                  <span class="fa-stack fa-lg">
-                    <i class="fas fa-circle fa-stack-2x" />
-                    <i class={`${s.icon} fa-stack-1x fa-inverse`} />
-                  </span>
+                <a href={s.url} title={s.title} class="social-icon">
+                  <Icon name={s.icon} label={s.title} class="social-icon-svg" />
                 </a>
               </li>
             ))

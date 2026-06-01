@@ -5,7 +5,10 @@ import Figure from "../../components/Figure.astro";
 import YouTube from "../../components/YouTube.astro";
 import Gallery from "../../components/Gallery.astro";
 import HeartButton from "../../components/HeartButton.astro";
+import ShareButtons from "../../components/ShareButtons.astro";
 import Comments from "../../components/Comments.astro";
+import { BASE_URL } from "../../consts";
+import { excerpt, readingTimeMinutes } from "../../utils";
 
 export async function getStaticPaths() {
   const posts = (await getCollection("posts"))
@@ -20,6 +23,10 @@ export async function getStaticPaths() {
 const { post, older, newer } = Astro.props;
 const { Content } = await render(post);
 
+const description = excerpt(post.body, 30);
+const readingMinutes = readingTimeMinutes(post.body);
+const shareUrl = new URL(`/posts/${post.id}/`, Astro.site ?? BASE_URL).href;
+
 const related = (await getCollection("posts"))
   .filter(
     (p) =>
@@ -32,12 +39,19 @@ const related = (await getCollection("posts"))
 
 <BaseLayout
   pageTitle={post.data.title}
-  header={{ kind: "post", title: post.data.title, date: post.data.date }}
+  description={description}
+  ogType="article"
+  header={{
+    kind: "post",
+    title: post.data.title,
+    date: post.data.date,
+    readingMinutes,
+  }}
 >
   <div class="container" role="main">
     <div class="row">
       <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-        <article role="main" class="blog-post">
+        <article role="main" class="blog-post" data-pagefind-body>
           <Content components={{ Figure, YouTube, Gallery }} />
 
           {
@@ -66,6 +80,7 @@ const related = (await getCollection("posts"))
           }
 
           <HeartButton slug={post.id} />
+          <ShareButtons url={shareUrl} title={post.data.title} />
         </article>
 
         {
