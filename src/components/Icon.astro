@@ -1,0 +1,28 @@
+---
+// Renders an inline SVG icon. fill is currentColor so callers control the
+// colour through CSS, exactly like the old Font Awesome <i> elements did.
+
+import { ICONS, type IconName } from "../icons";
+
+interface Props {
+  name: IconName;
+  class?: string;
+  label?: string;
+}
+
+const { name, class: className, label } = Astro.props;
+const icon = ICONS[name];
+---
+
+<svg
+  class={className}
+  viewBox={icon.viewBox}
+  fill="currentColor"
+  xmlns="http://www.w3.org/2000/svg"
+  role={label ? "img" : "presentation"}
+  aria-hidden={label ? undefined : "true"}
+  aria-label={label}
+  focusable="false"
+>
+  <path d={icon.path}></path>
+</svg>

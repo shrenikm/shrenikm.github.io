@@ -6,6 +6,7 @@
 // so the page is never broken while the worker is undeployed.
 
 import { HEART_API_URL } from "../consts";
+import Icon from "./Icon.astro";
 
 interface Props {
   slug: string;
@@ -19,7 +20,8 @@ const enabled = HEART_API_URL.length > 0;
   enabled && (
     <div class="heart" data-heart data-slug={slug} data-api={HEART_API_URL}>
       <button class="heart-btn" aria-label="Like this post" aria-pressed="false">
-        <i class="far fa-heart" />
+        <Icon name="heart-outline" class="heart-icon heart-outline" />
+        <Icon name="heart" class="heart-icon heart-solid" />
       </button>
       <span class="heart-count" aria-live="polite" />
     </div>
@@ -36,13 +38,13 @@ const enabled = HEART_API_URL.length > 0;
       const slug = el.dataset.slug!;
       const btn = el.querySelector<HTMLButtonElement>(".heart-btn")!;
       const countEl = el.querySelector<HTMLElement>(".heart-count")!;
-      const icon = el.querySelector<HTMLElement>("i")!;
       const storageKey = `liked:${slug}`;
 
+      // The outline / solid heart swap is driven purely by the aria-pressed
+      // attribute through CSS, so painting only needs to set the count and state.
       function paint(count: number, liked: boolean) {
         countEl.textContent = String(count);
         btn.setAttribute("aria-pressed", liked ? "true" : "false");
-        icon.className = liked ? "fas fa-heart" : "far fa-heart";
       }
 
       const likedLocally = localStorage.getItem(storageKey) === "1";

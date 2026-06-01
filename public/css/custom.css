@@ -194,3 +194,177 @@
 .post-preview .post-entry {
   overflow: auto;
 }
+
+/* Footer social icons: inline SVG centered in a filled circle, recreating the
+   old Font Awesome fa-stack look (white glyph on a #404040 disc). */
+.footer-links .social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.1em;
+  height: 2.1em;
+  border-radius: 50%;
+  background: #404040;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.footer-links .social-icon:hover,
+.footer-links .social-icon:focus {
+  background: #5a5a5a;
+  color: #fff;
+}
+
+.footer-links .social-icon-svg {
+  width: 0.95em;
+  height: 0.95em;
+  display: block;
+}
+
+/* Heart icon: the outline / solid swap is driven by aria-pressed on the button. */
+.heart-icon {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+
+.heart-btn .heart-solid {
+  display: none;
+}
+
+.heart-btn[aria-pressed="true"] .heart-outline {
+  display: none;
+}
+
+.heart-btn[aria-pressed="true"] .heart-solid {
+  display: block;
+}
+
+/* Post meta: calendar icon and the reading time estimate. */
+.post-meta .meta-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+}
+
+.post-meta .reading-time {
+  white-space: nowrap;
+}
+
+/* Clickable anchor link revealed to the left of a heading on hover. */
+.blog-post h1,
+.blog-post h2,
+.blog-post h3,
+.blog-post h4,
+.blog-post h5,
+.blog-post h6 {
+  position: relative;
+}
+
+.heading-anchor {
+  position: absolute;
+  left: -0.85em;
+  width: 0.85em;
+  text-align: center;
+  color: #ccc;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.blog-post h1:hover .heading-anchor,
+.blog-post h2:hover .heading-anchor,
+.blog-post h3:hover .heading-anchor,
+.blog-post h4:hover .heading-anchor,
+.blog-post h5:hover .heading-anchor,
+.blog-post h6:hover .heading-anchor {
+  opacity: 1;
+}
+
+.heading-anchor:hover {
+  color: #008aff;
+  text-decoration: none;
+}
+
+/* Copy button on code blocks, revealed on hover (top right of the block). */
+.blog-post pre.code-block {
+  position: relative;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 3px 9px;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  color: #000;
+  background: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.blog-post pre.code-block:hover .code-copy-btn {
+  opacity: 1;
+}
+
+.code-copy-btn:hover {
+  background: #e0e0e0;
+}
+
+/* Share row at the bottom of a post: X, LinkedIn and a copy link button. */
+.post-share {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0 5px;
+}
+
+.post-share-label {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  font-size: 0.95em;
+  color: #404040;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #808080;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.15s ease;
+}
+
+.share-btn:hover,
+.share-btn:focus {
+  color: #008aff;
+}
+
+.share-btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.share-copy.copied {
+  color: #008aff;
+}
+
+/* 404 page copy. */
+.error-page {
+  margin: 20px 0 60px;
+  font-size: 1.1em;
+}
+
+.error-page .error-home-link {
+  margin-top: 30px;
+  font-weight: 700;
+}

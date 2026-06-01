@@ -5,10 +5,11 @@ interface Props {
   kind: "home" | "post" | "page" | "list";
   title?: string;
   date?: Date;
+  readingMinutes?: number;
   hashTitle?: boolean;
 }
 
-const { kind, title, date, hashTitle = false } = Astro.props;
+const { kind, title, date, readingMinutes, hashTitle = false } = Astro.props;
 const showBanner = kind !== "home" && !!title;
 
 // The theme CSS styles page/post/tags/categories headings. A list page (tags
@@ -35,7 +36,9 @@ const headingClass =
                   {title}
                 </h1>
                 {kind !== "post" && <hr class="small" />}
-                {kind === "post" && date && <PostMeta date={date} />}
+                {kind === "post" && date && (
+                  <PostMeta date={date} readingMinutes={readingMinutes} />
+                )}
               </div>
             </div>
           </div>
