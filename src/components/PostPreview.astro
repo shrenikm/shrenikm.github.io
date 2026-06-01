@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import PostMeta from "./PostMeta.astro";
-import { excerpt } from "../utils";
+import { excerpt, readingTimeMinutes } from "../utils";
 
 interface Props {
   post: CollectionEntry<"posts">;
@@ -10,6 +10,7 @@ interface Props {
 const { post } = Astro.props;
 const href = `/posts/${post.id}/`;
 const summary = excerpt(post.body);
+const readingMinutes = readingTimeMinutes(post.body);
 ---
 
 <article class="post-preview">
@@ -18,7 +19,7 @@ const summary = excerpt(post.body);
   </a>
 
   <p class="post-meta">
-    <PostMeta date={post.data.date} />
+    <PostMeta date={post.data.date} readingMinutes={readingMinutes} />
   </p>
 
   <div class="post-entry">
