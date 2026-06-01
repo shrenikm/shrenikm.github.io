@@ -20,8 +20,13 @@ export async function getStaticPaths() {
 
 const { tag, posts } = Astro.props;
 
-// Match the old Hugo taxonomy term page: a title cased tag name as the heading.
-const heading = tag.charAt(0).toUpperCase() + tag.slice(1);
+// The tag itself keeps its underscores (used in URLs and tag chips), but the
+// page heading reads as spaced, title cased words: machine_learning -> Machine
+// Learning.
+const heading = tag
+  .split("_")
+  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+  .join(" ");
 ---
 
 <BaseLayout pageTitle={`#${tag}`} header={{ kind: "list", title: heading }}>
