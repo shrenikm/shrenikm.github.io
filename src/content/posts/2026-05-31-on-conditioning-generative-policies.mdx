@@ -5,7 +5,47 @@ tags: ["experiment", "generative_policies", "learnings", "machine_learning"]
 draft: false
 ---
 
-Gotta fill my post quota before the rest of the year zips past me, so here we go. This _probably_ won't be my last post of the year, but more on that another day.
+Gotta fill my post quota before the rest of the year zips past, so here we go. This _probably_ won't be my last post of the year, but more on that another day.
+
+I've been running some experiments on conditioning diffusion and flow matching policies. This writeup will cover some of my learnings.
+
+## Objective
+
+I started working on this to figure out what the limits of FiLM conditionning were. I'd never really completley wrapped my head around FiLM's effectiveness. A lot of the time it felt like things worked out with FiLM even though it shouldn't have? This then grew into seeing how other conditioning methods stack against each other. With a lot of VLAs switching over to using flow matching action heads these days, I ended up adding this into the mix as well.
+
+I started my experiments trying to validate a few hypothesis:
+
+1. FiLM and other similar methods apply a sort of global conditioning across all timesteps. In principle these _should_ break at a certain complexity of task conditioning
+2. Something like cross-attention _should_ in principle be better for tasks that require high fidelity local conditioning
+3. A lot of these methods will probably fail for more complex compositional conditioning. Maybe there's some conditioning method out there that can more efficiently encode this?
+
+Obviously none of this really matters if you're using an LLM/VLM backbone for your policy. So we limit our discussions and experiments to smaller models (< 50M) that don't employ such backbones (think diffusion policy).
+
+While none of my hypothesis are particularly novel or controversial, there were still a few open questions (at least open to me):
+1. At what point does FiLM break?
+2. How does FiLM stack against something more primitive?
+3. How does FiLM stack against something slight more spruced up?
+4. Do these methods perform differently for diffusion and flow matching?
+
+To test all of these, a few things are required:
+1. A toy dataset of actions/trajectories that is easy to synthesize and work with
+2. Implementations of diffusion and flow matching models that can generate said actions/trajectories
+3. Collection of conditioning methods to compare
+
+
+### Dataset
+
+I generated two types of synthetic datasets, both of which are collections of fixed length $(x, y)$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes angles, etc. Honestly, I don't know. We could have more complex inter-point feasible constraints, etc for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differ a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure it out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
+
+
+### Generative Policies
+
+
+### Conditioning Methods
+
+
+
+
 
 
 
