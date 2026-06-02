@@ -406,10 +406,11 @@ Mean distance is just the average of the closest distances between the waypoints
 The things that stood out to me are:
 1. Hit rates are pretty low in general. Either this is a pretty difficult task, or I didn't do a good enough job at designing and training the model. I'd wager it's a combination of both
 2. The global mechanisms' hit rates are unreasonably high. You don't just hit `>50%` of waypoints by guessing
-3. Flow matching handedly beats diffusion when coupled with global conditioninng mechanisms. This isn't just statistical noise
-4. As expected cross-attention performs the best here as it can make use of timestep specific conditioning. It also produces the best mean distance metrics. It still doesn't crack the `90%` hit-rate`, probably due to the factors mentioned above. I'm sure it's possible to tune the model and training parameters to get this number a lot higher
-5. Diversity metrics are the similar across all configurations, maybe slightly lower for the flow matching configurations
-6. Class entropy is also similar, maybe a bit lower for the flow matching configurations
+3. There isn't any difference betwen the individual global conditioning mechanisms
+4. Flow matching handedly beats diffusion when coupled with global conditioninng mechanisms. This isn't just statistical noise
+5. As expected cross-attention performs the best here as it can make use of timestep specific conditioning. It also produces the best mean distance metrics. It still doesn't crack the `90%` hit-rate`, probably due to the factors mentioned above. I'm sure it's possible to tune the model and training parameters to get this number a lot higher
+6. Diversity metrics are the similar across all configurations, maybe slightly lower for the flow matching configurations
+7. Class entropy is also similar, maybe a bit lower for the flow matching configurations
 
 Trying to reason about these:
 
@@ -485,3 +486,15 @@ To make some sense of this, we look at the retention, which is the % of hit-rate
 We see that cross-attention retains more of its hit-rate as the waypoints get more infeasible. Not particularly enlightening, but shows that cross-attention does a better job at solving this task and is more robust to noise in the distribution of waypoints.
 
 
+<Gallery
+  images={[
+    { src: "/posts/10/images/exp4/exp4_diffusion_film.png", alt: "Exp4, Diffusion, FiLM ", caption: "Diffusion + FiLM" },
+    { src: "/posts/10/images/exp4/exp4_diffusion_adagn.png", alt: "Exp4, Diffusion, AdaGN ", caption: "Diffusion + AdaGN" },
+    { src: "/posts/10/images/exp4/exp4_diffusion_concat.png", alt: "Exp4, Diffusion, Concat ", caption: "Diffusion + Concat" },
+    { src: "/posts/10/images/exp4/exp4_diffusion_ca.png", alt: "Exp4, Diffusion, Cross-attn ", caption: "Diffusion + Cross-attn" },
+    { src: "/posts/10/images/exp4/exp4_flow_matching_film.png", alt: "Exp4, Flow Matching, FiLM ", caption: "Flow Matching + FiLM" },
+    { src: "/posts/10/images/exp4/exp4_flow_matching_adagn.png", alt: "Exp4, Flow Matching, AdaGN ", caption: "Flow Matching + AdaGN" },
+    { src: "/posts/10/images/exp4/exp4_flow_matching_concat.png", alt: "Exp4, Flow Matching, Concat ", caption: "Flow Matching + Concat" },
+    { src: "/posts/10/images/exp4/exp4_flow_matching_ca.png", alt: "Exp4, Flow Matching, Cross-attn ", caption: "Flow Matching + Cross-attn" },
+  ]}
+/>
