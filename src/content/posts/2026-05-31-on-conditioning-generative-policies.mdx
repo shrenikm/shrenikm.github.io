@@ -38,13 +38,44 @@ To test all of these, a few things are required:
 I generated two families of synthetic datasets, both of which are collections of fixed size $(x, y)$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes angles, etc. Honestly, I don't know. We could have more complex inter-point feasible constraints, etc for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differ a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure it out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
 
 For `Dataset1`, we sample trajectories from four different classes: 
-1. Straight line trajectories parameterized by length $l$ and angle $\theta$, where $l \in U(0.6, 1.6)$ and $\theta \in U(0, 2\pi)$
-2. Constant curvature trajectories (Dubin's path) parameterized by radius $r$ and sweep $\alpha$ and sign $s$, where $r \in U(0.3, 0.9)$, $\alpha \in U(\pi/3, 3\pi/2)$ and $s \in \pm 1$
-3. L-shaped trajectories that are a combination of a line and a Dubin's arc, both sampled using the above distributions
-4. S-shaped trajectories that are composed by joining two Dubin's arcs of opposite signs
-5. Spiral trajectories (Clothoid) parameterized by length $l$, start curvature $\kappa_s$ and curvature rate $\kappa_r$, where $l \in U(2.5, 4.5)$, $\kappa_s \in \pm U(0.5, 2,5)$ and $\kappa_r \in \pm U(0.5, 2.5)$
 
-The dataset contains 500,000 trajectories, exactly balanced over these 5 classes, sampled according to the distributions above. Here's a gallery of some randomly sampled trajectories:
+<Table
+  headers={["Class", "Fraction", "Parameterization", "Distribution"]}
+  rows={[
+    [
+      "Straight line",
+      "0.20",
+      "length $l$, angle $\\theta$",
+      "$l \\in U(0.6, 1.6)$, $\\theta \\in U(0, 2\\pi)$",
+    ],
+    [
+      "Constant curvature (Dubins path)",
+      "0.20",
+      "radius $r$, sweep $\\alpha$, sign $s$",
+      "$r \\in U(0.3, 0.9)$, $\\alpha \\in U(\\pi/3, 3\\pi/2)$, $s \\in \\pm 1$",
+    ],
+    [
+      "L-shaped",
+      "0.20",
+      "line + Dubins arc",
+      "Line and Dubins arc distributions",
+    ],
+    [
+      "S-shaped",
+      "0.20",
+      "two Dubins arcs, opposite signs",
+      "Dubins arc distribution",
+    ],
+    [
+      "Spiral (Clothoid)",
+      "0.20",
+      "length $l$, start curvature $\\kappa_s$, curvature rate $\\kappa_r$",
+      "$l \\in U(2.5, 4.5)$, $\\kappa_s \\in \\pm U(0.5, 2.5)$, $\\kappa_r \\in \\pm U(0.5, 2.5)$",
+    ],
+  ]}
+/>
+
+The dataset contains 500,000 trajectories, sampled according to the distributions above. Here's a gallery of some randomly sampled trajectories:
 
 <ZoomableFigure src="/posts/10/images/datasets/dataset1_gallery.png" alt="Dataset1 gallery" />
 
@@ -58,6 +89,10 @@ For `Dataset2`, we generate trajectories in an occupancy map to simulate 2-D pat
     ["Dense", "0.45", "$U(22, 45)$", "$U(0.05, 0.16)$"],
   ]}
 />
+
+This dataset contains 200,000 trajectories computed by sampling random start and end positions and computing the shortest path between them using A*.
+
+<ZoomableFigure src="/posts/10/images/datasets/dataset2_gallery.png" alt="Dataset1 gallery" />
 
 
 
