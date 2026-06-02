@@ -173,6 +173,50 @@ We start with something, very simple: conditioning on the trajectory class (in `
 1. The models are able to produce trajectories of the given class
 2. The models exhibit diversity within trajectories of the same class
 
+The first thing here isn't trivial to verify. To do this we train a small 1-D convolution classifier. The classifier has an `~100%` on a generated validation dataset, so we can use it to gauge the accuracy of conditioning.
+
+<Table
+  caption="Class accuracy, (256 samples/condition)"
+  align={["left", "right", "right"]}
+  headers={["", "Diffusion", "Flow Matching"]}
+  rows={[
+    ["FiLM", "0.988", "0.985"],
+    ["Concat", "0.991", "0.986"],
+    ["AdaGN", "0.995", "0.980"],
+    ["Cross-attn", "0.987", "0.993"],
+  ]}
+/>
+
+The accuracies aren't `1.0` but given that the boundaries between the classes aren't that distinct, we'll give the models a pass. Unsurprisingly, we don't see any differences betwen the conditioning mechanisms or the models for this task.
+
+We can also measure the `diversity` (pairwise Euclidean distance between trajectories) of the samples within each class. These turn out to be `~7.5-8.0`, with the values being smaller for the line trajectories and larger for curves and arcs. Samples for each combination:
+
+<Gallery
+  images={[
+    { src: "/posts/10/images/exp1/exp1_diffusion_film.png", alt: "Exp1, Diffusion, FiLM ", caption: "Diffusion + FiLM" },
+    { src: "/posts/10/images/exp1/exp1_diffusion_concat.png", alt: "Exp1, Diffusion, Concat ", caption: "Diffusion + Concat" },
+    { src: "/posts/10/images/exp1/exp1_diffusion_adagn.png", alt: "Exp1, Diffusion, AdaGN ", caption: "Diffusion + AdaGN" },
+    { src: "/posts/10/images/exp1/exp1_diffusion_ca.png", alt: "Exp1, Diffusion, Cross-attn ", caption: "Diffusion + Cross-attn" },
+    { src: "/posts/10/images/exp1/exp1_flow_matching_film.png", alt: "Exp1, Flow Matching, FiLM ", caption: "Flow Matching + FiLM" },
+    { src: "/posts/10/images/exp1/exp1_flow_matching_concat.png", alt: "Exp1, Flow Matching, Concat ", caption: "Flow Matching + Concat" },
+    { src: "/posts/10/images/exp1/exp1_flow_matching_adagn.png", alt: "Exp1, Flow Matching, AdaGN ", caption: "Flow Matching + AdaGN" },
+    { src: "/posts/10/images/exp1/exp1_flow_matching_ca.png", alt: "Exp1, Flow Matching, Cross-attn ", caption: "Flow Matching + Cross-attn" },
+  ]}
+/>
+
+
+<Table
+  caption="Class accuracy, L2 (256 samples/condition) — higher is better; all within binomial noise"
+  align={["left", "right", "right"]}
+  headers={["", "Diffusion", "Flow Matching"]}
+  rows={[
+    ["FiLM", "0.966", "0.982"],
+    ["Concat", "0.966", "0.980"],
+    ["AdaGN", "0.973", "0.972"],
+    ["Cross-attn", "0.963", "0.968"],
+  ]}
+/>
+
 
 
 
