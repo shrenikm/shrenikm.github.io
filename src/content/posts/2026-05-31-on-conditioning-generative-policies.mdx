@@ -11,7 +11,7 @@ I've been running some experiments on conditioning diffusion and flow matching p
 
 ## Objective
 
-I started working on this to figure out what the limits of FiLM conditionning were. I'd never really completley wrapped my head around FiLM's effectiveness. A lot of the time it felt like things worked out with FiLM even though it shouldn't have? This then grew into seeing how other conditioning methods stack against each other. With a lot of VLAs switching over to using flow matching action heads these days, I ended up adding this into the mix as well.
+I started working on this to figure out what the limits of FiLM conditionning were. I'd never really completely wrapped my head around FiLM's effectiveness. A lot of the time it felt like things worked out with FiLM even though it shouldn't have? This then grew into wanting to know how other conditioning methods stack against each other. With a lot of VLAs switching over to using flow matching action heads these days, I ended up adding this into the mix as well.
 
 I started my experiments trying to validate a few hypothesis:
 
@@ -21,7 +21,7 @@ I started my experiments trying to validate a few hypothesis:
 
 Obviously none of this really matters if you're using an LLM/VLM backbone for your policy. So we limit our discussions and experiments to smaller models (< 50M) that don't employ such backbones (think diffusion policy).
 
-While none of my hypothesis are particularly novel or controversial, there were still a few open questions (at least open to me):
+While none of my hypothesis are particularly imaginative or controversial, there were still a few open questions (at least open to me):
 1. At what point does FiLM break?
 2. How does FiLM stack against something more primitive?
 3. How does FiLM stack against something slight more spruced up?
@@ -35,7 +35,14 @@ To test all of these, a few things are required:
 
 ### Dataset
 
-I generated two types of synthetic datasets, both of which are collections of fixed length $(x, y)$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes angles, etc. Honestly, I don't know. We could have more complex inter-point feasible constraints, etc for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differ a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure it out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
+I generated two families of synthetic datasets, both of which are collections of fixed size $(x, y)$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes angles, etc. Honestly, I don't know. We could have more complex inter-point feasible constraints, etc for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differ a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure it out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
+
+For `Dataset1`, we sample trajectories from four different classes: 
+1. Straight line trajectories parameterized by length $l$ and angle $\theta$, where $l \in U(0.6, 1.6)$ and $\theta \in U(0, 2\pi)$
+2. Constant curvature trajectories (Dubin's path) parameterized by radius $r$ and sweep $\alpha$ and sign $s$, where $r \in U(0.3, 0.9)$, $\alpha \in U(\pi/3, 3\pi/2)$ and $s \in \stackrel{+}{-}1$
+3. L-shaped trajectories that are a combination of a line and a Dubin's arc, both sampled using the above distributions
+4. S-shaped trajectories that are composed by joining two Dubin's arcs of opposite signs
+5. Spiral trajectories (Clothoid) parameterized by length $l$, start curvature $\kappa_s$ and curvature rate $\kappa_r$, where $l \in U(2.5, 4.5)$, $\kappa_s \in \stackrel{+}{-}U(0.5, 2,5)$ and $\kappa_r \in \stackrel{+}{-}U(0.5, 2.5)$
 
 
 ### Generative Policies
