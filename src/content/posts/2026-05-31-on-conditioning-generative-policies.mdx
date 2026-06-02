@@ -285,5 +285,8 @@ Here are some samples for a given set of constraints:
 As expected, for simple conditioning, there aren't any differences between any of the mechanisms or models. Applying conditioning globally across all of the timesteps is more than sufficient to encode such conditioning information and drive the models' output.
 
 
+## Experiment 3
 
+
+We now condition the start and end points of the trajectory. We end up with a smaller `dim=4` conditioning vector but requires more local structure as the start and end points are fixed.
 
