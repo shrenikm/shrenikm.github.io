@@ -419,6 +419,69 @@ Trying to reason about these:
   - There's probably something also to be said about the diffusion's SNR weighted loss diminishing conditioning gradients at high `t`, compared to flow matching's velocity prediction. This does make sense if we think of the global mechanisms solving this problem by "shape-fitting" and making high level decisions. Making high level decisions at high `t` that decide the success rate of the task probably suits flow matching more. The conditioning mechanisms don't allow for for low `t` refinement either. This would also explain why there isn't much of a difference between the two when it comes to cross-attention
 
 
-The above metrics were all obtained on inputs that were "in distribution", meaning that the waypoints were sampled from trajectories in the dataset. Doing it this way makes it so that there is always a feasible trajectory that threads the points, but also introduces some bias. I also ran some OOD evaluations to check if that would tell us something more.
+The above metrics were all obtained on inputs that were "in distribution", meaning that the waypoints were sampled from trajectories in the dataset. Doing it this way makes it so that there is always a feasible trajectory that threads the points, but may also introduce some bias. I also ran some OOD evaluations to check if that would tell us something more. (To be perfectly fair the bias angle isn't particularly real given that our spatial domain is small and bounded, and the training sample covers most of it anyway. The joint distribution of the waypoints should also be amply covered by the original dataset).
+
+I took in-distribution waypoint samples and slowly added gaussian noise to them (parameterized by $\sigma$). So $\sigma=0$ corresponds to the previous setup and the waypoints get increasingly random as we move down the rows.
+
+<Table
+  caption="Diffusion"
+  align={["left", "right", "right", "right", "right", "right"]}
+  headers={["Sigma", "FiLM", "AdaGN", "Concat", "Cross-attn"]}
+  rows={[
+    ["0.000", "0.5312", "0.5340", "0.5798", "0.8214"],
+    ["0.036", "0.4715", "0.4994", "0.5402", "0.7673"],
+    ["0.071", "0.3689", "0.4219", "0.4459", "0.6674"],
+    ["0.107", "0.3521", "0.3661", "0.4118", "0.6010"],
+    ["0.143", "0.2997", "0.2997", "0.3845", "0.5491"],
+    ["0.179", "0.2740", "0.2801", "0.3248", "0.4883"],
+    ["0.214", "0.2461", "0.2824", "0.3326", "0.4710"],
+    ["0.250", "0.2628", "0.2489", "0.2935", "0.4715"],
+    ["0.286", "0.2282", "0.2433", "0.2824", "0.4648"],
+    ["0.321", "0.2260", "0.2405", "0.2746", "0.4637"],
+    ["0.357", "0.2294", "0.2433", "0.2924", "0.4431"],
+    ["0.393", "0.2400", "0.2277", "0.2796", "0.4308"],
+    ["0.429", "0.2048", "0.2254", "0.2528", "0.4163"],
+    ["0.464", "0.2221", "0.2221", "0.2656", "0.4107"],
+    ["0.500", "0.1931", "0.2065", "0.2506", "0.4057"],
+  ]}
+/>
+
+<Table
+  caption="Flow Matching"
+  align={["left", "right", "right", "right", "right", "right"]}
+  headers={["Sigma", "FiLM", "AdaGN", "Concat", "Cross-attn"]}
+  rows={[
+    ["0.000", "0.6602", "0.6110", "0.6652", "0.8270"],
+    ["0.036", "0.5586", "0.5871", "0.5921", "0.7640"],
+    ["0.071", "0.4833", "0.4397", "0.4967", "0.6233"],
+    ["0.107", "0.4280", "0.3811", "0.4146", "0.5312"],
+    ["0.143", "0.3739", "0.3538", "0.3984", "0.5151"],
+    ["0.179", "0.3594", "0.3287", "0.3287", "0.4637"],
+    ["0.214", "0.3320", "0.2946", "0.3103", "0.4487"],
+    ["0.250", "0.3348", "0.3158", "0.3164", "0.4615"],
+    ["0.286", "0.3147", "0.2919", "0.3069", "0.4386"],
+    ["0.321", "0.3153", "0.2829", "0.2829", "0.3996"],
+    ["0.357", "0.2902", "0.2768", "0.2868", "0.4012"],
+    ["0.393", "0.2974", "0.2679", "0.2902", "0.4202"],
+    ["0.429", "0.3075", "0.2634", "0.2919", "0.3906"],
+    ["0.464", "0.2846", "0.2288", "0.2556", "0.3968"],
+    ["0.500", "0.2807", "0.2360", "0.2734", "0.3772"],
+  ]}
+/>
+
+There's a lot to process here, and this is admittedly not the greatest of experiments. But we'll work with what we have. The hit-rates drop as the inputs get more random, which is expected. The problem is that a good % of these probably don't even have a feasible solution that can thread all of the waypoints. The one saving grace is that the hit-rate counts the fraction of waypoints hit and isn't binary for the trajectory. This means that it's always possible to hit at least one waypoint for a given set of waypoints. So this basically becomes a contest of which method can make the best out of the random inputs. You might ask why I didn't just sample another dataset for the OOD waypoints. That would mean that I wouldn't be able to evaluate on noise injected inputs, which was a bit too thematic to resist.
+
+To make some sense of this, we look at the retention, which is the % of hit-rate that is preserved as we go from $\sigma=0$ to $\sigma=0.5$
+
+<Table
+  align={["left", "right", "right", "right", "right"]}
+  headers={["", "Cross-attn retention", "Trio retention"]}
+  rows={[
+    ["Diffusion", "49.4%", "39.5%"],
+    ["Flow Matching", "45.6%", "40.8%"],
+  ]}
+/>
+
+We see that cross-attention retains more of its hit-rate as the waypoints get more infeasible. Not particularly enlightening, but shows that cross-attention does a better job at solving this task and is more robust to noise in the distribution of waypoints.
 
 
