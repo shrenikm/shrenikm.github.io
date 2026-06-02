@@ -15,7 +15,7 @@ I started working on this to figure out what the limits of FiLM conditionning we
 
 I started my experiments trying to validate a few hypothesis:
 
-1. FiLM and other similar methods apply a sort of global conditioning across all timesteps. In principle these _should_ break at a certain complexity of task conditioning
+1. FiLM and other similar methods apply a sort of global conditioning across all timesteps equally. In principle these _should_ break at a certain complexity of task conditioning
 2. Something like cross-attention _should_ in principle be better for tasks that require high fidelity local conditioning
 3. A lot of these methods will probably fail for more complex compositional conditioning. Maybe there's some conditioning method out there that can more efficiently encode this?
 
@@ -35,7 +35,7 @@ To test all of these, a few things are required:
 
 ### Dataset
 
-I generated two families of synthetic datasets, both of which are collections of fixed size $(x, y)$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes angles, etc. Honestly, I don't know. We could have more complex inter-point feasible constraints, etc for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differ a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure it out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
+I generated two families of synthetic datasets, both of which are collections of `T=64` $(x, y)$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes angles, etc. Honestly, I don't know. We could have more complex inter-point feasible constraints, etc for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differ a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure it out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
 
 For `Dataset1`, we sample trajectories from four different classes: 
 
@@ -94,13 +94,35 @@ This dataset contains 200,000 trajectories computed by sampling random start and
 
 <ZoomableFigure src="/posts/10/images/datasets/dataset2_gallery.png" alt="Dataset1 gallery" />
 
-
-
+In both datasets, the trajectories are 
 
 ### Generative Policies
 
+For the policies, we use a 1-D U-Net structure (as seen in the original Diffusion Policy). Each model and conditioning variant uses FiLM for conditioning the timestep (even if the other inputs aren't conditioned through FiLM). The base model (base U-Net + timestep FiLM) has ~`10M` parameters.
+
+For diffusion, we train the model to predict the noise $\epsilon$. For the samples, we use DDPM (`T=100` with a cosine schedule). For inference we use DDIM with the `25-50` steps depending on the experiment.
+
+For flow matching, we use the same model but predict the velocity instead. During sampling, we sample $t \sim \beta(1.5, 1)$, and use `10-20` Euler steps during inference.
+
 
 ### Conditioning Methods
+
+
+#### FiLM
+
+For FiLM, an MLP produces per-channel scale $\gamma$ and shift $\beta$. The inputs get modulated as $\gamma \cdot x + \beta$ broadcast over all `T` actions to produce the `(B, C, T)` output.
+
+#### Concat
+
+I wanted to test something that's a bit more primitive. Concat basically does what it advertises: it concatenates the conditioning feature vector to the input channels (broadcast across `T`). The `(B, C+cond_dim, T)` tensor is then projected into `(B, C, T)`.
+
+#### AdaGN
+
+This one is supposed to be the dressed up version of FiLM. AdaLN-Zero has become popular in DiT networks, but given that we're using 1-D convolutions here, we stick to the group norm. The output is $(1 + \gamma) \cdot \texttt{GroupNorm}(x) + \beta$, with it starting zero initialized similar to AdaLN-Zero.
+
+#### Cross-Attention
+
+The only method that applies per timestep conditioning. Queries come from the action trajectory (one per `T`) with the keys/values coming from the condition tokens. We use multi-head attention with 4 heads, with FFN expansions stacked on top for some of the experiments. For single scalar/vector conditioning, this collapses into a single token attention module.
 
 
 
