@@ -39,10 +39,16 @@ I generated two families of synthetic datasets, both of which are collections of
 
 For `Dataset1`, we sample trajectories from four different classes: 
 1. Straight line trajectories parameterized by length $l$ and angle $\theta$, where $l \in U(0.6, 1.6)$ and $\theta \in U(0, 2\pi)$
-2. Constant curvature trajectories (Dubin's path) parameterized by radius $r$ and sweep $\alpha$ and sign $s$, where $r \in U(0.3, 0.9)$, $\alpha \in U(\pi/3, 3\pi/2)$ and $s \in \stackrel{+}{-}1$
+2. Constant curvature trajectories (Dubin's path) parameterized by radius $r$ and sweep $\alpha$ and sign $s$, where $r \in U(0.3, 0.9)$, $\alpha \in U(\pi/3, 3\pi/2)$ and $s \in \pm 1$
 3. L-shaped trajectories that are a combination of a line and a Dubin's arc, both sampled using the above distributions
 4. S-shaped trajectories that are composed by joining two Dubin's arcs of opposite signs
-5. Spiral trajectories (Clothoid) parameterized by length $l$, start curvature $\kappa_s$ and curvature rate $\kappa_r$, where $l \in U(2.5, 4.5)$, $\kappa_s \in \stackrel{+}{-}U(0.5, 2,5)$ and $\kappa_r \in \stackrel{+}{-}U(0.5, 2.5)$
+5. Spiral trajectories (Clothoid) parameterized by length $l$, start curvature $\kappa_s$ and curvature rate $\kappa_r$, where $l \in U(2.5, 4.5)$, $\kappa_s \in \pm U(0.5, 2,5)$ and $\kappa_r \in \pm U(0.5, 2.5)$
+
+The dataset contains 500,000 trajectories, exactly balanced over these 5 classes, sampled according to the distributions above. Here's a gallery of some randomly sampled trajectories:
+
+<Figure src="/posts/10/images/datasets/dataset1_gallery.png" alt="Dataset1 gallery" />
+
+
 
 
 ### Generative Policies
