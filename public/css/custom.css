@@ -451,3 +451,58 @@
 body.zoom-open {
   overflow: hidden;
 }
+
+/* Table component: a clean, minimalist table with horizontal rules only and a
+   subtle accent underline. The .nice-table class overrides the bordered/zebra
+   defaults that main.css applies to every <table>. */
+.nice-table-wrap {
+  margin: 25px 0;
+  overflow-x: auto;
+}
+
+.nice-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+
+.nice-table tr {
+  border-top: 0;
+  background: none;
+}
+
+.nice-table tbody tr:nth-child(2n) {
+  background: none;
+}
+
+.nice-table thead th {
+  border: 0;
+  border-bottom: 2px solid #0085a1;
+  background-color: #e6f3f7;
+  padding: 9px 16px;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.nice-table tbody td {
+  border: 0;
+  border-bottom: 1px solid #ececec;
+  padding: 9px 16px;
+  text-align: left;
+}
+
+.nice-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.nice-table tbody tr:hover td {
+  background-color: #f6f9fa;
+}
+
+.nice-table-wrap figcaption {
+  margin-top: 8px;
+  color: #808080;
+  font-size: 0.9em;
+  text-align: center;
+}

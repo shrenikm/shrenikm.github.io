@@ -1,0 +1,66 @@
+---
+// Clean, minimalist table. Takes structured data so it stays easy to extend
+// later with per row/column/cell highlighting. Cells may contain inline math
+// delimited by single dollars, rendered with KaTeX at build time (the global
+// KaTeX stylesheet from BaseLayout styles the output).
+import katex from "katex";
+import katexMacros from "../katex-macros.json";
+
+interface Props {
+  headers: string[];
+  rows: string[][];
+  caption?: string;
+  align?: ("left" | "center" | "right")[];
+}
+
+const { headers, rows, caption, align } = Astro.props;
+
+const macros = {
+  ...katexMacros,
+  "\\set": "\\left\\{#1\\right\\}",
+  "\\argmin": "\\operatorname*{arg\\,min}",
+  "\\argmax": "\\operatorname*{arg\\,max}",
+};
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function renderCell(cell: string): string {
+  // Odd split segments are the inside of a $...$ pair; render those as math
+  // and escape the surrounding plain text.
+  return cell
+    .split(/\$([^$]+)\$/g)
+    .map((part, i) =>
+      i % 2 === 1
+        ? katex.renderToString(part, { throwOnError: false, macros })
+        : escapeHtml(part),
+    )
+    .join("");
+}
+
+function alignStyle(index: number): string | undefined {
+  const value = align?.[index];
+  return value ? `text-align:${value}` : undefined;
+}
+---
+
+<figure class="nice-table-wrap">
+  <table class="nice-table">
+    <thead>
+      <tr>
+        {headers.map((header, i) => <th style={alignStyle(i)} set:html={renderCell(header)} />)}
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((row) => (
+          <tr>
+            {row.map((cell, i) => <td style={alignStyle(i)} set:html={renderCell(cell)} />)}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

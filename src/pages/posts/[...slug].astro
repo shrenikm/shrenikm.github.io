@@ -5,6 +5,7 @@ import Figure from "../../components/Figure.astro";
 import ZoomableFigure from "../../components/ZoomableFigure.astro";
 import YouTube from "../../components/YouTube.astro";
 import Gallery from "../../components/Gallery.astro";
+import Table from "../../components/Table.astro";
 import HeartButton from "../../components/HeartButton.astro";
 import ShareButtons from "../../components/ShareButtons.astro";
 import Comments from "../../components/Comments.astro";
@@ -53,7 +54,7 @@ const related = (await getCollection("posts"))
     <div class="row">
       <div class="col-xl-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <article role="main" class="blog-post" data-pagefind-body>
-          <Content components={{ Figure, ZoomableFigure, YouTube, Gallery }} />
+          <Content components={{ Figure, ZoomableFigure, YouTube, Gallery, Table }} />
 
           {
             post.data.tags.length > 0 && (

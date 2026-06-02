@@ -50,10 +50,14 @@ The dataset contains 500,000 trajectories, exactly balanced over these 5 classes
 
 For `Dataset2`, we generate trajectories in an occupancy map to simulate 2-D path planning. The map is a 64x64 occupancy grid with circular obstacles sampled in the following way:
 
-Tier | Fraction | Obstacle count | Obstacle radius
-Sparse | 0.20 | $U(1, 6)$ | $U(0.08, 0.20)$
-Medium | 0.35 | $U(7, 21)$ | $U(0.06, 0.18)$
-Dense | 0.45 | $U(22, 45)$ | $U(0.05, 0.16)$
+<Table
+  headers={["Tier", "Fraction", "Obstacle count", "Obstacle radius"]}
+  rows={[
+    ["Sparse", "0.20", "$U(1, 6)$", "$U(0.08, 0.20)$"],
+    ["Medium", "0.35", "$U(7, 21)$", "$U(0.06, 0.18)$"],
+    ["Dense", "0.45", "$U(22, 45)$", "$U(0.05, 0.16)$"],
+  ]}
+/>
 
 
 
