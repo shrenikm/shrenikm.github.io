@@ -131,6 +131,15 @@ The only method that applies per timestep conditioning. Queries come from the ac
 
 ### Sanity Check
 
+
+<Table caption="Training config"
+  headers={["Policy", "Steps", "Batch", "LR", "NFE"]}
+  rows={[
+    ["Diffusion", "20k/80k", "256", "1e-4", "25"],
+    ["Flow Matching", "20k/80k", "256", "1e-4", "10"],
+  ]}
+/>
+
 The first thing to do is to make sure that our base unconditional models work as expected. Training the models on just the spiral trajectories from `Dataset1` gives the following output samples:
 
  <Gallery

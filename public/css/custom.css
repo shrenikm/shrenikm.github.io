@@ -503,7 +503,8 @@ body.zoom-open {
 
 .nice-table-wrap figcaption {
   margin-top: 8px;
-  color: #808080;
+  color: #555;
   font-size: 0.9em;
+  font-weight: 600;
   text-align: center;
 }
