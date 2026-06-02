@@ -193,7 +193,9 @@ Training unconditionally on all of `Dataset1` gives you samples from every class
   ]}
 />
 
-We start with something, very simple: conditioning on the trajectory class (in `Dataset1`). We want to ensure two things:
+We start with something, very simple: conditioning on the trajectory class (in `Dataset1`). The class input is encoded as a one-hot vector (`dim=5`).
+
+We want to ensure two things:
 1. The models are able to produce trajectories of the given class
 2. The models exhibit diversity within trajectories of the same class
 
@@ -246,8 +248,12 @@ We can also measure the `diversity` (pairwise Euclidean distance between traject
 />
 
 
+Now we step it up a bit and condition the trajectories on the class, trajectory length and initial heading. The class is still encoded as a one-hot vector, with the length and angles represented as regular floats. To handle angle wrapping, we represent it as ($\cos\theta$, $\sin\theta$). Stacking everything together, we end up with a single `dim=8` vector.
+
+We use the same Oracle to measure classification accuracy:
+
 <Table
-  caption="Class accuracy, L2 (256 samples/condition) — higher is better; all within binomial noise"
+  caption="Class accuracy (256 samples/condition)"
   align={["left", "right", "right"]}
   headers={["", "Diffusion", "Flow Matching"]}
   rows={[
@@ -258,7 +264,9 @@ We can also measure the `diversity` (pairwise Euclidean distance between traject
   ]}
 />
 
+The accuracy spread is all due to the curve classes as expected. The error in length is `0.001-0.017` and the error in the angle is `1-10 deg`, with no notable differences between any of the configurations.
 
+As expected, for simple conditioning, there aren't any differences between any of the mechanisms or models.
 
 
 
