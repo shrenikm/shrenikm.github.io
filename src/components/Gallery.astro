@@ -12,12 +12,16 @@ interface GalleryImage {
 
 interface Props {
   images: GalleryImage[];
+  width?: string;
 }
 
-const { images } = Astro.props;
+const { images, width } = Astro.props;
+const style = width
+  ? `max-width:${width};margin-left:auto;margin-right:auto;`
+  : undefined;
 ---
 
-<div class="gallery" data-gallery>
+<div class="gallery" data-gallery style={style}>
   <div class="gallery-track">
     {
       images.map((img) => (
