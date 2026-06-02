@@ -78,8 +78,9 @@
 }
 
 .gallery-slide figcaption {
-  color: #808080;
+  color: #555;
   font-size: 0.9em;
+  font-weight: 600;
   padding: 8px;
 }
 

@@ -75,7 +75,7 @@ For `Dataset1`, we sample trajectories from four different classes:
   ]}
 />
 
-The dataset contains 500,000 trajectories, sampled according to the distributions above. Here's a gallery of some randomly sampled trajectories:
+The dataset contains 500,000 trajectories, sampled according to the distributions above. Note that some of the boundaries between the classes are intentionally blurry (Eg: L-shaped and S-shaped trajectories can look quite similar, etc.) to ensure that some of the trivial conditional tasks aren't too easy. Here's a gallery of some randomly sampled trajectories:
 
 <ZoomableFigure src="/posts/10/images/datasets/dataset1_gallery.png" alt="Dataset1 gallery" />
 
@@ -135,8 +135,8 @@ The first thing to do is to make sure that our base unconditional models work as
 
  <Gallery
     images={[
-      { src: "/posts/10/images/sanity_check/sanity_check_diffusion.png", alt: "Sanity Check - Diffusion", caption: "Diffusion" },
-      { src: "/posts/10/images/sanity_check/sanity_check_flow_matching.png", alt: "Sanity Check - Flow Matching", caption: "Flow Matching" },
+      { src: "/posts/10/images/sanity_check/sanity_check1_diffusion.png", alt: "Sanity Check - Diffusion", caption: "Diffusion (Spiral)" },
+      { src: "/posts/10/images/sanity_check/sanity_check1_flow_matching.png", alt: "Sanity Check - Flow Matching", caption: "Flow Matching (Spiral)" },
     ]}
   />
 
@@ -145,8 +145,17 @@ And no, I couldn't resisting making the classic denoising gifs.
 
  <Gallery
     images={[
-      { src: "/posts/10/gifs/sanity_check/sanity_check_diffusion.gif", alt: "Sanity Check - Diffusion", caption: "Diffusion"},
-      { src: "/posts/10/gifs/sanity_check/sanity_check_flow_matching.gif", alt: "Sanity Check - Flow Matching", caption: "Flow Matching"},
+      { src: "/posts/10/gifs/sanity_check/sanity_check1_diffusion.gif", alt: "Sanity Check - Diffusion", caption: "Diffusion (Spiral)" },
+      { src: "/posts/10/gifs/sanity_check/sanity_check1_flow_matching.gif", alt: "Sanity Check - Flow Matching", caption: "Flow Matching (Spiral)" },
+    ]}
+  />
+
+  Training unconditionally on all of `Dataset1` gives you samples from every class as expected.
+
+ <Gallery
+    images={[
+      { src: "/posts/10/images/sanity_check/sanity_check2_diffusion.png", alt: "Sanity Check - Diffusion", caption: "Diffusion (Spiral)" },
+      { src: "/posts/10/images/sanity_check/sanity_check2_flow_matching.png", alt: "Sanity Check - Flow Matching", caption: "Flow Matching (Spiral)" },
     ]}
   />
 
