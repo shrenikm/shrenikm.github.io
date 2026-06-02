@@ -303,7 +303,7 @@ As expected, for simple conditioning, there aren't any differences between any o
   ]}
 />
 
-We now condition the start and end points of the trajectory. We end up with a smaller `dim=4` conditioning vector but requires more local structure as the start and end points are fixed. Honestly I was expecting the timestep pooled methods to perform slightly worse which did not happen:
+We now condition the start and end points of the trajectory. We end up with a smaller `dim=4` conditioning vector but requires more local structure as the start and end points are fixed. Honestly I was expecting the global timestep uniform methods to perform slightly worse which did not happen:
 
 <Table
   caption="Error, mean ± std over 15 samples"
@@ -357,9 +357,9 @@ Here's the diffusion + FiLM model in action:
   ]}
 />
 
-Now it's time to really crank up the difficulty. For this experiment, we condition the model on a set of `2-5` waypoints with the restriction that the trajectory must pass through them. For the training data, we just randomly sample `2-5` on trajectories in the dataset. So in a way this becomes "in distribution" but we'll look at some OOD results as well.
+Now it's time to really crank up the difficulty. For this experiment, we condition the model on a set of `2-5` waypoints with the restriction that the trajectory must pass through them. For the training data, we just randomly sample `2-5` points on trajectories in the dataset.
 
-For the pooled mechanisms, we stack each of the waypoints and zero pad to hit the max number of points. This leaves us with a `dim=10` vector. For cross-attention, we cross attend between each of the waypoint tokens and the action timesteps.
+For the global mechanisms, we stack each of the waypoints and zero pad to hit the max number of points. This leaves us with a `dim=10` vector. For cross-attention, we cross attend between each of the waypoint tokens and the action timesteps.
 
 I thought this would be difficult for a few reasons:
 1. The number of waypoints isn't constant. The model has to learn to be combination invariant for maximum effectiveness
@@ -380,7 +380,9 @@ Surely FiLM completely breaks apart here right?
   ]}
 />
 
-Here we measure the hit-rate as a fraction of waypoints with a trajectory point with $\epsilon=0.05$
+Here we measure the hit-rate as a fraction of waypoints with a trajectory point with $\epsilon=0.05$. The values were computed over 3,840 samples per model x mechanism pair.
+
+Some more metrics before we try to make sense of the results:
 
 <Table
   caption="More metrics"
@@ -398,5 +400,17 @@ Here we measure the hit-rate as a fraction of waypoints with a trajectory point 
     ["Flow Matching + Cross-attn", "0.860", "0.0289", "6.352", "0.539"],
   ]}
 />
+
+Mean distance is just the average of the closest distances between the waypoints and points on the trajectory. Class entropy is a measure of how many classes the model samples are spread across. (We use the Oracle to estimate this).
+
+The things that stood out to me are:
+1. Hit rates are pretty low in general. Either this is a pretty difficult task, or I didn't do a good enough job at designing and training the model. I'd wager it's a combination of both
+2. The global mechanisms' hit rates are unreasonably high. You don't just hit `>50%` of waypoints by guessing
+3. Flow matching handedly beats diffusion when coupled with global conditioninng mechanisms. This isn't just statistical noise
+4. As expected cross-attention performs the best here as it can make use of timestep specific conditioning. It also produces the best mean distance metrics. It still doesn't crack the `90%` hit-rate`, probably due to the factors mentioned above. I'm sure it's possible to tune the model and training parameters to get this number a lot higher
+5. Diversity metrics are the similar across all configurations, maybe slightly lower for the flow matching configurations
+6. Class entropy is also similar, maybe a bit lower for the flow matching configurations
+
+
 
 
