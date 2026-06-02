@@ -104,6 +104,8 @@ For diffusion, we train the model to predict the noise $\epsilon$. For the sampl
 
 For flow matching, we use the same model but predict the velocity instead. During sampling, we sample $t \sim \beta(1.5, 1)$, and use `10-20` Euler steps during inference.
 
+<ZoomableFigure src="/posts/10/images/architecture/unet_architecture.png" alt="Dataset1 gallery" />
+
 
 ### Conditioning Methods
 
@@ -124,6 +126,29 @@ This one is supposed to be the dressed up version of FiLM. AdaLN-Zero has become
 
 The only method that applies per timestep conditioning. Queries come from the action trajectory (one per `T`) with the keys/values coming from the condition tokens. We use multi-head attention with 4 heads, with FFN expansions stacked on top for some of the experiments. For single scalar/vector conditioning, this collapses into a single token attention module.
 
+
+## Experiments
+
+### Sanity Check
+
+The first thing to do is to make sure that our base unconditional models work as expected. Training the models on just the spiral trajectories from `Dataset1` gives the following output samples:
+
+ <Gallery
+    images={[
+      { src: "/posts/10/images/sanity_check/sanity_check_diffusion.png", alt: "Sanity Check - Diffusion", caption: "Diffusion" },
+      { src: "/posts/10/images/sanity_check/sanity_check_flow_matching.png", alt: "Sanity Check - Flow Matching", caption: "Flow Matching" },
+    ]}
+  />
+
+And no, I couldn't resisting making the classic denoising gifs.
+
+
+ <Gallery
+    images={[
+      { src: "/posts/10/gifs/sanity_check/sanity_check_diffusion.gif", alt: "Sanity Check - Diffusion"},
+      { src: "/posts/10/gifs/sanity_check/sanity_check_flow_matching.gif", alt: "Sanity Check - Flow Matching"},
+    ]}
+  />
 
 
 
