@@ -288,6 +288,36 @@ As expected, for simple conditioning, there aren't any differences between any o
 ## Experiment 3
 
 
+<Table caption="Training hyperparameters"
+  headers={["Policy", "Steps", "Batch", "LR", "NFE"]}
+  rows={[
+    ["Diffusion", "40k", "256", "1e-4", "25"],
+    ["Flow Matching", "40k", "256", "1e-4", "10"],
+  ]}
+/>
+
+<Table caption="Model size (M)"
+  headers={["FiLM", "AdaGN", "Concat", "Cross-attn"]}
+  rows={[
+    ["9.867", "9.867", "8.915", "10.161"],
+  ]}
+/>
+
 We now condition the start and end points of the trajectory. We end up with a smaller `dim=4` conditioning vector but requires more local structure as the start and end points are fixed. Honestly I was expecting the timestep pooled methods to perform slightly worse which did not happen:
+
+<Table
+  caption="Error, mean ± std over 15 samples"
+  align={["left", "right", "right"]}
+  headers={["", "diffusion", "flow matching"]}
+  highlightCells={[[0, 1], [0, 2]]}
+  rows={[
+    ["FiLM", "0.0035 ± 0.0016", "0.0056 ± 0.0012"],
+    ["AdaGN", "0.0056 ± 0.0022", "0.0089 ± 0.0033"],
+    ["Concat", "0.0040 ± 0.0022", "0.0069 ± 0.0024"],
+    ["Cross-attn", "0.0057 ± 0.0026", "0.0073 ± 0.0027"],
+  ]}
+/>
+
+FiLM performed the best consistently, but they're all very close. Turns out that the spatial constraints are simple enough that pooling them through the entire trajectory (along with some convolution magic) is sufficient to solve the problem. But then again, given how U-Nets work maybe this isn't surprising at all.
 
 

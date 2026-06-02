@@ -508,3 +508,9 @@ body.zoom-open {
   font-weight: 600;
   text-align: center;
 }
+
+/* Emphasized cells (e.g. the best metric in a column). */
+.nice-table td.cell-highlight {
+  color: #0085a1;
+  font-weight: 700;
+}

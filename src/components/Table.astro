@@ -11,9 +11,14 @@ interface Props {
   rows: string[][];
   caption?: string;
   align?: ("left" | "center" | "right")[];
+  // Cells to emphasize as [rowIndex, colIndex], indexed into rows (colIndex
+  // includes the leading label column), e.g. the best metric per column.
+  highlightCells?: [number, number][];
 }
 
-const { headers, rows, caption, align } = Astro.props;
+const { headers, rows, caption, align, highlightCells } = Astro.props;
+
+const highlighted = new Set((highlightCells ?? []).map(([r, c]) => `${r},${c}`));
 
 const macros = {
   ...katexMacros,
@@ -54,9 +59,15 @@ function alignStyle(index: number): string | undefined {
     </thead>
     <tbody>
       {
-        rows.map((row) => (
+        rows.map((row, r) => (
           <tr>
-            {row.map((cell, i) => <td style={alignStyle(i)} set:html={renderCell(cell)} />)}
+            {row.map((cell, c) => (
+              <td
+                style={alignStyle(c)}
+                class={highlighted.has(`${r},${c}`) ? "cell-highlight" : undefined}
+                set:html={renderCell(cell)}
+              />
+            ))}
           </tr>
         ))
       }
