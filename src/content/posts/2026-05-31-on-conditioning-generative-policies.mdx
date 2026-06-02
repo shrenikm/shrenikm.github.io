@@ -411,6 +411,14 @@ The things that stood out to me are:
 5. Diversity metrics are the similar across all configurations, maybe slightly lower for the flow matching configurations
 6. Class entropy is also similar, maybe a bit lower for the flow matching configurations
 
+Trying to reason about these:
 
+1. The global mechanisms are probably doing some sort of "shape-fitting", matching waypoint configurations to high level trajectory shapes. The way these mechanisms propagate conditioning information isn't conducive to handling waypoint binding constraints, but it doesn't mean that they're completely helpless either
+2. The flow matching disparity is also very interesting. We can perhalps chalk some of it to the fact that it produces trajectories with slightly lower diversity and entropy scores. The question still is why?
+  - Flow matching uses the beta schedule to sample `t` unlike diffusion that sampled `t` uniformly. Maybe this was a bad comparison and I should've made these symmetric, but how is it possible to appreciate symmetry if there isn't any asymmetry to juxtapose against.
+  - There's probably something also to be said about the diffusion's SNR weighted loss diminishing conditioning gradients at high `t`, compared to flow matching's velocity prediction. This does make sense if we think of the global mechanisms solving this problem by "shape-fitting" and making high level decisions. Making high level decisions at high `t` that decide the success rate of the task probably suits flow matching more. The conditioning mechanisms don't allow for for low `t` refinement either. This would also explain why there isn't much of a difference between the two when it comes to cross-attention
+
+
+The above metrics were all obtained on inputs that were "in distribution", meaning that the waypoints were sampled from trajectories in the dataset. Doing it this way makes it so that there is always a feasible trajectory that threads the points, but also introduces some bias. I also ran some OOD evaluations to check if that would tell us something more.
 
 
