@@ -379,3 +379,75 @@
   display: block;
   width: 100%;
 }
+
+/* ZoomableFigure: click an image to open a larger version in an in-page
+   lightbox. The trigger is a reset button so it stays keyboard accessible. */
+.post-figure .zoom-trigger {
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  background: none;
+  line-height: 0;
+  cursor: zoom-in;
+}
+
+.zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 4vmin;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.zoom-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Fixed stage plus object-fit lets a small source scale up to fill the
+   viewport while preserving aspect ratio, which is the point of zooming. */
+.zoom-stage {
+  width: 94vw;
+  height: 86vh;
+}
+
+.zoom-stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.zoom-overlay-caption {
+  margin: 0;
+  max-width: 94vw;
+  color: #ddd;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.zoom-overlay-close {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 2.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+body.zoom-open {
+  overflow: hidden;
+}
