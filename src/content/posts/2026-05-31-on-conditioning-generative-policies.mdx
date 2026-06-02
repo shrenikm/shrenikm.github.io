@@ -141,31 +141,37 @@ The only method that applies per timestep conditioning. Queries come from the ac
 
 The first thing to do is to make sure that our base unconditional models work as expected. Training the models on just the spiral trajectories from `Dataset1` gives the following output samples:
 
- <Gallery
-    images={[
-      { src: "/posts/10/images/sanity_check/sanity_check1_diffusion.png", alt: "Sanity Check - Diffusion", caption: "Diffusion (Spiral)" },
-      { src: "/posts/10/images/sanity_check/sanity_check1_flow_matching.png", alt: "Sanity Check - Flow Matching", caption: "Flow Matching (Spiral)" },
-    ]}
-  />
+<Gallery
+  images={[
+    { src: "/posts/10/images/sanity_check/sanity_check1_diffusion.png", alt: "Sanity Check - Diffusion", caption: "Diffusion (Spiral)" },
+    { src: "/posts/10/images/sanity_check/sanity_check1_flow_matching.png", alt: "Sanity Check - Flow Matching", caption: "Flow Matching (Spiral)" },
+  ]}
+/>
 
 And no, I couldn't resisting making the classic denoising gifs.
 
 
- <Gallery
-    images={[
-      { src: "/posts/10/gifs/sanity_check/sanity_check1_diffusion.gif", alt: "Sanity Check - Diffusion", caption: "Diffusion (Spiral)" },
-      { src: "/posts/10/gifs/sanity_check/sanity_check1_flow_matching.gif", alt: "Sanity Check - Flow Matching", caption: "Flow Matching (Spiral)" },
-    ]}
-  />
+<Gallery
+  images={[
+    { src: "/posts/10/gifs/sanity_check/sanity_check1_diffusion.gif", alt: "Sanity Check - Diffusion", caption: "Diffusion (Spiral)" },
+    { src: "/posts/10/gifs/sanity_check/sanity_check1_flow_matching.gif", alt: "Sanity Check - Flow Matching", caption: "Flow Matching (Spiral)" },
+  ]}
+/>
 
 Training unconditionally on all of `Dataset1` gives you samples from every class as expected.
 
- <Gallery
-    images={[
-      { src: "/posts/10/images/sanity_check/sanity_check2_diffusion.png", alt: "Sanity Check - Diffusion", caption: "Diffusion (All)" },
-      { src: "/posts/10/images/sanity_check/sanity_check2_flow_matching.png", alt: "Sanity Check - Flow Matching", caption: "Flow Matching (All)" },
-    ]}
-  />
+<Gallery
+  images={[
+    { src: "/posts/10/images/sanity_check/sanity_check2_diffusion.png", alt: "Sanity Check - Diffusion", caption: "Diffusion (All)" },
+    { src: "/posts/10/images/sanity_check/sanity_check2_flow_matching.png", alt: "Sanity Check - Flow Matching", caption: "Flow Matching (All)" },
+  ]}
+/>
+
+### Experiment 1
+
+We start with something, very simple: conditioning on the trajectory class (in `Dataset1`). We want to ensure two things:
+1. The models are able to produce trajectories of the given class
+2. The models exhibit diversity within trajectories of the same class
 
 
 
