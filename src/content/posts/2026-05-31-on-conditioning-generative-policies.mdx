@@ -17,7 +17,7 @@ I started my experiments trying to validate a few hypothesis:
 
 1. FiLM and other similar methods apply a sort of global conditioning across all timesteps equally. In principle these _should_ break at a certain complexity of task conditioning
 2. Something like cross-attention _should_ in principle be better for tasks that require high fidelity local conditioning
-3. A lot of these methods will probably fail for more complex compositional conditioning. Maybe there's some conditioning method out there that can more efficiently encode this?
+3. A lot of these methods will probably fail for more complex compositional conditioning. Maybe there's some conditioning method out there that can more efficiently encode this? (Spoiler alert: I never go to this part)
 
 Obviously none of this really matters if you're using an LLM/VLM backbone for your policy. So we limit our discussions and experiments to smaller models (< 50M) that don't employ such backbones (think diffusion policy).
 
@@ -157,7 +157,7 @@ The first thing to do is to make sure that our base unconditional models work as
   ]}
 />
 
-And no, I couldn't resisting making the classic denoising gifs.
+And no, I couldn't resisting making the classic denoising gif.
 
 
 <Gallery
