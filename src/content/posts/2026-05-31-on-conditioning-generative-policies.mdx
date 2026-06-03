@@ -11,7 +11,7 @@ I've been running some experiments on conditioning diffusion and flow matching p
 
 ## Objective
 
-I started working on this to figure out what the limits of FiLM conditionning were. I'd never really completely wrapped my head around FiLM's effectiveness. A lot of the time it felt like things worked out with FiLM even though it shouldn't have? This then grew into wanting to know how other conditioning methods stack against each other. With a lot of VLAs switching over to using flow matching action heads these days, I ended up adding this into the mix as well.
+I started working on this to figure out what the limits of FiLM conditioning were. I'd never really completely wrapped my head around FiLM's effectiveness. A lot of the time it felt like things worked out with FiLM even though it shouldn't have? This then grew into wanting to know how other conditioning methods stack against each other. With a lot of VLAs switching over to using flow matching action heads these days, I ended up adding this into the mix as well.
 
 I started my experiments trying to validate a few hypothesis:
 
@@ -213,7 +213,7 @@ The first thing here isn't trivial to verify. To do this we train a small 1-D co
   ]}
 />
 
-The accuracies aren't `1.0` but given that the boundaries between the classes aren't that distinct, we'll give the models a pass. Unsurprisingly, we don't see any differences betwen the conditioning mechanisms or the models for this task.
+The accuracies aren't `1.0` but given that the boundaries between the classes aren't that distinct, we'll give the models a pass. Unsurprisingly, we don't see any differences between the conditioning mechanisms or the models for this task.
 
 We can also measure the `diversity` (pairwise Euclidean distance between trajectories) of the samples within each class. These turn out to be pretty good at `~7.5-8.0`, with the values being smaller for the line trajectories and larger for curves and arcs. Samples for each combination:
 
@@ -406,8 +406,8 @@ Mean distance is just the average of the closest distances between the waypoints
 The things that stood out to me are:
 1. Hit rates are pretty low in general. Either this is a pretty difficult task, or I didn't do a good enough job at designing and training the model. I'd wager it's a combination of both
 2. The global mechanisms' hit rates are unreasonably high. You don't just hit `>50%` of waypoints by guessing
-3. There isn't any difference betwen the individual global conditioning mechanisms
-4. Flow matching handedly beats diffusion when coupled with global conditioninng mechanisms. This isn't just statistical noise
+3. There isn't any difference between the individual global conditioning mechanisms
+4. Flow matching handedly beats diffusion when coupled with global conditioning mechanisms. This isn't just statistical noise
 5. As expected cross-attention performs the best here as it can make use of timestep specific conditioning. It also produces the best mean distance metrics. It still doesn't crack the `90%` hit-rate`, probably due to the factors mentioned above. I'm sure it's possible to tune the model and training parameters to get this number a lot higher
 6. Diversity metrics are the similar across all configurations, maybe slightly lower for the flow matching configurations
 7. Class entropy is also similar, maybe a bit lower for the flow matching configurations
@@ -415,7 +415,7 @@ The things that stood out to me are:
 Trying to reason about these:
 
 1. The global mechanisms are probably doing some sort of "shape-fitting", matching waypoint configurations to high level trajectory shapes. The way these mechanisms propagate conditioning information isn't conducive to handling waypoint binding constraints, but it doesn't mean that they're completely helpless either
-2. The flow matching disparity is also very interesting. We can perhalps chalk some of it to the fact that it produces trajectories with slightly lower diversity and entropy scores. The question still is why?
+2. The flow matching disparity is also very interesting. We can perhaps chalk some of it to the fact that it produces trajectories with slightly lower diversity and entropy scores. The question still is why?
   - Flow matching uses the beta schedule to sample `t` unlike diffusion that sampled `t` uniformly. Maybe this was a bad comparison and I should've made these symmetric, but how is it possible to appreciate symmetry if there isn't any asymmetry to juxtapose against.
   - There's probably something also to be said about the diffusion's SNR weighted loss diminishing conditioning gradients at high `t`, compared to flow matching's velocity prediction. This does make sense if we think of the global mechanisms solving this problem by "shape-fitting" and making high level decisions. Making high level decisions at high `t` that decide the success rate of the task probably suits flow matching more. The conditioning mechanisms don't allow for for low `t` refinement either. This would also explain why there isn't much of a difference between the two when it comes to cross-attention
 
@@ -641,7 +641,7 @@ For this final experiment, we try our best to solve the problem. Instead of gene
   ]}
 />
 
-As expected, cross-attention dominates the field here. Its success rate on dense occupany maps isn't perfect, probably due to a mixture of the problem being difficult and the model and training process not being optimized enough. Interestingly, flow matching performs slightly to moderately worse in most configurations. I don't really have too much insight as to why. It could be something to do with the model or training process. Going back to our previous theoretical reasoning, it could also be beacuse flow matching tries to do more at the initial noisy steps, leading to more unstable steps when working with high information conditioning features.
+As expected, cross-attention dominates the field here. Its success rate on dense occupancy maps isn't perfect, probably due to a mixture of the problem being difficult and the model and training process not being optimized enough. Interestingly, flow matching performs slightly to moderately worse in most configurations. I don't really have too much insight as to why. It could be something to do with the model or training process. Going back to our previous theoretical reasoning, it could also be because flow matching tries to do more at the initial noisy steps, leading to more unstable steps when working with high information conditioning features.
 
 
 <Gallery
