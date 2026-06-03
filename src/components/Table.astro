@@ -6,8 +6,18 @@
 import katex from "katex";
 import katexMacros from "../katex-macros.json";
 
+interface HeaderCell {
+  label: string;
+  colspan?: number;
+  rowspan?: number;
+  align?: "left" | "center" | "right";
+}
+
 interface Props {
-  headers: string[];
+  // Simple single-row header. For merged/grouped headers pass headerRows
+  // instead (one HeaderCell array per header row, with colspan/rowspan).
+  headers?: string[];
+  headerRows?: HeaderCell[][];
   rows: string[][];
   caption?: string;
   align?: ("left" | "center" | "right")[];
@@ -16,7 +26,7 @@ interface Props {
   highlightCells?: [number, number][];
 }
 
-const { headers, rows, caption, align, highlightCells } = Astro.props;
+const { headers, headerRows, rows, caption, align, highlightCells } = Astro.props;
 
 const highlighted = new Set((highlightCells ?? []).map(([r, c]) => `${r},${c}`));
 
@@ -53,9 +63,28 @@ function alignStyle(index: number): string | undefined {
 <figure class="nice-table-wrap">
   <table class="nice-table">
     <thead>
-      <tr>
-        {headers.map((header, i) => <th style={alignStyle(i)} set:html={renderCell(header)} />)}
-      </tr>
+      {
+        headerRows
+          ? headerRows.map((hr) => (
+              <tr>
+                {hr.map((cell) => (
+                  <th
+                    colspan={cell.colspan}
+                    rowspan={cell.rowspan}
+                    style={cell.align ? `text-align:${cell.align}` : undefined}
+                    set:html={renderCell(cell.label)}
+                  />
+                ))}
+              </tr>
+            ))
+          : (
+              <tr>
+                {(headers ?? []).map((header, i) => (
+                  <th style={alignStyle(i)} set:html={renderCell(header)} />
+                ))}
+              </tr>
+            )
+      }
     </thead>
     <tbody>
       {

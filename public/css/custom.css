@@ -486,6 +486,12 @@ body.zoom-open {
   white-space: nowrap;
 }
 
+/* Grouped (merged) header rows: only the bottom-most header row keeps the
+   accent underline; rows above it get a lighter divider. */
+.nice-table thead tr:not(:last-child) th {
+  border-bottom: 1px solid #bfe0e8;
+}
+
 .nice-table tbody td {
   border: 0;
   border-bottom: 1px solid #ececec;
