@@ -303,7 +303,7 @@ As expected, for simple conditioning, there aren't any differences between any o
   ]}
 />
 
-We now condition the start and end points of the trajectory. We end up with a smaller `dim=4` conditioning vector but requires more local structure as the start and end points are fixed. Honestly I was expecting the global timestep uniform methods to perform slightly worse which did not happen:
+We now condition the start and endpoints of the trajectory. We end up with a smaller `dim=4` conditioning vector but requires more local structure as the start and endpoints are fixed. Honestly I was expecting the global timestep uniform methods to perform slightly worse which did not happen:
 
 <Table
   caption="Error, mean ± std over 15 samples"
@@ -517,3 +517,52 @@ The first "experiment 5" had me try to do obstacle avoidance with `Dataset1`. Le
     ["12.298", "12.298", "11.358", "12.593"],
   ]}
 />
+
+The objective of this experiment (and the next) is fairly simple: learn collision free trajectories in an occupancy map. We use `Dataset2` (See [Dataset](#dataset) for details) and train policies to output feasible trajectories. This problem specifically requires a high degree of local action conditioning in order to produce samples with a high success rate. Global conditioning methods, in theory, shouldn't be able to solve this problem well as they don't have localized control of the actions at the level that is required.
+
+For this specific experiment, we try something similar to what is usually done with image inputs to such models. We encode the occupancy map into one `dim=128` vector and condition every mechanism using this single vector. We use ResNet style CNN blocks to encode the image into this feature vector. Cross-attention is also made to use the same vector across all of the timesteps.
+
+<Table
+  caption="Collision rate (Lower is better)"
+  align={["left", "right", "right"]}
+  headers={["", "Diffusion", "Flow Matching"]}
+  highlightCells={[[3, 1], [3, 2]]}
+  rows={[
+    ["FiLM", "0.5430", "0.5195"],
+    ["AdaGN", "0.5391", "0.5312"],
+    ["Concat", "0.5488", "0.5098"],
+    ["Cross-attn", "0.5215", "0.5059"],
+  ]}
+/>
+
+<Table
+  caption="Success rate (higher is better)"
+  align={["left", "right", "right"]}
+  headers={["", "Diffusion", "Flow Matching"]}
+  highlightCells={[[3, 1], [3, 2]]}
+  rows={[
+    ["FiLM", "0.4570", "0.4805"],
+    ["AdaGN", "0.4609", "0.4688"],
+    ["Concat", "0.4512", "0.4902"],
+    ["Cross-attn", "0.4785", "0.4941"],
+  ]}
+/>
+
+<Table
+  caption="Endpoint error (lower is better)"
+  align={["left", "right", "right"]}
+  headers={["", "Diffusion", "Flow Matching"]}
+  highlightCells={[[2, 1], [2, 2]]}
+  rows={[
+    ["FiLM", "0.0068", "0.0097"],
+    ["AdaGN", "0.0076", "0.0106"],
+    ["Concat", "0.0055", "0.0092"],
+    ["Cross-attn", "0.0069", "0.0094"],
+  ]}
+/>
+
+During evaluation, we sample 512 configurations (occupancy map + endpoints) for each model-mechanism pair. The occupancy maps are sampled using the same `sparse`, `medium`, `dense` split as during dataset creation.
+
+The models solve the endpoint constraints pretty well. We've already established that global mechanisms have no difficulty with this, so this shouldn't come as a surprise. We also measure the collision rate and the success rate. The collision rate is the fraction of samples whose minimum signed distance to any obstacle in the map is `< 0`. The success rate is the fraction of samples that are both collision free and within the endpoint error of `0.05`.
+
+The success and collision rates are modest, no doubt being propped up by the `sparse` samples. Cross attention is better in terms of collision and success rates, but the difference isn't that large. All four mechanisms perform similarly as expected. Flow matching continues to perform better (though the margin is smaller this time), perhaps hinting again at its effectiveness when paired with global conditioning methods.
