@@ -35,7 +35,7 @@ To test all of these, a few things are required:
 
 ### Dataset
 
-I generated two families of synthetic datasets, both of which are collections of `T=64` $(x, y)$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes angles, etc. Honestly, I don't know. We could have more complex inter-point feasible constraints, etc for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differs a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure it out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
+I generated two families of synthetic datasets, both of which are collections of `T=64` $(x, y) \in [-1, 1]$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes things like angles. Honestly, I don't know. We could have more complex inter-point feasibility constraints, etc. for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differs a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure things out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
 
 For `Dataset1`, we sample trajectories from four different classes: 
 
@@ -199,7 +199,7 @@ We want to ensure two things:
 1. The models are able to produce trajectories of the given class
 2. The models exhibit diversity within trajectories of the same class
 
-The first thing here isn't trivial to verify. To do this we train a small 1-D convolution classifier. The classifier has an `~100%` on a generated validation dataset, so we can use it to gauge the accuracy of conditioning.
+The first thing here isn't trivial to verify. To do this we train a small 1-D convolution classifier. The classifier has an `~100%` accuracy on a generated validation dataset, so we can go ahead and use it to gauge the accuracy of conditioning.
 
 <Table
   caption="Class accuracy (256 samples/condition)"
@@ -282,7 +282,7 @@ Here are some samples for a given set of constraints:
 />
 
 
-As expected, for simple conditioning, there aren't any differences between any of the mechanisms or models. Applying conditioning globally across all of the timesteps is more than sufficient to encode such conditioning information and drive the models' output.
+As expected, for simple conditioning, there aren't any differences between any of the mechanisms or models. Applying conditioning globally across all of the timesteps is more than sufficient to encode such conditioning information and drive the output.
 
 
 ### Experiment 3
@@ -406,7 +406,7 @@ Mean distance is just the average of the closest distances between the waypoints
 The things that stood out to me are:
 1. Hit-rates are pretty low in general. Either this is a pretty difficult task, or I didn't do a good enough job at designing and training the model. I'd wager it's a combination of both
 2. The global mechanisms' hit-rates are unreasonably high. You don't just hit `>50%` of waypoints by guessing
-3. There isn't any difference between the individual global conditioning mechanisms
+3. There isn't any difference between the individual global conditioning mechanisms (Except for maybe the diffusion + concatenation combination compared to other diffusion combinations. This might be due to the combinatorial nature of the problem)
 4. Flow matching handily beats diffusion when coupled with global conditioning mechanisms. This isn't just statistical noise
 5. As expected cross-attention performs the best here as it can make use of timestep specific conditioning. It also produces the best mean distance metrics. It still doesn't crack the `90%` hit-rate, probably due to the factors mentioned above. I'm sure it's possible to tune the model and training parameters to get this number a lot higher
 6. Diversity metrics are the similar across all configurations, maybe slightly lower for the flow matching configurations
