@@ -520,3 +520,118 @@ body.zoom-open {
   color: #0085a1;
   font-weight: 700;
 }
+
+/* ------------------------------------------------------------------ */
+/* References                                                          */
+/* Inline [^code] citations are markdown footnotes; Astro hoists their */
+/* definitions into section[data-footnotes] (relabeled "References" by */
+/* remarkRehype.footnoteLabel in astro.config.mjs). Only the rendered  */
+/* list is restyled below; the footnote/back-reference anchors that    */
+/* power the inline citations are left untouched.                      */
+/* ------------------------------------------------------------------ */
+
+/* Quiet, letter-spaced back-matter heading: the visible "## References"
+   that sits directly above the generated footnotes section. */
+.blog-post h2:has(+ section[data-footnotes]) {
+  margin: 55px 0 0 0;
+  padding-top: 26px;
+  border-top: 1px solid #ececec;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #404040;
+}
+
+.blog-post section[data-footnotes] {
+  margin-top: 20px;
+}
+
+/* Drop the default decimal markers for hanging [n] markers in accent teal. */
+.blog-post section[data-footnotes] ol {
+  list-style: none;
+  counter-reset: ref;
+  margin: 0;
+  padding: 0;
+}
+
+.blog-post section[data-footnotes] ol > li {
+  counter-increment: ref;
+  position: relative;
+  padding: 3px 0 3px 2.6em;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #555;
+  border-radius: 3px;
+  scroll-margin-top: 90px;
+}
+
+.blog-post section[data-footnotes] ol > li + li {
+  margin-top: 0.55em;
+}
+
+.blog-post section[data-footnotes] ol > li::before {
+  content: counter(ref);
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 1.9em;
+  text-align: right;
+  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #0085a1;
+}
+
+.blog-post section[data-footnotes] li p {
+  margin: 0;
+}
+
+/* Soften the markdown **bold** of every entry to a clean regular weight. */
+.blog-post section[data-footnotes] li strong {
+  font-weight: 400;
+  color: #404040;
+}
+
+/* [Link] anchor: quiet teal with a hairline underline that fills on hover. */
+.blog-post section[data-footnotes] a:not(.data-footnote-backref) {
+  color: #0085a1;
+  text-decoration: none;
+  border-bottom: 1px solid #bfe0e8;
+  transition: border-color 0.15s ease;
+}
+
+.blog-post section[data-footnotes] a:not(.data-footnote-backref):hover {
+  border-bottom-color: #0085a1;
+}
+
+/* Back-to-text arrow: kept for navigation and a11y, dialed to a whisper. */
+.blog-post section[data-footnotes] .data-footnote-backref {
+  border: none;
+  margin-left: 0.45em;
+  color: #c6c6c6;
+  font-size: 0.85em;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.blog-post section[data-footnotes] .data-footnote-backref:hover {
+  color: #0085a1;
+}
+
+/* Clicking an inline citation briefly spotlights the entry it lands on. */
+.blog-post section[data-footnotes] ol > li:target {
+  animation: ref-flash 1.8s ease;
+}
+
+@keyframes ref-flash {
+  0%, 25% {
+    background: #eef6f8;
+  }
+  100% {
+    background: transparent;
+  }
+}
