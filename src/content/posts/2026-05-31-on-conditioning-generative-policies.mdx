@@ -345,8 +345,8 @@ Here's the diffusion + FiLM model in action:
 <Table caption="Training hyperparameters"
   headers={["Policy", "Steps", "Batch", "LR", "NFE"]}
   rows={[
-    ["Diffusion", "40k", "256", "1e-4", "25"],
-    ["Flow Matching", "40k", "256", "1e-4", "10"],
+    ["Diffusion", "40k", "256", "1e-4", "50"],
+    ["Flow Matching", "40k", "256", "1e-4", "20"],
   ]}
 />
 
@@ -496,5 +496,24 @@ We see that cross-attention retains more of its hit-rate as the waypoints get mo
     { src: "/posts/10/images/exp4/exp4_flow_matching_adagn.png", alt: "Exp4, Flow Matching, AdaGN ", caption: "Flow Matching + AdaGN" },
     { src: "/posts/10/images/exp4/exp4_flow_matching_concat.png", alt: "Exp4, Flow Matching, Concat ", caption: "Flow Matching + Concat" },
     { src: "/posts/10/images/exp4/exp4_flow_matching_ca.png", alt: "Exp4, Flow Matching, Cross-attn ", caption: "Flow Matching + Cross-attn" },
+  ]}
+/>
+
+### Experiment 5
+
+The first "experiment 5" had me try to do obstacle avoidance with `Dataset1`. Let's just say that neither the setup, nor the eval made any sense (for obvious reasons), so we can pretend that it never happened. The real experiment uses `dataset2`.
+
+<Table caption="Training hyperparameters"
+  headers={["Policy", "Steps", "Batch", "LR", "NFE"]}
+  rows={[
+    ["Diffusion", "7k", "1536", "2.5e-4", "50"],
+    ["Flow Matching", "7k", "1536", "2.5e-4", "20"],
+  ]}
+/>
+
+<Table caption="Model size (M)"
+  headers={["FiLM", "AdaGN", "Concat", "Cross-attn"]}
+  rows={[
+    ["12.298", "12.298", "11.358", "12.593"],
   ]}
 />
