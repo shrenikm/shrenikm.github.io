@@ -641,3 +641,18 @@ For this final experiment, we try our best to solve the problem. Instead of gene
   ]}
 />
 
+As expected, cross-attention dominates the field here. Its success rate on dense occupany maps isn't perfect, probably due to a mixture of the problem being difficult and the model and training process not being optimized enough. Interestingly, flow matching performs slightly to moderately worse in most configurations. I don't really have too much insight as to why. It could be something to do with the model or training process. Going back to our previous theoretical reasoning, it could also be beacuse flow matching tries to do more at the initial noisy steps, leading to more unstable steps when working with high information conditioning features.
+
+
+<Gallery
+  images={[
+    { src: "/posts/10/images/exp6/exp6_diffusion_film.png", alt: "Exp6, Diffusion, FiLM ", caption: "Diffusion + FiLM" },
+    { src: "/posts/10/images/exp6/exp6_diffusion_adagn.png", alt: "Exp6, Diffusion, AdaGN ", caption: "Diffusion + AdaGN" },
+    { src: "/posts/10/images/exp6/exp6_diffusion_concat.png", alt: "Exp6, Diffusion, Concat ", caption: "Diffusion + Concat" },
+    { src: "/posts/10/images/exp6/exp6_diffusion_ca.png", alt: "Exp6, Diffusion, Cross-attn ", caption: "Diffusion + Cross-attn" },
+    { src: "/posts/10/images/exp6/exp6_flow_matching_film.png", alt: "Exp6, Flow Matching, FiLM ", caption: "Flow Matching + FiLM" },
+    { src: "/posts/10/images/exp6/exp6_flow_matching_adagn.png", alt: "Exp6, Flow Matching, AdaGN ", caption: "Flow Matching + AdaGN" },
+    { src: "/posts/10/images/exp6/exp6_flow_matching_concat.png", alt: "Exp6, Flow Matching, Concat ", caption: "Flow Matching + Concat" },
+    { src: "/posts/10/images/exp6/exp6_flow_matching_ca.png", alt: "Exp6, Flow Matching, Cross-attn ", caption: "Flow Matching + Cross-attn" },
+  ]}
+/>
