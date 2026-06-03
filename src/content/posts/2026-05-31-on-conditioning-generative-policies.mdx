@@ -97,11 +97,11 @@ This dataset contains 200,000 trajectories computed by sampling random start and
 
 ### Generative Policies
 
-For the policies, we use a 1-D U-Net structure (as seen in the original Diffusion Policy). Each model and conditioning variant uses FiLM for conditioning the timestep (even if the other inputs aren't conditioned through FiLM). The base model (base U-Net + timestep FiLM) has ~`10M` parameters.
+For the policies, we use a 1-D U-Net structure (as seen in the original Diffusion Policy [^dp]). Each model and conditioning variant uses FiLM for conditioning the timestep (even if the other inputs aren't conditioned through FiLM). The base model (base U-Net + timestep FiLM) has ~`10M` parameters.
 
-For diffusion, we train the model to predict the noise $\epsilon$. For the samples, we use DDPM (`T=100` with a cosine schedule). For inference we use DDIM with the `25-50` steps depending on the experiment.
+For diffusion, we train the model to predict the noise $\epsilon$. For the samples, we use DDPM [^ddpm] (`T=100` with a cosine schedule [^iddpm]). For inference we use DDIM [^ddim] with the `25-50` steps depending on the experiment.
 
-For flow matching, we use the same model but predict the velocity instead. During sampling, we sample $t \sim \beta(1.5, 1)$, and use `10-20` Euler steps during inference. Note that the distribution for $t$ is similar to what is used in $\pi_0$ and is a point of assymetry (compared to diffusion) in our experiments.
+For flow matching [^fm], we use the same model but predict the velocity instead. During sampling, we sample $t \sim \beta(1.5, 1)$, and use `10-20` Euler steps during inference. Note that the distribution for $t$ is similar to what is used in $\pi_0$ and is a point of assymetry (compared to diffusion) in our experiments.
 
 <ZoomableFigure src="/posts/10/images/architecture/unet_architecture.png" alt="U-Net Architecture" />
 
@@ -111,7 +111,7 @@ For flow matching, we use the same model but predict the velocity instead. Durin
 
 #### FiLM
 
-For FiLM, an MLP produces per-channel scale $\gamma$ and shift $\beta$. The inputs get modulated as $\gamma \cdot x + \beta$ broadcast over all `T` actions to produce the `(B, C, T)` output.
+For FiLM [^film], an MLP produces per-channel scale $\gamma$ and shift $\beta$. The inputs get modulated as $\gamma \cdot x + \beta$ broadcast over all `T` actions to produce the `(B, C, T)` output.
 
 #### Concat
 
@@ -119,11 +119,11 @@ I wanted to test something that's a bit more primitive. Concat basically does wh
 
 #### AdaGN
 
-This one is supposed to be the dressed up version of FiLM. AdaLN-Zero has become popular in DiT networks, but given that we're using 1-D convolutions here, we stick to the group norm. The output is $(1 + \gamma) \cdot \texttt{GroupNorm}(x) + \beta$, with it starting zero initialized similar to AdaLN-Zero.
+This one is supposed to be the dressed up version of FiLM. AdaLN-Zero has become popular in DiT networks [^dit], but given that we're using 1-D convolutions here, we stick to the group norm. The output is $(1 + \gamma) \cdot \texttt{GroupNorm}(x) + \beta$ [^adagn], with it starting zero initialized similar to AdaLN-Zero.
 
 #### Cross-Attention
 
-The only method that applies per timestep conditioning. Queries come from the action trajectory (one per `T`) with the keys/values coming from the condition tokens. We use multi-head attention with 4 heads, with FFN expansions stacked on top for some of the experiments. For single scalar/vector conditioning, this collapses into a single token attention module.
+The only method that applies per timestep conditioning. Queries come from the action trajectory (one per `T`) with the keys/values coming from the condition tokens. We use multi-head attention with 4 heads [^attn], with FFN expansions stacked on top for some of the experiments. For single scalar/vector conditioning, this collapses into a single token attention module.
 
 
 ## Experiments
@@ -599,7 +599,7 @@ The success and collision rates are modest, no doubt being propped up by the `sp
   ]}
 />
 
-For this final experiment, we try our best to solve the problem. Instead of generating a single feature vector, we encode the image ViT style using 8x8 patches and a hidden dimension of 128. For the global mechanisms, these patch tokens and the endpoint tokens are stacked and used for conditioning. For cross-attention, we take the input tokens and compute cross-attention with all of the action timesteps.
+For this final experiment, we try our best to solve the problem. Instead of generating a single feature vector, we encode the image ViT style [^vit] using 8x8 patches and a hidden dimension of 128. For the global mechanisms, these patch tokens and the endpoint tokens are stacked and used for conditioning. For cross-attention, we take the input tokens and compute cross-attention with all of the action timesteps.
 
 (Note that I also tried a 4x4 patch version with a smaller hidden dimension where cross-attention still performed better than the global methods but not nearly as decisively as in this experiment).
 
@@ -671,3 +671,14 @@ So what did we learn?
 4. Use global conditioning when you just need high level decision making or constraints and cross-attention when you need more local control over your actions. Of course, if you're using a DiT backbone, cross-attention becomes the natural choice
 
 ## References
+
+[^dp]: **Chi, C., Xu, Z., Feng, S., Cousineau, E., Du, Y., Burchfiel, B., Tedrake, R., & Song, S. (2023). Diffusion policy: Visuomotor policy learning via action diffusion. arXiv preprint arXiv:2303.04137.** [[Link]](https://arxiv.org/abs/2303.04137)
+[^ddpm]: **Ho, J., Jain, A., & Abbeel, P. (2020). Denoising diffusion probabilistic models. arXiv preprint arXiv:2006.11239.** [[Link]](https://arxiv.org/abs/2006.11239)
+[^iddpm]: **Nichol, A., & Dhariwal, P. (2021). Improved denoising diffusion probabilistic models. arXiv preprint arXiv:2102.09672.** [[Link]](https://arxiv.org/abs/2102.09672)
+[^ddim]: **Song, J., Meng, C., & Ermon, S. (2020). Denoising diffusion implicit models. arXiv preprint arXiv:2010.02502.** [[Link]](https://arxiv.org/abs/2010.02502)
+[^fm]: **Lipman, Y., Chen, R. T. Q., Ben-Hamu, H., Nickel, M., & Le, M. (2022). Flow matching for generative modeling. arXiv preprint arXiv:2210.02747.** [[Link]](https://arxiv.org/abs/2210.02747)
+[^film]: **Perez, E., Strub, F., de Vries, H., Dumoulin, V., & Courville, A. (2017). FiLM: Visual reasoning with a general conditioning layer. arXiv preprint arXiv:1709.07871.** [[Link]](https://arxiv.org/abs/1709.07871)
+[^adagn]: **Dhariwal, P., & Nichol, A. (2021). Diffusion models beat GANs on image synthesis. arXiv preprint arXiv:2105.05233.** [[Link]](https://arxiv.org/abs/2105.05233)
+[^dit]: **Peebles, W., & Xie, S. (2022). Scalable diffusion models with transformers. arXiv preprint arXiv:2212.09748.** [[Link]](https://arxiv.org/abs/2212.09748)
+[^attn]: **Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., & Polosukhin, I. (2017). Attention is all you need. arXiv preprint arXiv:1706.03762.** [[Link]](https://arxiv.org/abs/1706.03762)
+[^vit]: **Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn, D., Zhai, X., Unterthiner, T., Dehghani, M., Minderer, M., Heigold, G., Gelly, S., Uszkoreit, J., & Houlsby, N. (2020). An image is worth 16x16 words: Transformers for image recognition at scale. arXiv preprint arXiv:2010.11929.** [[Link]](https://arxiv.org/abs/2010.11929)
