@@ -566,3 +566,17 @@ During evaluation, we sample 512 configurations (occupancy map + endpoints) for 
 The models solve the endpoint constraints pretty well. We've already established that global mechanisms have no difficulty with this, so this shouldn't come as a surprise. We also measure the collision rate and the success rate. The collision rate is the fraction of samples whose minimum signed distance to any obstacle in the map is `< 0`. The success rate is the fraction of samples that are both collision free and within the endpoint error of `0.05`.
 
 The success and collision rates are modest, no doubt being propped up by the `sparse` samples. Cross attention is better in terms of collision and success rates, but the difference isn't that large. All four mechanisms perform similarly as expected. Flow matching continues to perform better (though the margin is smaller this time), perhaps hinting again at its effectiveness when paired with global conditioning methods.
+
+
+<Gallery
+  images={[
+    { src: "/posts/10/images/exp5/exp5_diffusion_film.png", alt: "Exp5, Diffusion, FiLM ", caption: "Diffusion + FiLM" },
+    { src: "/posts/10/images/exp5/exp5_diffusion_adagn.png", alt: "Exp5, Diffusion, AdaGN ", caption: "Diffusion + AdaGN" },
+    { src: "/posts/10/images/exp5/exp5_diffusion_concat.png", alt: "Exp5, Diffusion, Concat ", caption: "Diffusion + Concat" },
+    { src: "/posts/10/images/exp5/exp5_diffusion_ca.png", alt: "Exp5, Diffusion, Cross-attn ", caption: "Diffusion + Cross-attn" },
+    { src: "/posts/10/images/exp5/exp5_flow_matching_film.png", alt: "Exp5, Flow Matching, FiLM ", caption: "Flow Matching + FiLM" },
+    { src: "/posts/10/images/exp5/exp5_flow_matching_adagn.png", alt: "Exp5, Flow Matching, AdaGN ", caption: "Flow Matching + AdaGN" },
+    { src: "/posts/10/images/exp5/exp5_flow_matching_concat.png", alt: "Exp5, Flow Matching, Concat ", caption: "Flow Matching + Concat" },
+    { src: "/posts/10/images/exp5/exp5_flow_matching_ca.png", alt: "Exp5, Flow Matching, Cross-attn ", caption: "Flow Matching + Cross-attn" },
+  ]}
+/>
