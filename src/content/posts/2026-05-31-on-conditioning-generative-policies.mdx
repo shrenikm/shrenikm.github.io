@@ -11,15 +11,15 @@ I've been running some experiments on conditioning diffusion and flow matching p
 
 ## Objective
 
-I started working on this to figure out what the limits of FiLM conditioning were. I'd never completely wrapped my head around FiLM's effectiveness. A lot of the time it felt like things worked out with FiLM even though it shouldn't have? This then grew into wanting to know how other conditioning methods stack against each other. With a lot of VLAs switching over to using flow matching action heads these days, I ended up adding this into the mix as well.
+I started working on this to figure out what the limits of FiLM [^film] conditioning were. I'd never completely wrapped my head around FiLM's effectiveness. A lot of the time it felt like things worked out with FiLM even though it shouldn't have. This then grew into wanting to know how other conditioning methods stack against each other. With a lot of VLAs switching over to using flow matching [^fm] action heads these days, I ended up adding this into the mix as well.
 
 I started my experiments trying to validate a few hypotheses:
 
 1. FiLM and other similar methods apply a sort of global conditioning across all timesteps equally. In principle these _should_ break at a certain complexity of task conditioning
-2. Something like cross-attention _should_ be better for tasks that require high fidelity local conditioning
+2. Something like cross-attention [^attn] _should_ be better for tasks that require high fidelity local conditioning
 3. A lot of these methods will probably fail for more complex compositional conditioning. Maybe there's some conditioning method out there that can more efficiently encode this? (Spoiler alert: I never got to this part)
 
-Obviously none of this matters much if you're using an LLM/VLM backbone for your policy. So we limit our discussions and experiments to smaller models (< 50M) that don't employ such backbones (think diffusion policy).
+Obviously none of this matters much if you're using an LLM/VLM backbone for your policy. So we limit our discussions and experiments to smaller models (< 50M) that don't employ such backbones (think diffusion policy [^dp]).
 
 While none of my hypotheses are particularly imaginative or controversial, there were still a few open questions (at least open to me):
 1. At what point does FiLM break?
@@ -416,7 +416,7 @@ Trying to reason about these:
 
 1. The global mechanisms are probably doing some sort of "shape-fitting", matching waypoint configurations to high level trajectory shapes. The way these mechanisms propagate conditioning information isn't conducive to handling waypoint binding constraints, but it doesn't mean that they're completely helpless either
 2. The flow matching disparity is also very interesting. We can perhaps chalk some of it to the fact that it produces trajectories with slightly lower diversity and entropy scores. The question is why?
-  - Flow matching uses the beta schedule to sample `t` unlike diffusion that sampled `t` uniformly. Maybe this was a bad comparison and I should've made these symmetric, but as they say, it's impossible to appreciate symmetry if there isn't any asymmetry to juxtapose against.
+  - Flow matching [^fm] uses the beta schedule to sample `t` unlike diffusion that sampled `t` uniformly. Maybe this was a bad comparison and I should've made these symmetric, but as they say, it's impossible to appreciate symmetry if there isn't any asymmetry to juxtapose against.
   - Here's something a bit more speculative: Diffusion's SNR weighted loss could be diminishing conditioning gradients at high `t` (higher noise levels), compared to flow matching's velocity prediction. This does make sense if we think of the global mechanisms solving this problem by "shape-fitting" and making high level decisions. Making high level decisions at high `t` that decide the success rate of the task probably suits flow matching more. The conditioning mechanisms don't allow for low `t` refinement either. This would also explain why there isn't much of a difference between the two when it comes to cross-attention
 
 The above metrics were all obtained on inputs that were "in distribution", meaning that the waypoints were sampled from trajectories in the dataset. Doing it this way makes it so that there is always a feasible trajectory that threads the points, but may also introduce some bias. I also ran some OOD evaluations to check if that would tell us something more. (To be perfectly fair the bias angle isn't particularly real given that our spatial domain is small and bounded, and the training sample covers most of it anyway. The joint distribution of the waypoints should also be amply covered by the original dataset).
@@ -668,7 +668,7 @@ So what did we learn?
 1. There isn't really that much difference between the three global mechanisms. FiLM and AdaGN are pretty interchangeable. Simple concatenation proved to be effective as well, but for more complex policies we'd probably have an easier time training with some modulation mechanism
 2. Global mechanisms are almost unreasonably effective, even for problems that might seem too difficult for them at first glance. If you had to choose some conditioning mechanism for your policy, FiLM should probably be your first choice
 3. Flow matching seems to be the better generative model when it comes to making the best out of limited resources (global conditioning on difficult tasks). It also needs a lot fewer denoising steps, making it a good default for a lot of tasks. Some effects with flow matching probably still need to be investigated further
-4. Use global conditioning when you just need high level decision making or constraints and cross-attention when you need more local control over your actions. Of course, if you're using a DiT backbone, cross-attention becomes the natural choice
+4. Use global conditioning when you just need high level decision making or constraints and cross-attention when you need more local control over your actions. Of course, if you're using a DiT backbone [^dit], cross-attention becomes the natural choice
 
 ## References
 
