@@ -661,3 +661,14 @@ Below we can see the samples that the model (diffusion + cross-attention) produc
 
 
 <Figure src="/posts/10/gifs/exp6/exp6_app.gif" alt="Exp6 App" />
+
+## Takeaways
+
+So what did we learn?
+
+1. There isn't really that much difference between the three global mechanisms. FiLM and AdaGN are pretty interchangeable. Simple concatenation proved to be effective as well, but for more complex policies we'd probably have an easier time training with some modulation mechanism
+2. Global mechanisms are almost unreasonably effective, even for problems that might seem too difficult for them at first glance. If you had to choose some conditioning mechanism for your policy, FiLM should probably be your first choice
+3. Flow matching seems to be the better generative model when it comes to making the best out of limited resources (global conditioning on difficult tasks). It also needs a lot fewer denoising steps, making it a good default for a lot of tasks. Some effects with flow matching probably still need to be investigated further
+4. Use global conditioning when you just need high level decision making or constraints and cross-attention when you need more local control over your actions. Of course, if you're using a DiT backbone, cross-attention becomes the natural choice
+
+## References
