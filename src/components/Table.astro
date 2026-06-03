@@ -1,0 +1,106 @@
+---
+// Clean, minimalist table. Takes structured data so it stays easy to extend
+// later with per row/column/cell highlighting. Cells may contain inline math
+// delimited by single dollars, rendered with KaTeX at build time (the global
+// KaTeX stylesheet from BaseLayout styles the output).
+import katex from "katex";
+import katexMacros from "../katex-macros.json";
+
+interface HeaderCell {
+  label: string;
+  colspan?: number;
+  rowspan?: number;
+  align?: "left" | "center" | "right";
+}
+
+interface Props {
+  // Simple single-row header. For merged/grouped headers pass headerRows
+  // instead (one HeaderCell array per header row, with colspan/rowspan).
+  headers?: string[];
+  headerRows?: HeaderCell[][];
+  rows: string[][];
+  caption?: string;
+  align?: ("left" | "center" | "right")[];
+  // Cells to emphasize as [rowIndex, colIndex], indexed into rows (colIndex
+  // includes the leading label column), e.g. the best metric per column.
+  highlightCells?: [number, number][];
+}
+
+const { headers, headerRows, rows, caption, align, highlightCells } = Astro.props;
+
+const highlighted = new Set((highlightCells ?? []).map(([r, c]) => `${r},${c}`));
+
+const macros = {
+  ...katexMacros,
+  "\\set": "\\left\\{#1\\right\\}",
+  "\\argmin": "\\operatorname*{arg\\,min}",
+  "\\argmax": "\\operatorname*{arg\\,max}",
+};
+
+function escapeHtml(value: string): string {
+  return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function renderCell(cell: string): string {
+  // Odd split segments are the inside of a $...$ pair; render those as math
+  // and escape the surrounding plain text.
+  return cell
+    .split(/\$([^$]+)\$/g)
+    .map((part, i) =>
+      i % 2 === 1
+        ? katex.renderToString(part, { throwOnError: false, macros })
+        : escapeHtml(part),
+    )
+    .join("");
+}
+
+function alignStyle(index: number): string | undefined {
+  const value = align?.[index];
+  return value ? `text-align:${value}` : undefined;
+}
+---
+
+<figure class="nice-table-wrap">
+  <table class="nice-table">
+    <thead>
+      {
+        headerRows
+          ? headerRows.map((hr) => (
+              <tr>
+                {hr.map((cell) => (
+                  <th
+                    colspan={cell.colspan}
+                    rowspan={cell.rowspan}
+                    style={cell.align ? `text-align:${cell.align}` : undefined}
+                    set:html={renderCell(cell.label)}
+                  />
+                ))}
+              </tr>
+            ))
+          : (
+              <tr>
+                {(headers ?? []).map((header, i) => (
+                  <th style={alignStyle(i)} set:html={renderCell(header)} />
+                ))}
+              </tr>
+            )
+      }
+    </thead>
+    <tbody>
+      {
+        rows.map((row, r) => (
+          <tr>
+            {row.map((cell, c) => (
+              <td
+                style={alignStyle(c)}
+                class={highlighted.has(`${r},${c}`) ? "cell-highlight" : undefined}
+                set:html={renderCell(cell)}
+              />
+            ))}
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

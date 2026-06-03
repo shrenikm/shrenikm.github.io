@@ -1,0 +1,114 @@
+---
+// Like Figure, but clicking the image opens it in an in-page lightbox so small
+// images can be enlarged without leaving the post. A single overlay element is
+// shared by every zoomable image on the page (created lazily by the script).
+// Pass zoomSrc to point the lightbox at a higher resolution version of src.
+interface Props {
+  src: string;
+  alt?: string;
+  caption?: string;
+  title?: string;
+  width?: string;
+  zoomSrc?: string;
+}
+
+const { src, alt, caption, title, width, zoomSrc } = Astro.props;
+const style = width
+  ? `max-width:${width};margin-left:auto;margin-right:auto;`
+  : undefined;
+const label = alt ?? caption ?? "";
+---
+
+<figure class="post-figure zoomable" style={style}>
+  <button
+    type="button"
+    class="zoom-trigger"
+    aria-label={`Zoom image${label ? `: ${label}` : ""}`}
+    data-zoomable
+    data-zoom-src={zoomSrc ?? src}
+    data-zoom-alt={label}
+    data-zoom-caption={caption ?? ""}
+  >
+    <img src={src} alt={label} loading="lazy" decoding="async" />
+  </button>
+  {
+    (title || caption) && (
+      <figcaption>
+        {title && <h4>{title}</h4>}
+        {caption && <p>{caption}</p>}
+      </figcaption>
+    )
+  }
+</figure>
+
+<script>
+  function initZoomableFigures() {
+    // Lazily build the one overlay shared by every zoomable image.
+    function ensureOverlay(): HTMLElement {
+      const existing = document.querySelector<HTMLElement>(".zoom-overlay");
+      if (existing) return existing;
+
+      const overlay = document.createElement("div");
+      overlay.className = "zoom-overlay";
+      overlay.setAttribute("role", "dialog");
+      overlay.setAttribute("aria-modal", "true");
+      overlay.innerHTML = [
+        '<button class="zoom-overlay-close" aria-label="Close">&times;</button>',
+        '<div class="zoom-stage"><img alt="" /></div>',
+        '<p class="zoom-overlay-caption"></p>',
+      ].join("");
+      document.body.appendChild(overlay);
+
+      // Any click on the backdrop, image or close button dismisses it.
+      overlay.addEventListener("click", () => closeOverlay(overlay));
+      return overlay;
+    }
+
+    function openOverlay(src: string, alt: string, caption: string) {
+      const overlay = ensureOverlay();
+      const img = overlay.querySelector<HTMLImageElement>(".zoom-stage img")!;
+      const cap = overlay.querySelector<HTMLElement>(".zoom-overlay-caption")!;
+      img.src = src;
+      img.alt = alt;
+      cap.textContent = caption;
+      cap.style.display = caption ? "" : "none";
+      overlay.classList.add("open");
+      document.body.classList.add("zoom-open");
+    }
+
+    function closeOverlay(overlay: HTMLElement) {
+      overlay.classList.remove("open");
+      document.body.classList.remove("zoom-open");
+    }
+
+    // Bind document level listeners only once so view transition re-inits do
+    // not stack duplicate handlers.
+    const w = window as unknown as { __zoomBound?: boolean };
+    if (!w.__zoomBound) {
+      w.__zoomBound = true;
+
+      document.addEventListener("click", (event) => {
+        const trigger = (event.target as HTMLElement).closest<HTMLElement>(
+          "[data-zoomable]",
+        );
+        if (!trigger) return;
+        openOverlay(
+          trigger.dataset.zoomSrc ?? "",
+          trigger.dataset.zoomAlt ?? "",
+          trigger.dataset.zoomCaption ?? "",
+        );
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        const overlay = document.querySelector<HTMLElement>(".zoom-overlay.open");
+        if (overlay) closeOverlay(overlay);
+      });
+    }
+
+    ensureOverlay();
+  }
+
+  initZoomableFigures();
+  document.addEventListener("astro:page-load", initZoomableFigures);
+</script>
