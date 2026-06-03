@@ -13,15 +13,15 @@ I've been running some experiments on conditioning diffusion and flow matching p
 
 I started working on this to figure out what the limits of FiLM conditioning were. I'd never really completely wrapped my head around FiLM's effectiveness. A lot of the time it felt like things worked out with FiLM even though it shouldn't have? This then grew into wanting to know how other conditioning methods stack against each other. With a lot of VLAs switching over to using flow matching action heads these days, I ended up adding this into the mix as well.
 
-I started my experiments trying to validate a few hypothesis:
+I started my experiments trying to validate a few hypotheses:
 
 1. FiLM and other similar methods apply a sort of global conditioning across all timesteps equally. In principle these _should_ break at a certain complexity of task conditioning
 2. Something like cross-attention _should_ in principle be better for tasks that require high fidelity local conditioning
-3. A lot of these methods will probably fail for more complex compositional conditioning. Maybe there's some conditioning method out there that can more efficiently encode this? (Spoiler alert: I never go to this part)
+3. A lot of these methods will probably fail for more complex compositional conditioning. Maybe there's some conditioning method out there that can more efficiently encode this? (Spoiler alert: I never got to this part)
 
 Obviously none of this really matters if you're using an LLM/VLM backbone for your policy. So we limit our discussions and experiments to smaller models (< 50M) that don't employ such backbones (think diffusion policy).
 
-While none of my hypothesis are particularly imaginative or controversial, there were still a few open questions (at least open to me):
+While none of my hypotheses are particularly imaginative or controversial, there were still a few open questions (at least open to me):
 1. At what point does FiLM break?
 2. How does FiLM stack against something more primitive?
 3. How does FiLM stack against something slight more spruced up?
@@ -35,7 +35,7 @@ To test all of these, a few things are required:
 
 ### Dataset
 
-I generated two families of synthetic datasets, both of which are collections of `T=64` $(x, y)$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes angles, etc. Honestly, I don't know. We could have more complex inter-point feasible constraints, etc for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differ a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure it out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
+I generated two families of synthetic datasets, both of which are collections of `T=64` $(x, y)$ points bounded in 2-D space. The obvious question is how this scales to more realistic scenarios where we end up with a larger space of actions that includes angles, etc. Honestly, I don't know. We could have more complex inter-point feasible constraints, etc for actual robot actions and the results here might not carry over. However, I don't think that the representation problem differs a lot in terms of complexity. Angles can always be represented with $(\cos \theta, \sin \theta)$, rotations with 6-D representations, and so on. If the model has enough capacity, it should be able to just figure it out. All that to say, I'd be surprised if most things from this 2-D experiment didn't translate in some form to more practical problems.
 
 For `Dataset1`, we sample trajectories from four different classes: 
 
@@ -101,7 +101,7 @@ For the policies, we use a 1-D U-Net structure (as seen in the original Diffusio
 
 For diffusion, we train the model to predict the noise $\epsilon$. For the samples, we use DDPM (`T=100` with a cosine schedule). For inference we use DDIM with the `25-50` steps depending on the experiment.
 
-For flow matching, we use the same model but predict the velocity instead. During sampling, we sample $t \sim \beta(1.5, 1)$, and use `10-20` Euler steps during inference.
+For flow matching, we use the same model but predict the velocity instead. During sampling, we sample $t \sim \beta(1.5, 1)$, and use `10-20` Euler steps during inference. Note that the distribution for $t$ is similar to what is used in $\pi_0$ and is a point of assymetry (compared to diffusion) in our experiments.
 
 <ZoomableFigure src="/posts/10/images/architecture/unet_architecture.png" alt="Dataset1 gallery" />
 
@@ -157,7 +157,7 @@ The first thing to do is to make sure that our base unconditional models work as
   ]}
 />
 
-And no, I couldn't resisting making the classic denoising gif.
+And no, I couldn't resist making the classic denoising gif.
 
 
 <Gallery
@@ -193,7 +193,7 @@ Training unconditionally on all of `Dataset1` gives you samples from every class
   ]}
 />
 
-We start with something, very simple: conditioning on the trajectory class (in `Dataset1`). The class input is encoded as a one-hot vector (`dim=5`).
+We start with something very simple: conditioning on the trajectory class (in `Dataset1`). The class input is encoded as a one-hot vector (`dim=5`).
 
 We want to ensure two things:
 1. The models are able to produce trajectories of the given class
@@ -363,7 +363,7 @@ For the global mechanisms, we stack each of the waypoints and zero pad to hit th
 
 I thought this would be difficult for a few reasons:
 1. The number of waypoints isn't constant. The model has to learn to be combination invariant for maximum effectiveness
-2. It constraints specific parts of the trajectory, but moreover makes the model choose where the constraint needs to be applied through trying to generate a trajectory in the data distribution
+2. It constrains specific parts of the trajectory, but moreover makes the model choose where the constraint needs to be applied through trying to generate a trajectory in the data distribution
 
 Surely FiLM completely breaks apart here right?
 
@@ -404,11 +404,11 @@ Some more metrics before we try to make sense of the results:
 Mean distance is just the average of the closest distances between the waypoints and points on the trajectory. Class entropy is a measure of how many classes the model samples are spread across. (We use the Oracle to estimate this).
 
 The things that stood out to me are:
-1. Hit rates are pretty low in general. Either this is a pretty difficult task, or I didn't do a good enough job at designing and training the model. I'd wager it's a combination of both
-2. The global mechanisms' hit rates are unreasonably high. You don't just hit `>50%` of waypoints by guessing
+1. Hit-rates are pretty low in general. Either this is a pretty difficult task, or I didn't do a good enough job at designing and training the model. I'd wager it's a combination of both
+2. The global mechanisms' hit-rates are unreasonably high. You don't just hit `>50%` of waypoints by guessing
 3. There isn't any difference between the individual global conditioning mechanisms
-4. Flow matching handedly beats diffusion when coupled with global conditioning mechanisms. This isn't just statistical noise
-5. As expected cross-attention performs the best here as it can make use of timestep specific conditioning. It also produces the best mean distance metrics. It still doesn't crack the `90%` hit-rate`, probably due to the factors mentioned above. I'm sure it's possible to tune the model and training parameters to get this number a lot higher
+4. Flow matching handily beats diffusion when coupled with global conditioning mechanisms. This isn't just statistical noise
+5. As expected cross-attention performs the best here as it can make use of timestep specific conditioning. It also produces the best mean distance metrics. It still doesn't crack the `90%` hit-rate, probably due to the factors mentioned above. I'm sure it's possible to tune the model and training parameters to get this number a lot higher
 6. Diversity metrics are the similar across all configurations, maybe slightly lower for the flow matching configurations
 7. Class entropy is also similar, maybe a bit lower for the flow matching configurations
 
@@ -417,7 +417,7 @@ Trying to reason about these:
 1. The global mechanisms are probably doing some sort of "shape-fitting", matching waypoint configurations to high level trajectory shapes. The way these mechanisms propagate conditioning information isn't conducive to handling waypoint binding constraints, but it doesn't mean that they're completely helpless either
 2. The flow matching disparity is also very interesting. We can perhaps chalk some of it to the fact that it produces trajectories with slightly lower diversity and entropy scores. The question still is why?
   - Flow matching uses the beta schedule to sample `t` unlike diffusion that sampled `t` uniformly. Maybe this was a bad comparison and I should've made these symmetric, but how is it possible to appreciate symmetry if there isn't any asymmetry to juxtapose against.
-  - There's probably something also to be said about the diffusion's SNR weighted loss diminishing conditioning gradients at high `t`, compared to flow matching's velocity prediction. This does make sense if we think of the global mechanisms solving this problem by "shape-fitting" and making high level decisions. Making high level decisions at high `t` that decide the success rate of the task probably suits flow matching more. The conditioning mechanisms don't allow for for low `t` refinement either. This would also explain why there isn't much of a difference between the two when it comes to cross-attention
+  - Here's something a bit more speculative: Diffusion's SNR weighted loss could be diminishing conditioning gradients at high `t` (higher noise levels), compared to flow matching's velocity prediction. This does make sense if we think of the global mechanisms solving this problem by "shape-fitting" and making high level decisions. Making high level decisions at high `t` that decide the success rate of the task probably suits flow matching more. The conditioning mechanisms don't allow for low `t` refinement either. This would also explain why there isn't much of a difference between the two when it comes to cross-attention
 
 
 The above metrics were all obtained on inputs that were "in distribution", meaning that the waypoints were sampled from trajectories in the dataset. Doing it this way makes it so that there is always a feasible trajectory that threads the points, but may also introduce some bias. I also ran some OOD evaluations to check if that would tell us something more. (To be perfectly fair the bias angle isn't particularly real given that our spatial domain is small and bounded, and the training sample covers most of it anyway. The joint distribution of the waypoints should also be amply covered by the original dataset).
@@ -602,7 +602,7 @@ The success and collision rates are modest, no doubt being propped up by the `sp
 
 For this final experiment, we try our best to solve the problem. Instead of generating a single feature vector, we encode the image ViT style using 8x8 patches and a hidden dimension of 128. For the global mechanisms, these patch tokens and the endpoint tokens are stacked and used for conditioning. For cross-attention, we take the input tokens and compute cross-attention with all of the action timesteps.
 
-(Note that I also tried a 4x4 patch version with a smaller hidden dimension where cross-attention still performed better than the global methods but not nearly as this experiment).
+(Note that I also tried a 4x4 patch version with a smaller hidden dimension where cross-attention still performed better than the global methods but not nearly as decisively as in this experiment).
 
 <Table
   align={["left", "right", "right", "right", "right", "right", "right", "right", "right"]}
@@ -641,7 +641,7 @@ For this final experiment, we try our best to solve the problem. Instead of gene
   ]}
 />
 
-As expected, cross-attention dominates the field here. Its success rate on dense occupancy maps isn't perfect, probably due to a mixture of the problem being difficult and the model and training process not being optimized enough. Interestingly, flow matching performs slightly to moderately worse in most configurations. I don't really have too much insight as to why. It could be something to do with the model or training process. Going back to our previous theoretical reasoning, it could also be because flow matching tries to do more at the initial noisy steps, leading to more unstable steps when working with high information conditioning features.
+As expected, cross-attention dominates the field here. Its success rate on dense occupancy maps isn't perfect, probably due to a mixture of the problem being difficult and the model and training process not being optimized enough. Interestingly, flow matching performs slightly to moderately worse in most configurations. I don't really have too much insight as to why. It could be something to do with the model or training process. Going back to our previous theoretical reasoning, it could also be because flow matching tries to do more at the initial noisy steps, leading to more unstable steps when working with high information conditioning features. Running an experiment without the time-samping asymmetry might shed some more light here, but it isn't something I've tested yet.
 
 
 <Gallery
